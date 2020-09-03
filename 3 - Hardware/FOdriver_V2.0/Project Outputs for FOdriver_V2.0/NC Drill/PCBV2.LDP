@@ -1,0 +1,3 @@
+Layer Pairs Export File for PCB: C:\Users\Constanza\Desktop\GIT_repos\iowlabs_repos\FlueOpti\Boards\FOdriver_V2.0\PCBV2.PcbDoc
+LayersSetName=Top_Bot_Thru_Holes|DrillFile=pcbv2-roundholes.txt|DrillLayers=gtl,gp1,g1,gbl
+LayersSetName=Top_Bot_Slot_Holes|DrillFile=pcbv2-slotholes.txt|DrillLayers=gtl,gp1,g1,gbl

@@ -1,0 +1,17 @@
+Project Outputs Generation Report
+---------------------------------
+Start Output Generation At 22:18:17 On 19-07-2020
+
+Output: NC Drill Files
+Type  : NC Drill
+From  : PCB Document [PCBV2.PcbDoc]
+   Generated File[PCBV2-RoundHoles.TXT]
+   Generated File[PCBV2-SlotHoles.TXT]
+   Generated File[PCBV2.LDP]
+   Generated File[PCBV2.DRR]
+
+
+Files Generated   : 4
+Documents Printed : 0
+
+Finished Output Generation At 22:18:17 On 19-07-2020
