@@ -16,7 +16,7 @@ Los LEDs que se deben controlar realizan 3 tareas distintas:
 
 El proyecto también considera la necesidad de implementar sensores que permitan calibrar el sistema y monitorear variables determinadas, tales como intensidad o temperatura.
 
-![Diagrama General](/Doc/Diagrama_1.PNG)
+![Diagrama General](/README_images/Diagrama_1.PNG)
 
 
 
@@ -40,7 +40,7 @@ A continuación se enlista un set de requerimientos específicos del proyecto:
 2. Actualmente, se está pensando en una placa de LEDs azules con distribución física del tipo circular. Esto implicaría una cantidad de 55 LEDs. En la siguiente imagen se muestra esta topología propuesta:
 
 
-![Propuesta nueva disposición LEDs azules](/Doc/disposicionBLUE.PNG)
+![Propuesta nueva disposición LEDs azules](/README_images/disposicionBLUE.PNG)
 
 3. Los LEDs verdes empleados para la activación de genes corresponden a los [Kingbright WP7083ZGD/G](http://www.kingbrightusa.com/images/catalog/SPEC/WP7083ZGD-G.pdf):
    * Longitud de onda: 520nm
@@ -86,7 +86,7 @@ Una alternativa es el fototransistor [TEMT6000](https://learn.sparkfun.com/tutor
 Teniendo presente los requerimientos planteados en la sección anterior se propone una solución basada en el siguiente esquema
 
 
-![Esquema de la solución electrónica propuesta](/Doc/solución_propuesta.png)
+![Esquema de la solución electrónica propuesta](/README_images/solución_propuesta.png)
 
 
 El principal criterio de diseño considerado es la modularidad, con el objetivo de poder entregar una solución adaptable y escalable. Los parámetros prácticos de elección de componentes dependen de los requerimientos específicos del sistema. El esquema general consiste en un módulo que genera señales PWM, el cual es controlado por protocolo serial I2C. Este módulo genera 16 señales de PWM permitiendo controlar hasta 16 canales. Estas señales PWM controlan los módulos driver. Estos últimos ajustan la señal PWM a los requerimientos que necesitan los distintos tipos de circuitos de LEDs. Cada driver puede poseer uno o más canales dependiendo de la cantidad de subcircuitos independientes que se deseen controlar por tipo de LED. Del mismo modo, algunas de estas señales de control PWM pueden dejarse a disposición del usuario en caso que necesite controlar una placa con driver ya existente, como es el caso de este proyecto. 
@@ -124,13 +124,13 @@ Las principales características de este ADC se enlistan a continuación
 #### Acondicionamiento de señal
 Los sensores que se utilizarán permiten implementar el proceso de medición gracias a la variación de sus propiedades eléctricas. En general, estas variaciones se evidencian mediante un cambio de voltaje. En consecuencia, este es el voltaje que debe ser adquirido por el circuito electrónico. Por ello, en primera instancia, se dispone de un circuito divisor que, al ser conectado con el respectivo sensor, permite obtener el voltaje asociado a la medición. En la siguiente figura se muestra un ejemplo de esta conexión circuital, para el caso de un sensor de temperatura del tipo termistor (NTC):
 
-![Divisor](/Doc/Imagenes/divisor_ntc.png)
+![Divisor](/README_images/divisor_ntc.png)
 
 Para realizar correctamente la adquisición de las señales desde los sensores es necesario contar con una etapa de acondicionamiento de señal. De esta forma, se asegura que los valores de voltaje que entreguen los sensores se encuentren dentro de los límites que permiten las entradas del ADC y de la Raspberry. No solo es deseable que se opere dentro de los límites, sino también aprovechar el rango de lectura al máximo, es decir, que el voltaje mínimo de medición sea igual (o lo más cercano posible) al voltaje mínimo que permiten los pines del ADC. Y, la misma relación con el voltaje máximo de medición. 
 
 Dado que aún no existe 100% de certeza sobre los sensores a utilizar, se implementó una circuito genérico de acondicionamiento, el cual se compone de una etapa de amplificación y otra de adición de offset. En la siguiente figura se muestra este circuito:
 
-![Acondicionador](/Doc/Imagenes/acondicionador.png)
+![Acondicionador](/README_images/acondicionador.png)
 
 Los símbolos de switches corresponden, en la práctica, a un solder jumper, el cual conecta la entrada con la salida solo si se unen con soldadura sus terminales. Si se conectan S1, S2 y S3 el circuito queda configurado como un buffer, lo cual, de todas formas, beneficia a la señal adquirida puesto que el buffer disminuye su impedancia. Conectando o no S1, S2 y S3 se pueden obtener distintas configuraciones: solo amplificador, solo adición de offset, o ambas. Además, los valores de las resistencias se pueden ajustar dependiendo de los sensores que se utilicen, de tal forma de fijar correctamente la ganancia y el offset, según sea el caso.
 
@@ -207,4 +207,4 @@ Dado que el circuito electrónico funcionará con alimentación DC es necesario 
 
 En la siguiente figura se muestra el diagrama de bloques del esquemático implementado
 
-![Diagrama de bloques del esquemático](/Doc/diagrama_bloques.png)
+![Diagrama de bloques del esquemático](/README_images/diagrama_bloques.png)
