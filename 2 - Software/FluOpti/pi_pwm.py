@@ -90,7 +90,7 @@ if __name__ == '__main__':
 
 	while True:
 		for prcnt in seq:
-			print prcnt,
+			print(prcnt)
 			sys.stdout.flush()
 			pwm.set_all(prcnt)
 			time.sleep(0.5)
