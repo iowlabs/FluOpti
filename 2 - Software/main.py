@@ -47,22 +47,22 @@ class FluOpti():
       quti()
 
   def set_module(slef,module,level,time):
-    if not module in _default_modules:
+    if not module in self._default_modules:
       print('Module not in the FluOpti\'s modules')
       return False
     if level < 0 or level > 100:
       print('Try with a porcentaje level (0..100)')
       return False
 
-    _default_modules[module]['value'] = level
-    _default_modules[module]['time']  = time
+    self._default_modules[module]['value'] = level
+    self._default_modules[module]['time']  = time
 
   def set_modules_off(self):
     self.pwm.set_all(0)
 
   def run(self,time):    
-    for key in _default_modules:
-      self.pwm.set_pwm(_default_modules[key]['chan'],_default_modules[key]['value'])
+    for key in self._default_modules:
+      self.pwm.set_pwm(self._default_modules[key]['chan'],self._default_modules[key]['value'])
 
     time.sleep(time)
     self.set_modules_off()
@@ -79,4 +79,4 @@ if __name__ == '__main__':
   flu.set_module('HEATER_1', 10,10)
   flu.set_module('HEATER_2', 10,10)
 
-  run(60)
+  run(20)
