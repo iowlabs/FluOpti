@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 import time
 import threading
+import os
 
 from FluOpti import pi_pwm
 #from FluOpti import pi_adc
@@ -9,7 +10,8 @@ MODE_MANUAL = 1
 MODE_AUTO   = 2
 MODE_DEBUGG = 3
 
-class FluOpti:
+class FluOpti():
+
   _default_modules  = {
     #MODULE  #CHANNEL   
   'LED_1':{ 'chan':0, 'value': 0, 'time':0},
@@ -34,14 +36,15 @@ class FluOpti:
   }
 
   def __init__(self):
+    
     self.mode = MODE_MANUAL
-
+    
     try:
-      self.pwm = pi_pwm.pi_pwm()
+      self.pwm = pi_pwm.pi_pwm(0x5c)
       #self.adc = pi_temperature.pi_temperature()
     except:
       print('Problem with the i2c modules')
-      system.exit()
+      quti()
 
   def set_module(slef,module,level,time):
     if not module in _default_modules:
@@ -66,12 +69,14 @@ class FluOpti:
 
 if __name__ == '__main__':
 
-  set_module('LED_B', 50,10)
-  set_module('LED_W', 50,10)
-  set_module('LED_1', 80,10)
-  set_module('LED_2', 80,10)
-  set_module('HEATER_1', 10,10)
-  set_module('HEATER_2', 10,10)
+  flu = FluOpti()
+
+
+  flu.set_module('LED_B', 50,10)
+  flu.set_module('LED_W', 50,10)
+  flu.set_module('LED_1', 80,10)
+  flu.set_module('LED_2', 80,10)
+  flu.set_module('HEATER_1', 10,10)
+  flu.set_module('HEATER_2', 10,10)
 
   run(60)
-  
