@@ -46,7 +46,7 @@ class FluOpti():
       print('Problem with the i2c modules')
       quti()
 
-  def set_module(slef,module,level,time):
+  def set_module(self,module,level,t_exp):
     if not module in self._default_modules:
       print('Module not in the FluOpti\'s modules')
       return False
@@ -55,16 +55,16 @@ class FluOpti():
       return False
 
     self._default_modules[module]['value'] = level
-    self._default_modules[module]['time']  = time
+    self._default_modules[module]['time']  = t_exp
 
   def set_modules_off(self):
     self.pwm.set_all(0)
 
-  def run(self,time):    
+  def run(self,t_exp):    
     for key in self._default_modules:
       self.pwm.set_pwm(self._default_modules[key]['chan'],self._default_modules[key]['value'])
 
-    time.sleep(time)
+    time.sleep(t_exp)
     self.set_modules_off()
 
 if __name__ == '__main__':
@@ -79,4 +79,4 @@ if __name__ == '__main__':
   flu.set_module('HEATER_1', 10,10)
   flu.set_module('HEATER_2', 10,10)
 
-  run(20)
+  flu.run(20)
