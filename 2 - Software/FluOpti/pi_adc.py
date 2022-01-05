@@ -1,7 +1,9 @@
-# Nori
-# ASI 2018
 
-"""This module controls an ADC I2C module, model Adafruit ADS1115.
+"""
+
+This module controls an ADC I2C module, model Adafruit ADS1115.
+Author: @IOWLABS
+
 """
 
 ############ IMPLEMENTATION NOTES ##############################################

@@ -1,5 +1,6 @@
 """
 This module controls a PWM I2C module, model Adafruit PCA9685.
+Author: @IOWLABS
 
 """
 

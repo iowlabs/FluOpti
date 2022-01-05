@@ -72,11 +72,14 @@ if __name__ == '__main__':
   flu = FluOpti()
 
 
-  flu.set_module('LED_B', 50,10)
-  flu.set_module('LED_W', 50,10)
+  
+  
   flu.set_module('LED_1', 80,10)
   flu.set_module('LED_2', 80,10)
-  flu.set_module('HEATER_1', 10,10)
-  flu.set_module('HEATER_2', 10,10)
+  flu.set_module('LED_3', 80,10)
+  flu.set_module('LED_4', 80,10)
+  flu.set_module('LED_5', 80,10)
+  
+  
 
   flu.run(20)
