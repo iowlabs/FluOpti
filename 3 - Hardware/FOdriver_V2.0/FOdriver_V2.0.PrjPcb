@@ -176,6 +176,23 @@ GenerateClassCluster=0
 DocumentUniqueId=LRUDHCIW
 
 [Document9]
+DocumentPath=ADC.SchDoc
+AnnotationEnabled=1
+AnnotateStartValue=1
+AnnotationIndexControlEnabled=1
+AnnotateSuffix=
+AnnotateScope=All
+AnnotateOrder=0
+DoLibraryUpdate=1
+DoDatabaseUpdate=1
+ClassGenCCAutoEnabled=1
+ClassGenCCAutoRoomEnabled=1
+ClassGenNCAutoScope=None
+DItemRevisionGUID=
+GenerateClassCluster=0
+DocumentUniqueId=MWDPGWSJ
+
+[Document10]
 DocumentPath=analogPath.SchDoc
 AnnotationEnabled=1
 AnnotateStartValue=1
@@ -192,7 +209,7 @@ DItemRevisionGUID=
 GenerateClassCluster=0
 DocumentUniqueId=JOIGSXXL
 
-[Document10]
+[Document11]
 DocumentPath=PCBV2.PcbDoc
 AnnotationEnabled=1
 AnnotateStartValue=1
@@ -209,8 +226,8 @@ DItemRevisionGUID=
 GenerateClassCluster=0
 DocumentUniqueId=QTKRKLVB
 
-[Document11]
-DocumentPath=ADC.SchDoc
+[Document12]
+DocumentPath=Job1.OutJob
 AnnotationEnabled=1
 AnnotateStartValue=1
 AnnotationIndexControlEnabled=0
@@ -224,101 +241,105 @@ ClassGenCCAutoRoomEnabled=1
 ClassGenNCAutoScope=None
 DItemRevisionGUID=
 GenerateClassCluster=0
-DocumentUniqueId=MWDPGWSJ
+DocumentUniqueId=
 
 [GeneratedDocument1]
-DocumentPath=Project Outputs for FOdriver_V2.0\Design Rule Check - PCBV2.html
+DocumentPath=Project Outputs for Free Documents\BOM\Bill of Materials-PCBV2.xls
 DItemRevisionGUID=
 
 [GeneratedDocument2]
-DocumentPath=Project Outputs for FOdriver_V2.0\NC Drill\PCBV2-RoundHoles.TXT
+DocumentPath=Project Outputs for FOdriver_V2.0\Design Rule Check - PCBV2.html
 DItemRevisionGUID=
 
 [GeneratedDocument3]
-DocumentPath=Project Outputs for FOdriver_V2.0\NC Drill\PCBV2-SlotHoles.TXT
+DocumentPath=Project Outputs for FOdriver_V2.0\NC Drill\PCBV2-RoundHoles.TXT
 DItemRevisionGUID=
 
 [GeneratedDocument4]
-DocumentPath=Project Outputs for FOdriver_V2.0\NC Drill\PCBV2.DRR
+DocumentPath=Project Outputs for FOdriver_V2.0\NC Drill\PCBV2-SlotHoles.TXT
 DItemRevisionGUID=
 
 [GeneratedDocument5]
-DocumentPath=Project Outputs for FOdriver_V2.0\Gerber\PCBV2.EXTREP
+DocumentPath=Project Outputs for FOdriver_V2.0\NC Drill\PCBV2.DRR
 DItemRevisionGUID=
 
 [GeneratedDocument6]
-DocumentPath=Project Outputs for FOdriver_V2.0\Gerber\PCBV2.G1
+DocumentPath=Project Outputs for FOdriver_V2.0\Gerber\PCBV2.EXTREP
 DItemRevisionGUID=
 
 [GeneratedDocument7]
-DocumentPath=Project Outputs for FOdriver_V2.0\Gerber\PCBV2.GBL
+DocumentPath=Project Outputs for FOdriver_V2.0\Gerber\PCBV2.G1
 DItemRevisionGUID=
 
 [GeneratedDocument8]
-DocumentPath=Project Outputs for FOdriver_V2.0\Gerber\PCBV2.GBO
+DocumentPath=Project Outputs for FOdriver_V2.0\Gerber\PCBV2.GBL
 DItemRevisionGUID=
 
 [GeneratedDocument9]
-DocumentPath=Project Outputs for FOdriver_V2.0\Gerber\PCBV2.GBP
+DocumentPath=Project Outputs for FOdriver_V2.0\Gerber\PCBV2.GBO
 DItemRevisionGUID=
 
 [GeneratedDocument10]
-DocumentPath=Project Outputs for FOdriver_V2.0\Gerber\PCBV2.GBS
+DocumentPath=Project Outputs for FOdriver_V2.0\Gerber\PCBV2.GBP
 DItemRevisionGUID=
 
 [GeneratedDocument11]
-DocumentPath=Project Outputs for FOdriver_V2.0\Gerber\PCBV2.GM1
+DocumentPath=Project Outputs for FOdriver_V2.0\Gerber\PCBV2.GBS
 DItemRevisionGUID=
 
 [GeneratedDocument12]
-DocumentPath=Project Outputs for FOdriver_V2.0\Gerber\PCBV2.GM4
+DocumentPath=Project Outputs for FOdriver_V2.0\Gerber\PCBV2.GM1
 DItemRevisionGUID=
 
 [GeneratedDocument13]
-DocumentPath=Project Outputs for FOdriver_V2.0\Gerber\PCBV2.GM13
+DocumentPath=Project Outputs for FOdriver_V2.0\Gerber\PCBV2.GM4
 DItemRevisionGUID=
 
 [GeneratedDocument14]
-DocumentPath=Project Outputs for FOdriver_V2.0\Gerber\PCBV2.GM15
+DocumentPath=Project Outputs for FOdriver_V2.0\Gerber\PCBV2.GM13
 DItemRevisionGUID=
 
 [GeneratedDocument15]
-DocumentPath=Project Outputs for FOdriver_V2.0\Gerber\PCBV2.GP1
+DocumentPath=Project Outputs for FOdriver_V2.0\Gerber\PCBV2.GM15
 DItemRevisionGUID=
 
 [GeneratedDocument16]
-DocumentPath=Project Outputs for FOdriver_V2.0\Gerber\PCBV2.GPB
+DocumentPath=Project Outputs for FOdriver_V2.0\Gerber\PCBV2.GP1
 DItemRevisionGUID=
 
 [GeneratedDocument17]
-DocumentPath=Project Outputs for FOdriver_V2.0\Gerber\PCBV2.GPT
+DocumentPath=Project Outputs for FOdriver_V2.0\Gerber\PCBV2.GPB
 DItemRevisionGUID=
 
 [GeneratedDocument18]
-DocumentPath=Project Outputs for FOdriver_V2.0\Gerber\PCBV2.GTL
+DocumentPath=Project Outputs for FOdriver_V2.0\Gerber\PCBV2.GPT
 DItemRevisionGUID=
 
 [GeneratedDocument19]
-DocumentPath=Project Outputs for FOdriver_V2.0\Gerber\PCBV2.GTO
+DocumentPath=Project Outputs for FOdriver_V2.0\Gerber\PCBV2.GTL
 DItemRevisionGUID=
 
 [GeneratedDocument20]
-DocumentPath=Project Outputs for FOdriver_V2.0\Gerber\PCBV2.GTP
+DocumentPath=Project Outputs for FOdriver_V2.0\Gerber\PCBV2.GTO
 DItemRevisionGUID=
 
 [GeneratedDocument21]
-DocumentPath=Project Outputs for FOdriver_V2.0\Gerber\PCBV2.GTS
+DocumentPath=Project Outputs for FOdriver_V2.0\Gerber\PCBV2.GTP
 DItemRevisionGUID=
 
 [GeneratedDocument22]
-DocumentPath=Project Outputs for FOdriver_V2.0\NC Drill\PCBV2.LDP
+DocumentPath=Project Outputs for FOdriver_V2.0\Gerber\PCBV2.GTS
 DItemRevisionGUID=
 
 [GeneratedDocument23]
-DocumentPath=Project Outputs for FOdriver_V2.0\Gerber\PCBV2.REP
+DocumentPath=Project Outputs for FOdriver_V2.0\NC Drill\PCBV2.LDP
 DItemRevisionGUID=
 
 [GeneratedDocument24]
+DocumentPath=Project Outputs for FOdriver_V2.0\Gerber\PCBV2.REP
+DItemRevisionGUID=
+
+[GeneratedDocument25]
 DocumentPath=Project Outputs for FOdriver_V2.0\Gerber\PCBV2.RUL
 DItemRevisionGUID=
 
@@ -337,7 +358,7 @@ AutoOpenFile=0
 AutoOpenOutJob=-1
 
 [Generic_SmartPDFSettings]
-ProjectMode=-1
+ProjectMode=0
 ZoomPrecision=50
 AddNetsInformation=-1
 AddNetPins=-1
@@ -374,7 +395,7 @@ OutputDir=
 [OutputGroup1]
 Name=Netlist Outputs
 Description=
-TargetPrinter=CutePDF Writer
+TargetPrinter=Microsoft Print to PDF
 PrinterOptions=Record=PrinterOptions|Copies=1|Duplex=1|TrueTypeOptions=3|Collate=1|PrintJobKind=1|PrintWhat=1
 OutputType1=EDIF
 OutputName1=EDIF for PCB
@@ -485,7 +506,7 @@ OutputDefault21=0
 [OutputGroup2]
 Name=Simulator Outputs
 Description=
-TargetPrinter=CutePDF Writer
+TargetPrinter=Microsoft Print to PDF
 PrinterOptions=Record=PrinterOptions|Copies=1|Duplex=1|TrueTypeOptions=3|Collate=1|PrintJobKind=1|PrintWhat=1
 OutputType1=AdvSimNetlist
 OutputName1=Mixed Sim
@@ -596,7 +617,7 @@ PageOptions12=Record=PageOptions|CenterHorizontal=True|CenterVertical=True|Print
 [OutputGroup4]
 Name=Assembly Outputs
 Description=
-TargetPrinter=CutePDF Writer
+TargetPrinter=Microsoft Print to PDF
 PrinterOptions=Record=PrinterOptions|Copies=1|Duplex=1|TrueTypeOptions=3|Collate=1|PrintJobKind=1|PrintWhat=1
 OutputType1=Assembly
 OutputName1=Assembly Drawings
@@ -618,7 +639,7 @@ OutputDefault3=0
 [OutputGroup5]
 Name=Fabrication Outputs
 Description=
-TargetPrinter=CutePDF Writer
+TargetPrinter=Microsoft Print to PDF
 PrinterOptions=Record=PrinterOptions|Copies=1|Duplex=1|TrueTypeOptions=3|Collate=1|PrintJobKind=1|PrintWhat=1
 OutputType1=CompositeDrill
 OutputName1=Composite Drill Drawing
@@ -690,7 +711,7 @@ OutputDefault12=0
 [OutputGroup6]
 Name=Report Outputs
 Description=
-TargetPrinter=Brother HL-1200 series
+TargetPrinter=Microsoft Print to PDF
 PrinterOptions=Record=PrinterOptions|Copies=1|Duplex=1|TrueTypeOptions=3|Collate=1|PrintJobKind=1|PrintWhat=1
 OutputType1=SimpleBOM
 OutputName1=Simple BOM
@@ -741,7 +762,7 @@ OutputDefault6=0
 [OutputGroup7]
 Name=Other Outputs
 Description=
-TargetPrinter=CutePDF Writer
+TargetPrinter=Microsoft Print to PDF
 PrinterOptions=Record=PrinterOptions|Copies=1|Duplex=1|TrueTypeOptions=3|Collate=1|PrintJobKind=1|PrintWhat=1
 OutputType1=Text Print
 OutputName1=Text Print
@@ -921,7 +942,7 @@ PageOptions29=Record=PageOptions|CenterHorizontal=True|CenterVertical=True|Print
 [OutputGroup8]
 Name=Validation Outputs
 Description=
-TargetPrinter=CutePDF Writer
+TargetPrinter=Microsoft Print to PDF
 PrinterOptions=Record=PrinterOptions|Copies=1|Duplex=1|TrueTypeOptions=3|Collate=1|PrintJobKind=1|PrintWhat=1
 OutputType1=Configuration compliance
 OutputName1=Environment configuration compliance check
@@ -960,7 +981,7 @@ OutputDefault6=0
 [OutputGroup9]
 Name=Export Outputs
 Description=
-TargetPrinter=CutePDF Writer
+TargetPrinter=Microsoft Print to PDF
 PrinterOptions=Record=PrinterOptions|Copies=1|Duplex=1|TrueTypeOptions=3|Collate=1|PrintJobKind=1|PrintWhat=1
 OutputType1=AutoCAD dwg/dxf PCB
 OutputName1=AutoCAD dwg/dxf File PCB
@@ -1011,7 +1032,7 @@ OutputDefault9=0
 [OutputGroup10]
 Name=PostProcess Outputs
 Description=
-TargetPrinter=CutePDF Writer
+TargetPrinter=Microsoft Print to PDF
 PrinterOptions=Record=PrinterOptions|Copies=1|Duplex=1|TrueTypeOptions=3|Collate=1|PrintJobKind=1|PrintWhat=1
 OutputType1=Copy Files
 OutputName1=Copy Files
