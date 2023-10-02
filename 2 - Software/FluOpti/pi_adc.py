@@ -1,9 +1,7 @@
+# Nori
+# ASI 2018
 
-"""
-
-This module controls an ADC I2C module, model Adafruit ADS1115.
-Author: @IOWLABS
-
+"""This module controls an ADC I2C module, model Adafruit ADS1115.
 """
 
 ############ IMPLEMENTATION NOTES ##############################################
@@ -36,7 +34,7 @@ Author: @IOWLABS
 #    -  16 = +/-0.256V
 #   See table 3 in the ADS1015/ADS1115 datasheet for more info on gain.
 #
-# - Used addresses: 
+# - Used addresses:
 #   - Red board:  0x4B
 #   - Blue board: 0x49, 0x48
 #
@@ -70,13 +68,13 @@ temp_array = [  32651, 31031, 29500, 28054, 26687, 25395, 24172, 23016, 21921, 2
         12493, 11943, 11420, 10923, 10450, 10000, 9572,  9165,  8777,  8408,
         8056,  7721,  7402,  7097,  6807,  6530,  6266,  6014,  5774,  5544,
         5325,  5116,  4916,  4724,  4542,  4367,  4200,  4040,  3887,  3741,
-        3601,  3467,  3339,  3216,  3098,  2985,  2877,  2773,  2674,  2579, 
-        2487,  2399,  2315,  2234,  2157,  2082,  2011,  1942,  1876,  1813, 
+        3601,  3467,  3339,  3216,  3098,  2985,  2877,  2773,  2674,  2579,
+        2487,  2399,  2315,  2234,  2157,  2082,  2011,  1942,  1876,  1813,
         1752,  1693,  1637,  1582,  1530,  1480,  1432,  1385,  1341,  1298,
-        1256,  1216,  1178,  1141,  1105,  1070,  1037,  1005,  974,   945, 
+        1256,  1216,  1178,  1141,  1105,  1070,  1037,  1005,  974,   945,
         916,   888,   862,   836,   811,   787,   764,   741,   720,   699,
         678,   659,   640,   622,   604,   587,   571,   555,   539,   524,
-        510,   496,   482,   469,   457,   444,   432,   421,   410,   399, 
+        510,   496,   482,   469,   457,   444,   432,   421,   410,   399,
         388,   378,   368,   359,   350,   341  ]
 MIN_TEMP_RES = 341    # At 125 deg C
 MAX_TEMP_RES = 32651  # At 000 deg C
@@ -90,7 +88,7 @@ class pi_temperature():
   :param gain: range of the ADC conversion, see datasheet for details
   '''
 
-  def __init__(self, address=0x4A, average_n_samples=5, gain=1,
+  def __init__(self, address=0x49, average_n_samples=5, gain=1,
           r0=default_resistor1, r1=default_resistor2, r2=default_resistor3, r3=default_resistor4):
     self.address = address
     self.GAIN    = gain   # ADC Gain, see notes above
@@ -98,10 +96,10 @@ class pi_temperature():
 
     # Resistors value
     self.R_0 = [r0, r1, r2, r3]
-    
+
     self.adc = Adafruit_ADS1x15.ADS1015(address=address, busnum=1)    # ADS1115 16 bit, ADS1015 12 bit
     self.read_all()
- 
+
 
   def adc_value_to_volts(self, val, gain=1.0):
     '''Converts adc data to voltage in the range +-4.096/GAIN volts.'''
@@ -127,6 +125,10 @@ class pi_temperature():
       self.read(i, voltage_or_temperature)
     return self.values
 
+  def get_temps(self):
+    self.read(0,False)
+    self.read(1,False)
+    return [self.values[0],self.values[1]]
 
   def convert_temperature(self, adc_in_v, r_idx):
     # print 'v', r_idx, adc_in_v
@@ -182,4 +184,3 @@ if __name__ == '__main__':
     adc.read_all(voltage_or_temperature=False)
     print('| {0:>6} | {1:>6} | {2:>6} | {3:>6} |'.format(*adc.values))
     time.sleep(0.5)
-

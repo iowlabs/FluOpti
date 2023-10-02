@@ -1,6 +1,5 @@
 """
 This module controls a PWM I2C module, model Adafruit PCA9685.
-Author: @IOWLABS
 
 """
 
@@ -16,7 +15,7 @@ Author: @IOWLABS
 # - 12 bit resolution
 # - Frequency from 40 to 1000 Hz (according to the lib)
 # - 16 channels
-#  
+#
 # - Addresses:
 #	- default address:	0x5C
 #
@@ -40,7 +39,7 @@ N_CHANNELS = 16
 
 class pi_pwm():
 
-	def __init__(self, address=0x40):
+	def __init__(self, address=0x5c):
 		self.address = address
 
 		self.pwm = Adafruit_PCA9685.PCA9685(address=address, busnum=1)
