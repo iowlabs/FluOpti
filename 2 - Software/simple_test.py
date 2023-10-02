@@ -18,11 +18,28 @@ Fluopti.setTempSampleTime(1)
 Fluopti.setTempSP(1,30)
 Fluopti.setTempSP(2,35)
 #miniFluo.startTempCtrl()
+# -- Testing channel BLUE
 for prcnt in seq:
     sys.stdout.flush()
     print(f"seteando color azul a {prcnt} \%" )
     Fluopti.LEDSetPWR('B',prcnt)
     Fluopti.LEDon('B')
     sleep(1)
-#Fluo.stopTempCtrl()
 Fluopti.LEDoff('B')
+# -- Testing channel RED
+for prcnt in seq:
+    sys.stdout.flush()
+    print(f"seteando color rojo a {prcnt} \%" )
+    Fluopti.LEDSetPWR('R',prcnt)
+    Fluopti.LEDon('R')
+    sleep(1)
+Fluopti.LEDoff('R')
+# -- Testing channel Blue
+for prcnt in seq:
+    sys.stdout.flush()
+    print(f"seteando color Verde a {prcnt} \%" )
+    Fluopti.LEDSetPWR('G',prcnt)
+    Fluopti.LEDon('G')
+    sleep(1)
+#Fluo.stopTempCtrl()
+Fluopti.LEDoff('G')
