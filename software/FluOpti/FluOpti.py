@@ -1,4 +1,6 @@
 #!/usr/bin/python3
+
+# import general libraries
 import json, signal, sys, os, glob, datetime, io
 from time import sleep,time
 from picamera import PiCamera, Color
@@ -10,6 +12,11 @@ from FluOpti.pi_adc import pi_temperature
 
 import threading
 from simple_pid import PID
+
+# GPIO setup
+import RPi.GPIO as GPIO
+GPIO.setwarnings(False)
+GPIO.setmode(GPIO.BOARD) # set BOARD PIN nomenclature
 
 class FluOpti():
     def __init__(self):
@@ -31,6 +38,18 @@ class FluOpti():
         #correct the digital position (digital start from 0 instead of 1)
         for mod in list(self._default_modules.keys()):
             self._default_modules[mod]['chan'] += -1
+        
+        # GPIO PIN to control directly with the raspberry
+        self.GPIO = {         
+        #MODULE  #PIN  #STATUS
+
+        'B'    :{ 'pin':37,'status':0}
+        }
+        
+        # define all the PIN as OUT
+        for mod in list(self.GPIO.keys()):
+            pin = self.GPIO[mod]['pin']
+            GPIO.setup(pin, GPIO.OUT)
         
         #data data path
         self.data_path = "/data"
@@ -178,8 +197,36 @@ class FluOpti():
         self.photo_counter  += 1
         self.photo_output   = self.photo_path + led +str(self.photo_counter)+'.jpg'
         self.camera.capture(file_output_photo)
-
-
+    
+    def add_GPIO(self, module, pin):
+        
+        self.GPIO[module] = { 'pin': pin,'status':0}
+        GPIO.setup(pin, GPIO.OUT)
+    
+    def pin_control(self, module, state):
+        
+        pin = self.GPIO[module]['pin']
+        
+        if state == 0:
+            # Turn OFF
+            GPIO.output(pin,GPIO.LOW)
+            
+            #update the state
+            self.GPIO[module]['state'] = state
+            print('GPIO PIN ' + str(pin) + ' OFF')
+            
+        elif state == 1:
+            #Turn ON
+            GPIO.output(pin,GPIO.HIGH)
+            
+            #update the state
+            self.GPIO[module]['state'] = state
+            print('GPIO PIN ' + str(pin) + ' ON')
+        
+        else:
+            
+            print('Invalid GPIO state. It have to be 0 or 1')
+        
     ''' Clean exit '''
     def close(self, *args):
         try:

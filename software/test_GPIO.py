@@ -6,22 +6,13 @@ Created on Nov 2023
 """
 
 
+
 # Import general packages
 import time
 import sys
 from time import sleep
 import threading
 import os
-
-
-# GPIO setup
-import RPi.GPIO as GPIO
-GPIO.setwarnings(False)
-
-GPIO.setmode(GPIO.BOARD) # set BOARD PIN nomeclature
-
-BASE_PIN = 37           # conected PIN
-GPIO.setup(BASE_PIN, GPIO.OUT)
 
     
 # import FluOpti library
@@ -68,11 +59,12 @@ else:
 
 
 ## Test GPIO ###
-    
+GPIO_module = 'B'
+#Fluopti.add_GPIO(module_name, pin_number)  #to add a new GPIO pin to be controled
 
-GPIO.output(BASE_PIN,GPIO.HIGH)
-print('GPIO PIN ' + str(BASE_PIN).split('_')[0] + ' ON')
-
+Fluopti.pin_control(GPIO_module, 1)
+# Turn ON  --> state = 1
+Fluopti.pin_control(GPIO_module, 1)
 
 # -- Testing channels -- #
     
@@ -91,9 +83,8 @@ Fluopti.LEDoff(channel)
 print("Canal "+ channel +" OFF" )    
 
 
-# Turn OFF the GPIO PIN
-GPIO.output(BASE_PIN,GPIO.LOW)
-print('GPIO PIN ' + str(BASE_PIN).split('_')[0] + ' OFF')
+# Turn OFF the GPIO PIN --> state = 0
+Fluopti.pin_control(GPIO_module, 0)
 
 
 #Fluo.stopTempCtrl()
