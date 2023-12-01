@@ -15,14 +15,23 @@ class FluOpti():
     def __init__(self):
 
         self._default_modules  = {
-        #MODULE  #CHANNEL    #VALUE
-        'R'    :{ 'chan':6, 'value': 0,'status':0},
-        'G'    :{ 'chan':7, 'value': 0,'status':0},
-        'B'    :{ 'chan':8, 'value': 0,'status':0},
-        'W'    :{ 'chan':9, 'value': 0,'status':0},
+                
+        #MODULE  #CHANNEL   #VALUE  #STATUS
+        
+        #CHANNEL refer to related pin conection in the FluOpti Board
+        
+        'R'    :{ 'chan':5, 'value': 0,'status':0},
+        'G'    :{ 'chan':6, 'value': 0,'status':0},
+        'B'    :{ 'chan':7, 'value': 0,'status':0},
+        'W'    :{ 'chan':8, 'value': 0,'status':0},
         'H1'   :{ 'chan':10, 'value': 0,'status':0},
         'H2'   :{ 'chan':11, 'value': 0,'status':0}
         }
+        
+        #correct the digital position (digital start from 0 instead of 1)
+        for mod in list(self._default_modules.keys()):
+            self._default_modules[mod]['chan'] += -1
+        
         #data data path
         self.data_path = "/data"
 
@@ -56,7 +65,11 @@ class FluOpti():
         self.startPWM()
         #self.startNTC()
         self.startADC()
-
+    
+    def get_chan(self,module):
+        chan = self._default_modules[module]['chan']
+        return(chan + 1)
+        
     def gen_frame(self):
         """Video streaming generator function."""
         while True:
@@ -128,11 +141,11 @@ class FluOpti():
         if ch == 1:
             self.t_sp1 = new_tsp
             self.pid_temp1.setpoint = self.t_sp1
-            print(f"new sp {self.t_sp1} added on channel {ch}")
+            print(f"new temperature setpoint {self.t_sp1}°C added on channel {ch}")
         elif ch == 2:
             self.t_sp2 = new_tsp
             self.pid_temp2.setpoint = self.t_sp2
-            print(f"new sp {self.t_sp2} added on channel {ch}")
+            print(f"new temperature setpoint {self.t_sp2}°C added on channel {ch}")
         else:
             print("error")
 
