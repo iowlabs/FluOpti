@@ -54,16 +54,31 @@ else:
     
 for c in channels:
     position = Fluopti.get_chan(c)
-    print('\nCanal '+ c +' in position '+ str(position)+':\n')
+    print('\nChannel '+ c +' in position '+ str(position)+':\n')
+    
+    c_board = Fluopti.modules[c]['board']  # board where channel is connected
+    
+    if c_board == 'FluOpti':    
+        for prcnt in seq:
+            sys.stdout.flush()
+            
+            Fluopti.LEDSetPWR(c,prcnt)
+            Fluopti.LEDon(c)
+            sleep(1)
+            
+        Fluopti.LEDoff(c)
         
-    for prcnt in seq:
-        sys.stdout.flush()
-        print("Seteando color "+ c +f" al {prcnt} %" )
-        Fluopti.LEDSetPWR(c,prcnt)
-        Fluopti.LEDon(c)
-        sleep(1)
-    Fluopti.LEDoff(c)
-    print("Canal "+ c +" OFF" )
+    elif c_board == 'RPI_GPIO':
+        
+        # turn ON --> state = 1
+        Fluopti.GPIO_control(c, state = 1)
+        sleep(3)
+        
+        # turn OFF --> state = 0
+        Fluopti.GPIO_control(c, state = 0)
+    
+    else:
+        print('Indefined action for board '+ c_board +' of channel '+ str(c) +'\n')
 
 #Fluo.stopTempCtrl()
 

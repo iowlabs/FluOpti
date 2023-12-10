@@ -45,13 +45,13 @@ channel = 'R'
 
 if len(sys.argv) > 1:
     try:
-        # Channels should be separated by ','
-        channels = sys.argv[1].split(',')
-        print('\n**Testing input channels**\n')
+        
+        channel = sys.argv[1]
+        print('\n**Testing input channel**\n')
     except:
 
-        print('Some parameter(s) seems to be invalid...')
-        print ('It should be a list separated by ","')
+        print('input parameter seems to be invalid...')
+        print ('It should be a string')
         sys.exit()
 
 else:
@@ -60,31 +60,27 @@ else:
 
 ## Test GPIO ###
 GPIO_module = 'B'
-#Fluopti.add_GPIO(module_name, pin_number)  #to add a new GPIO pin to be controled
+#Fluopti.add_channel(module_name, pin_number, board = 'RPI_GPIO')  #to add a new GPIO pin to be controled
 
-Fluopti.pin_control(GPIO_module, 1)
 # Turn ON  --> state = 1
-Fluopti.pin_control(GPIO_module, 1)
+Fluopti.GPIO_control(GPIO_module, 1)
 
 # -- Testing channels -- #
     
 position = Fluopti.get_chan(channel)
-print('\nCanal '+ channel +' in position '+ str(position)+':\n')
+print('\nChannel '+ channel +' in position '+ str(position)+':\n')
     
 for prcnt in power:
     sys.stdout.flush()
-    print("Seteando color "+ channel +f" al {prcnt} %" )
     Fluopti.LEDSetPWR(channel,prcnt)
     Fluopti.LEDon(channel)
     sleep(3)
 
 ## Turn OFF the FLuOpti Channel    
 Fluopti.LEDoff(channel)
-print("Canal "+ channel +" OFF" )    
-
 
 # Turn OFF the GPIO PIN --> state = 0
-Fluopti.pin_control(GPIO_module, 0)
+Fluopti.GPIO_control(GPIO_module, 0)
 
 
 #Fluo.stopTempCtrl()
