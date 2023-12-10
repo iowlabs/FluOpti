@@ -33,7 +33,8 @@ Fluopti.setTempSP(2,35)
 print('\nNote: you can run this code with the list of channels to be tested as an input\n')
 
 #default values
-channels = ['B','R','G','W']
+channels = Fluopti.get_modules(m_type = 'LED')
+#channels = ['B','R','G','W']
 
 if len(sys.argv) > 1:
     try:
@@ -47,7 +48,8 @@ if len(sys.argv) > 1:
         sys.exit()
 
 else:
-    print ('\n**Testing default channels**\n')
+    print ('\n**Testing all LED modules**\n')
+    print (channels)
 
 
 # -- Testing channels -- #
@@ -70,12 +72,12 @@ for c in channels:
         
     elif c_board == 'RPI_GPIO':
         
-        # turn ON --> state = 1
-        Fluopti.GPIO_control(c, state = 1)
+        # turn ON --> status = 1
+        Fluopti.GPIO_control(c, status = 1)
         sleep(3)
         
-        # turn OFF --> state = 0
-        Fluopti.GPIO_control(c, state = 0)
+        # turn OFF --> status = 0
+        Fluopti.GPIO_control(c, status = 0)
     
     else:
         print('Indefined action for board '+ c_board +' of channel '+ str(c) +'\n')

@@ -29,7 +29,7 @@ def indicate_leds(options, str_options):
     
     while not valid:
         
-        input_leds = input('\nEnter the channel(s) name(s) separated by "," '
+        input_leds = input('\nEnter the channel(s) name(s) to turn ON separated by "," '
                           +'(options = '+ str_options +') : ')
         
         input_leds = input_leds.split(',')
@@ -69,7 +69,7 @@ def turn_on(leds):
         elif c_board == 'RPI_GPIO':
             
             # turn ON --> state = 1
-            Fluopti.GPIO_control(led, state = 1)
+            Fluopti.GPIO_control(led, status = 1)
             
         else:
             print('Indefined action for board '+ c_board +' of channel '+ str(led) +'\n')
@@ -90,7 +90,7 @@ def turn_off(leds):
         elif c_board == 'RPI_GPIO':
             
             # turn OFF --> state = 0
-            Fluopti.GPIO_control(led, state = 0)
+            Fluopti.GPIO_control(led, status = 0)
             
         else:
             print('Indefined action for board '+ c_board +' of channel '+ str(led) +'\n')
@@ -108,14 +108,14 @@ if len(sys.argv) > 1:
     try:
         power = int(sys.argv[1])
         if power >= 0 and power <= 100:
-            print('\nChannel power defined at '+sys.argv[1]+'% PWM\n')
+            print('\nPower of channels defined at '+sys.argv[1]+'% PWM\n')
         
         else:
     
-            print('Invalid input...Default 100% PWM power will be used.')
+            print('Invalid power input...Default 100% PWM power will be used.')
             power = 100
     except:
-        print('Invalid input...Default 100% PWM power will be used.')
+        print('Invalid power input...Default 100% PWM power will be used.')
         power = 100
 else:
     print ('\nDefault 100% PWM power will be used')
@@ -125,10 +125,7 @@ else:
 
 ### Channels definition ####
 
-options = list()
-for mod in list(Fluopti.modules.keys()):
-    if Fluopti.modules[mod]['type'] == 'LED':
-        options.append(mod)
+options = Fluopti.get_modules(m_type = 'LED')
 
 # create a string with the options to display in text
 str_options = ''
@@ -146,7 +143,7 @@ turn_on(input_leds)
 
 
 # -- Turning OFF --
-leds_on = Fluopti.get_on_channels(mod_type = 'LED') # list of LEDs in ON state
+leds_on = Fluopti.get_modules(m_type = 'LED', status = 1, msj = False) # list of LEDs in ON state
 
 str_ledons = ''
 
@@ -156,14 +153,15 @@ while len(leds_on) > 0:
     
         str_ledons = str_ledons + str(led_name) + ","
     
-    print('Current LED(s) in state ON: '+ str_ledons)    
+    print('Current LED(s) in ON state: '+ str_ledons+'\n')    
     leds_off = input('Turn OFF? (indicate the channel(s) separated by ","): ').split(',')
     
     turn_off(leds_off)
     
-    #update the list of leds in ON state 
-    leds_on = Fluopti.get_on_channels(mod_type = 'LED')
+    #update the list of leds in ON state
+    leds_on = Fluopti.get_modules(m_type = 'LED', status = 1, msj = False)
     str_ledons = ''
 
+print('\nAll LED channels turned OFF.\nProgram Finished\n')
 
 

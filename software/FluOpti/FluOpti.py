@@ -27,12 +27,12 @@ class FluOpti():
         
         #CHANNEL refer to related pin conection in the FluOpti Board or Raspberry Pi GPIO Pin
         
-        'R'    :{ 'board': 'FluOpti', 'chan':5, 'value': 0,'status':0, 'type': 'LED'},
-        'G'    :{ 'board': 'FluOpti','chan':6, 'value': 0,'status':0, 'type': 'LED'},
-        'B'    :{ 'board': 'RPI_GPIO','chan':37, 'value': 0,'status':0, 'type': 'LED'},
-        'W'    :{ 'board': 'FluOpti','chan':8, 'value': 0,'status':0, 'type': 'LED'},
-        'H1'   :{ 'board': 'FluOpti','chan':10, 'value': 0,'status':0, 'type': 'Heater'},
-        'H2'   :{ 'board': 'FluOpti','chan':11, 'value': 0,'status':0, 'type': 'Heater'}
+        'R'    :{ 'board': 'FluOpti', 'chan':5, 'value': 0,'status':0, 'm_type': 'LED'},
+        'G'    :{ 'board': 'FluOpti','chan':6, 'value': 0,'status':0, 'm_type': 'LED'},
+        'B'    :{ 'board': 'RPI_GPIO','chan':37, 'value': 0,'status':0, 'm_type': 'LED'},
+        'W'    :{ 'board': 'FluOpti','chan':8, 'value': 0,'status':0, 'm_type': 'LED'},
+        'H1'   :{ 'board': 'FluOpti','chan':10, 'value': 0,'status':0, 'm_type': 'Heater'},
+        'H2'   :{ 'board': 'FluOpti','chan':11, 'value': 0,'status':0, 'm_type': 'Heater'}
         }
         
         
@@ -85,41 +85,67 @@ class FluOpti():
         self.startADC()
     
     def get_chan(self,module):
+        # return the phisical channel conection of a module
         chan = self.modules[module]['chan']
         return(chan + 1)
         
-    def get_on_channels(self, mod_type = None):
-        # return a list with the names of channels in ON state (state == 1)
-        # you can specify an specific module type (e.g. 'LED', 'Heater', 'Sensor')
+    
+    def get_modules(self, msj = True, **properties):
+        '''
+        To get the list with the name of all the present modules on self
+        or a subset based on the properties of its modules.
+        e.g: get_modules('m_type'='LED', 'status' = 1) will retrieve the 
+        list of LED modules in ON state.
+        '''
         
-        on_channels = list()
+        mod_names = list(self.modules.keys())
+        input_props = list(properties.keys())
         
-        if mod_type == None:
-            #obtain all the ON channels
-            for m_name in list(self.modules.keys()):
-                mod = self.modules[m_name]
-                
-                if mod['status'] == 1:
-                    on_channels.append(m_name)
+        # if no properties were indicated --> return the full list of modules names
+        if len(input_props) == 0:
+            return(mod_names)
+        
+        else: 
+            ##################
+            # check if input properties are defined in modules
             
-            return(on_channels)
-        
-        else:
-            # get a specific type of channels
-            try:
-                for m_name in list(self.modules.keys()):
-                    
-                    mod = self.modules[m_name]
-                    
-                    if mod['status'] == 1 and mod['type'] == mod_type:
-                        
-                        on_channels.append(m_name)
-                
-                return(on_channels)
+            #use the fist module as reference (it asume all have the same property classes)
+            fluopti_props = list(self.modules[mod_names[0]].keys())
             
-            except:
-                print('[Error] input an invalid channel type')
+            for prop in input_props:
+                if prop not in fluopti_props:
+                    
+                    print('[Error] - Property "' + str(prop) + '" not present in all the modules')
+                    exit()
+            
+            #######################
+            # Select the modules based on the given properties and its values
+            selected_modules = list()
+            
+            for m_name in mod_names:
                 
+                mod_i = self.modules[m_name]
+                
+                selected = True
+
+                for prop in input_props:
+                    
+                    input_value = properties[prop]
+                    module_value = mod_i[prop]
+                    
+                    # if any property value doesn´t match, module_i is not selected
+                    if input_value != module_value:
+                        selected = False
+                
+                if selected:
+                            
+                    selected_modules.append(m_name)
+            
+            if len(selected_modules) == 0 and msj:        
+                print('\nThere is no modules with the given characteristics\n')
+            
+            return(selected_modules)
+            
         
     def gen_frame(self):
         """Video streaming generator function."""
@@ -249,26 +275,26 @@ class FluOpti():
             GPIO.setup(channel, GPIO.OUT)
             print('\nModule '+ str(module) + 'set as output in GPIO '+str(channel)+ '\n')
     
-    def GPIO_control(self, module, state, msj = True):
+    def GPIO_control(self, module, status, msj = True):
         
         pin = self.modules[module]['chan']
         
-        if state == 0:
+        if status == 0:
             # Turn OFF
             GPIO.output(pin,GPIO.LOW)
             
-            #update the state
-            self.modules[module]['state'] = state
+            #update the status
+            self.modules[module]['status'] = status
             
             if msj == True:
                 print('\nGPIO Pin ' + str(pin) + ' (module '+ str(module) +') turned OFF')
             
-        elif state == 1:
+        elif status == 1:
             #Turn ON
             GPIO.output(pin,GPIO.HIGH)
             
-            #update the state
-            self.modules[module]['state'] = state
+            #update the status
+            self.modules[module]['status'] = status
             
             if msj == True:
                 print('\nGPIO Pin ' + str(pin) + ' (module '+ str(module) +') turned ON')

@@ -62,7 +62,7 @@ else:
 GPIO_module = 'B'
 #Fluopti.add_channel(module_name, pin_number, board = 'RPI_GPIO')  #to add a new GPIO pin to be controled
 
-# Turn ON  --> state = 1
+# Turn ON  --> status = 1
 Fluopti.GPIO_control(GPIO_module, 1)
 
 # -- Testing channels -- #
@@ -79,7 +79,7 @@ for prcnt in power:
 ## Turn OFF the FLuOpti Channel    
 Fluopti.LEDoff(channel)
 
-# Turn OFF the GPIO PIN --> state = 0
+# Turn OFF the GPIO PIN --> status = 0
 Fluopti.GPIO_control(GPIO_module, 0)
 
 
