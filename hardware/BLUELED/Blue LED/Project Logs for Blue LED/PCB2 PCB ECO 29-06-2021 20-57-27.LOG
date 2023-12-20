@@ -1,0 +1,20 @@
+Added Pin To Net: NetName=12V Pin=LED1-1
+Added Pin To Net: NetName=12V Pin=LED4-1
+Added Pin To Net: NetName=12V Pin=LED7-1
+Added Pin To Net: NetName=12V Pin=LED10-1
+Added Pin To Net: NetName=12V Pin=LED13-1
+Added Pin To Net: NetName=12V Pin=LED16-1
+Added Pin To Net: NetName=12V Pin=LED19-1
+Added Pin To Net: NetName=12V Pin=LED22-1
+Added Pin To Net: NetName=12V Pin=LED25-1
+Added Pin To Net: NetName=12V Pin=LED28-1
+Added Pin To Net: NetName=12V Pin=LED31-1
+Added Pin To Net: NetName=12V Pin=LED34-1
+Added Pin To Net: NetName=12V Pin=LED37-1
+Added Net: Name=12V
+Added Pin To Net: NetName=NetLED40_1 Pin=LED40-1
+Added Pin To Net: NetName=NetLED40_1 Pin=LED43-1
+Added Pin To Net: NetName=NetLED40_1 Pin=LED46-1
+Added Pin To Net: NetName=NetLED40_1 Pin=LED49-1
+Added Pin To Net: NetName=NetLED40_1 Pin=LED52-1
+Added Net: Name=NetLED40_1

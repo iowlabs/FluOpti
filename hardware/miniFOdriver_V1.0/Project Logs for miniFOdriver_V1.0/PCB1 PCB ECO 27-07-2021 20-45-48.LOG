@@ -1,0 +1,6 @@
+Change Component Designator: OldDesignator=R NewDesignator=RPI?
+Added Pin To Net: NetName=SDA_BUS Pin=RPI?-3
+Added Pin To Net: NetName=SCL_BUS Pin=RPI?-5
+Added Room: Name=ADC
+Added Room: Name=Drivers
+Added Room: Name=U_DCDC_stepdown

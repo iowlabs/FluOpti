@@ -1,0 +1,19 @@
+Removed Member From Class: ClassName=Generador PWM Member=R3
+Removed Member From Class: ClassName=ADC Member=R4
+Removed Member From Class: ClassName=Generador PWM Member=R4
+Removed Member From Class: ClassName=ADC Member=R15
+Removed Member From Class: ClassName=ADC Member=R19
+Removed Member From Class: ClassName=Step-Down Member=R22
+Removed Member From Class: ClassName=Generador PWM Member=R25
+Removed Member From Class: ClassName=Generador PWM Member=R26
+Removed Member From Class: ClassName=Generador PWM Member=R27
+Removed Member From Class: ClassName=ADC Member=U1
+Added Member To Class: ClassName=Step-Down Member=Component R2 Res3
+Added Member To Class: ClassName=Generador PWM Member=Component R5 Res3
+Added Member To Class: ClassName=Generador PWM Member=Component R6 Res3
+Added Member To Class: ClassName=Generador PWM Member=Component R7 Res3
+Added Member To Class: ClassName=Generador PWM Member=Component R8 Res3
+Added Member To Class: ClassName=Generador PWM Member=Component R9 Res3
+Added Member To Class: ClassName=ADC Member=Component R25 Res3
+Added Member To Class: ClassName=ADC Member=Component R26 Res3
+Added Member To Class: ClassName=ADC Member=Component R27 Res3

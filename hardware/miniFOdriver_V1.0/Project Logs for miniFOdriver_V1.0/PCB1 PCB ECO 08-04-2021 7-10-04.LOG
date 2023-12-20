@@ -1,0 +1,19 @@
+Removed Pin From Net: NetName=SCL_BUS Pin=J3-1
+Removed Pin From Net: NetName=PWM_IN Pin=J3-2
+Removed Pin From Net: NetName=SDA_BUS Pin=J3-3
+Removed Pin From Net: NetName=GPIO Pin=J3-4
+Removed Pin From Net: NetName=SCL_BUS Pin=R55-1
+Removed Pin From Net: NetName=SCL_BUS Pin=U7-10
+Removed Member From Class: ClassName=Entradas Member=J3
+Added Component: Designator=J2(CONN-TH_A2547WV-3P)
+Add component. Clean all parameters for all variants
+Add component (AddParameter): Name = "Manufacturer"; Value = "CJT(Changjiang Connectors)"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Manufacturer Part Number"; Value = "A2547WV-3P"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Package"; Value = "Through Hole,P=2.54mm"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Pitch"; Value = "2.54"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Supplier 1"; Value = "LCSC"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Supplier Part Number 1"; Value = "C239378"; VariantName = "[No Variations]"
+Added Pin To Net: NetName=SDA_BUS Pin=J2-2
+Added Pin To Net: NetName=SCL_BUS Pin=R32-2
+Added Pin To Net: NetName=SCL_BUS Pin=U8-26
+Added Member To Class: ClassName=Entradas Member=Component J2 Generic Header 3x1

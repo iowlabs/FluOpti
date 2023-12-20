@@ -1,0 +1,21 @@
+Removed Pin From Net: NetName=+3V3 Pin=C30-2
+Removed Pin From Net: NetName=SCL_BUS Pin=I2C-1
+Removed Pin From Net: NetName=SDA_BUS Pin=I2C-2
+Removed Pin From Net: NetName=V_PWR Pin=PWR_OUT-1
+Removed Pin From Net: NetName=+3V3 Pin=U10-1
+Removed Pin From Net: NetName=SCL_BUSA Pin=U10-2
+Removed Pin From Net: NetName=+3V3 Pin=U10-5
+Removed Pin From Net: NetName=SDA_BUS Pin=U10-6
+Removed Pin From Net: NetName=SCL_BUS Pin=U10-7
+Removed Pin From Net: NetName=+3V3 Pin=U10-8
+Removed Member From Class: ClassName=Entradas Member=C30
+Removed Member From Class: ClassName=Salidas Member=I2C
+Removed Member From Class: ClassName=Salidas Member=PWR_OUT
+Removed Member From Class: ClassName=Entradas Member=U10
+Change Component Description : Designator=Q1_1 Old Description=MOSFET N Channel 20V 8.7A 700mV @ 250uA 22mO @ 4.1A,4.5V SOIC-8_150mil RoHS New Description=MOSFET N Channel 20V 8.7A 700mV @ 250uA 22mO @ 4.1A,4.5V SOIC-8_150mil RoHS
+Change Component Description : Designator=Q1_2 Old Description=MOSFET N Channel 20V 8.7A 700mV @ 250uA 22mO @ 4.1A,4.5V SOIC-8_150mil RoHS New Description=MOSFET N Channel 20V 8.7A 700mV @ 250uA 22mO @ 4.1A,4.5V SOIC-8_150mil RoHS
+Change Component Description : Designator=Q1_3 Old Description=MOSFET N Channel 20V 8.7A 700mV @ 250uA 22mO @ 4.1A,4.5V SOIC-8_150mil RoHS New Description=MOSFET N Channel 20V 8.7A 700mV @ 250uA 22mO @ 4.1A,4.5V SOIC-8_150mil RoHS
+Added Pin To Net: NetName=SDA_BUS Pin=J3-3
+Added Pin To Net: NetName=SCL_BUS Pin=R32-2
+Added Pin To Net: NetName=SCL_BUS Pin=U8-26
+Change Net Name : Old Net Name=SCL_BUSA New Net Name=SCL_BUS

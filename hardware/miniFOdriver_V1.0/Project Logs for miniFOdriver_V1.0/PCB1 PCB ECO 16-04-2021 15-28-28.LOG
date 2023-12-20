@@ -1,0 +1,15 @@
+Removed Pin From Net: NetName=CH_3 Pin=Heater1-2
+Removed Pin From Net: NetName=CH_2 Pin=White1-2
+Change Net Name : Old Net Name=CH_0 New Net Name=CH_0_aux
+Change Net Name : Old Net Name=CH_1 New Net Name=CH_1_aux
+Added Pin To Net: NetName=CH_1 Pin=Q1_1-5
+Added Pin To Net: NetName=CH_1 Pin=Q1_1-6
+Added Pin To Net: NetName=CH_1 Pin=Q1_1-7
+Added Pin To Net: NetName=CH_1 Pin=Q1_1-8
+Added Net: Name=CH_1
+Added Pin To Net: NetName=CH_2_aux Pin=Blue1-2
+Added Net: Name=CH_2_aux
+Added Pin To Net: NetName=CH_3_aux Pin=White1-2
+Added Net: Name=CH_3_aux
+Added Pin To Net: NetName=CH_4_aux Pin=Heater1-2
+Added Net: Name=CH_4_aux

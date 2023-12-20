@@ -1,0 +1,7 @@
+Change Component Designator: OldDesignator=J? NewDesignator=J1
+Change Component Designator: OldDesignator=R? NewDesignator=R1
+Added Component: Designator=5(TP)
+Add component. Clean all parameters for all variants
+Added Pin To Net: NetName=ADC_CH1 Pin=5-1
+Change Net Name : Old Net Name=ADC_CH1 New Net Name=tempSens
+Added Member To Class: ClassName=ADC Member=Component 5 TP

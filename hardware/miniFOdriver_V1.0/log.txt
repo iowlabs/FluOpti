@@ -1,0 +1,26 @@
+added:
+- ads1115                   package vssop-10
+- ap2112k3.3                package sot25
+- AZ1117e                   PACKAGE SOT223-3
+- 10uF Tantalum cap         package 1206(SMDCAP-A)
+- xl6008                    package TO252-5
+- header 3x1                package CONN-TH_A2547WV-3P
+- header_power 2x1          package CONN-TH_430450212
+- header 2x1                package CONN-TH_A2547WV-2P
+- cap pol                   package SMD10X10
+- header 4x2                package CONN-TH_8P-P2.54-V-M_15477608
+- header 3x1c (pin header)  package HDR-TH_3P-P2.54-V
+- usb-c female              package USB-C_SMD
+- cap pol                   package SMD13.5x13.5
+- LM2596_5V                 package TO-263-5
+- fuse                      package F1206
+- schottky diode            package SMB_L4.6-W3.6-LS5.3-RD
+- inductor smd              package IND-SMD_L12.5-W12.5_SMDRS1275
+- inductor smd              package IND-SMD_L8.0-W8.0
+- inductor smd              package IND-SMD_L12.3-W12.3
+- header 3x2c (pin header)  package HDR-TH_6P-P2.54-V-R2-C3-S2.54_A2541WV-2X3P
+- header 2x2c (pin header)  package HDR-TH_2P-P2.54-V-R2-C2-S2.54_A2541WV-2X2P
+- Solder Jumper             package custom package
+- IRF7401                   package soic8
+- header 2x1c (pinheader)   package HDR-TH_P2.54-H-M_A2541WV-2P
+ 

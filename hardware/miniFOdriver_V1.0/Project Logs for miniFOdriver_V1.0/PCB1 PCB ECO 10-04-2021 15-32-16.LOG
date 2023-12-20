@@ -1,0 +1,11 @@
+Removed Pin From Net: NetName=+5V Pin=PWR_RPI-A9
+Removed Pin From Net: NetName=+5V Pin=PWR_RPI-B9
+Change Component Comment : Designator=PWR_RPI Old Comment=USB-C female 6 New Comment=USB-A female 5
+Change Component Designator: OldDesignator=temp_sens NewDesignator=temp_sens1
+Change component parameters: Designator = "PWR_RPI"; UniqueID = "\RLXBDAEK\NRCEWVBI"
+Change component parameters. Clean all parameters for all variants
+Change component parameters (AddParameter): Name = "Manufacturer"; Value = "XKB Connectivity"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Manufacturer Part Number"; Value = "U234-051N-3GRA035-5"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Supplier 1"; Value = "LCSC"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Supplier Part Number 1"; Value = "C381138"; VariantName = "[No Variations]"
+Added Pin To Net: NetName=+5V Pin=PWR_RPI-1
