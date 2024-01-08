@@ -97,14 +97,14 @@ class pi_temperature():
     # Resistors value
     self.R_0 = [r0, r1, r2, r3]
 
-    self.adc = Adafruit_ADS1x15.ADS1015(address=address, busnum=1)    # ADS1115 16 bit, ADS1015 12 bit
+    self.adc = Adafruit_ADS1x15.ADS1115(address=address, busnum=1)    # ADS1115 16 bit, ADS1015 12 bit
     self.read_all()
 
 
   def adc_value_to_volts(self, val, gain=1.0):
     '''Converts adc data to voltage in the range +-4.096/GAIN volts.'''
-    #volts = val * 4.096 / gain / 2**15     # ADC is 16 bits, that is, 15 bits resolution plus 1 bit for sign. Thus, divide by 2**15
-    volts = val * 4.096 / gain / 2**11      # ADC is 12 bits, that is, 11 bits resolution plus 1 bit for sign. Thus, divide by 2**11
+    volts = val * 4.096 / gain / 2**15     # ADC is 16 bits, that is, 15 bits resolution plus 1 bit for sign. Thus, divide by 2**15
+    #volts = val * 4.096 / gain / 2**11      # ADC is 12 bits, that is, 11 bits resolution plus 1 bit for sign. Thus, divide by 2**11
     return volts
 
   # True reads voltage, False reads temperature
