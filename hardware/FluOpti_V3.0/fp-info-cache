@@ -1,4 +1,4 @@
-22710481515494216
+22713892182189988
 Audio_Module
 Reverb_BTDR-1H
 Digital Reverberation Unit, http://www.belton.co.kr/inc/downfile.php?seq=17&file=pdf (footprint from http://www.uk-electronic.de/PDF/BTDR-1.pdf)
@@ -61348,6 +61348,13 @@ SSOP-24
 25
 24
 IoWLabs
+TO-263-3 TAB 3
+
+
+0
+7
+3
+IoWLabs
 TP4056_SOP-8-PP
 8-Lead Plastic SOP-8-PP
 SSOP 0.50 exposed pad
@@ -61424,6 +61431,13 @@ SMA-K
 0
 4
 4
+IoWLabsConnectors
+Switch SP3T SS13D07L2B
+
+
+0
+6
+5
 IoWLabsConnectors
 TB-4x1-5P-TH-V
 
