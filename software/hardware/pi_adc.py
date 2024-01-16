@@ -80,7 +80,7 @@ MIN_TEMP_RES = 341    # At 125 deg C
 MAX_TEMP_RES = 32651  # At 000 deg C
 
 
-class adc_module():
+class pi_temperature():
   '''Inits I2C module.
 
   :param address: int, I2C address, example 0x4A
@@ -97,14 +97,14 @@ class adc_module():
     # Resistors value
     self.R_0 = [r0, r1, r2, r3]
 
-    self.adc = Adafruit_ADS1x15.ADS1015(address=address, busnum=1)    # ADS1115 16 bit, ADS1015 12 bit
+    self.adc = Adafruit_ADS1x15.ADS1115(address=address, busnum=1)    # ADS1115 16 bit, ADS1015 12 bit
     self.read_all()
 
 
   def adc_value_to_volts(self, val, gain=1.0):
     '''Converts adc data to voltage in the range +-4.096/GAIN volts.'''
-    #volts = val * 4.096 / gain / 2**15     # ADC is 16 bits, that is, 15 bits resolution plus 1 bit for sign. Thus, divide by 2**15
-    volts = val * 4.096 / gain / 2**11      # ADC is 12 bits, that is, 11 bits resolution plus 1 bit for sign. Thus, divide by 2**11
+    volts = val * 4.096 / gain / 2**15     # ADC is 16 bits, that is, 15 bits resolution plus 1 bit for sign. Thus, divide by 2**15
+    #volts = val * 4.096 / gain / 2**11      # ADC is 12 bits, that is, 11 bits resolution plus 1 bit for sign. Thus, divide by 2**11
     return volts
 
   # True reads voltage, False reads temperature
@@ -170,10 +170,10 @@ if __name__ == '__main__':
   if len(sys.argv) > 1:
     addr = int(sys.argv[1], 16)
   else:
-    addr = 0x49
+    addr = 0x4A
 
   print('Init with address ' + hex(addr))
-  adc = adc_module(addr)
+  adc = pi_temperature(addr)
   print('\tinit done !\n')
 
   print('Reading ADS1115 values, press Ctrl-C to quit...')
