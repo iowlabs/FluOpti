@@ -3,12 +3,15 @@
 # import general libraries
 import json, signal, sys, os, glob, datetime, io
 from time import sleep,time
-from picamera import PiCamera, Color
+#from picamera import PiCamera, Color #Pruebas en IOWLABS con Raspi 4 genera errores
 
-#from FluOpti.camera_pi import Camera
-from FluOpti.pi_pwm import pi_pwm
-from FluOpti.pi_adc import pi_temperature
+#from FluOpti.camera_pi import Camera #Esta libreria no esta en la carpeta
+#from FluOpti.pi_pwm import pi_pwm
+#from FluOpti.pi_adc import pi_temperature
 
+#correcion de importacion de elementos
+from hardware.pi_pwm import pwm_module 
+from hardware.pi_adc import pi_temperature
 
 import threading
 from simple_pid import PID
@@ -31,8 +34,10 @@ class FluOpti():
         'G'    :{ 'board': 'FluOpti','chan':6, 'value': 0,'status':0, 'm_type': 'LED'},
         'B'    :{ 'board': 'RPI_GPIO','chan':37, 'value': 0,'status':0, 'm_type': 'LED'},
         'W'    :{ 'board': 'FluOpti','chan':8, 'value': 0,'status':0, 'm_type': 'LED'},
-        'H1'   :{ 'board': 'FluOpti','chan':10, 'value': 0,'status':0, 'm_type': 'Heater'},
-        'H2'   :{ 'board': 'FluOpti','chan':11, 'value': 0,'status':0, 'm_type': 'Heater'}
+        #'H1'   :{ 'board': 'FluOpti','chan':10, 'value': 0,'status':0, 'm_type': 'Heater'}, #En pruebas en IOWLABS se determino que H1 y H2 tenian los puertos cambiados
+        #'H2'   :{ 'board': 'FluOpti','chan':11, 'value': 0,'status':0, 'm_type': 'Heater'}
+        'H1'   :{ 'board': 'FluOpti','chan':11, 'value': 0,'status':0, 'm_type': 'Heater'},
+        'H2'   :{ 'board': 'FluOpti','chan':12, 'value': 0,'status':0, 'm_type': 'Heater'}
         }
         
         
@@ -157,7 +162,7 @@ class FluOpti():
     def startPWM(self):
         try:
             print('pwm start')
-            self.pwm = pi_pwm(0x5c)
+            self.pwm = pwm_module(0x5c)
             self.pwm_status = True
         except Exception as e:
             print('Problem with the i2c modules')
@@ -208,7 +213,7 @@ class FluOpti():
 
     def updateTemps(self):
         self.t1,self.t2 = self.adc.get_temps()
-        #print(f"t1: {self.t1},\t t2: {self.t2} ")
+        print(f"t1: {self.t1},\t t2: {self.t2} ")
         return self.t1,self.t2
 
     def startTempCtrl(self) :
