@@ -80,7 +80,7 @@ MIN_TEMP_RES = 341    # At 125 deg C
 MAX_TEMP_RES = 32651  # At 000 deg C
 
 
-class adc_module():
+class pi_temperature():
   '''Inits I2C module.
 
   :param address: int, I2C address, example 0x4A
@@ -173,7 +173,7 @@ if __name__ == '__main__':
     addr = 0x4A
 
   print('Init with address ' + hex(addr))
-  adc = adc_module(addr)
+  adc = pi_temperature(addr)
   print('\tinit done !\n')
 
   print('Reading ADS1115 values, press Ctrl-C to quit...')

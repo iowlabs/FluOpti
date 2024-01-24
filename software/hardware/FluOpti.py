@@ -11,7 +11,7 @@ from time import sleep,time
 
 #correcion de importacion de elementos
 from hardware.pi_pwm import pwm_module
-from hardware.pi_adc import adc_module
+from hardware.pi_adc import pi_temperature
 from hardware.pi_ntc import ntc_module
 
 import threading
@@ -25,27 +25,27 @@ GPIO.setmode(GPIO.BOARD) # set BOARD PIN nomenclature
 class FluOpti():
     def __init__(self,type = "normal"):
 
-		self.type = type
-		if self.type == "normal":
-        	self.modules = {
-       			#MODULE #BOARD #CHANNEL   #VALUE  #STATUS  #CHANNEL refer to related pin conection in the FluOpti Board or Raspberry Pi GPIO Pin
-        	'R'    :{ 'board': 'FluOpti' , 'chan':5, 'value': 0, 'status':0, 'm_type': 'LED'},
-        	'G'    :{ 'board': 'FluOpti' , 'chan':6, 'value': 0, 'status':0, 'm_type': 'LED'},
-        	'B'    :{ 'board': 'RPI_GPIO', 'chan':37,'value': 0, 'status':0, 'm_type': 'LED'},
-        	'W'    :{ 'board': 'FluOpti' , 'chan':8, 'value': 0, 'status':0, 'm_type': 'LED'},
-        	'H1'   :{ 'board': 'FluOpti' , 'chan':11,'value': 0, 'status':0, 'm_type': 'Heater'},
-        	'H2'   :{ 'board': 'FluOpti' , 'chan':12,'value': 0, 'status':0, 'm_type': 'Heater'}
+        self.type = type
+        if self.type == "normal":
+            self.modules = {
+            #MODULE #BOARD #CHANNEL   #VALUE  #STATUS  #CHANNEL refer to related pin conection in the FluOpti Board or Raspberry Pi GPIO Pin
+            'R'    :{ 'board': 'FluOpti' , 'chan':5, 'value': 0, 'status':0, 'm_type': 'LED'},
+            'G'    :{ 'board': 'FluOpti' , 'chan':6, 'value': 0, 'status':0, 'm_type': 'LED'},
+            'B'    :{ 'board': 'FluOpti', 'chan':7,'value': 0, 'status':0, 'm_type': 'LED'},
+            'W'    :{ 'board': 'FluOpti' , 'chan':8, 'value': 0, 'status':0, 'm_type': 'LED'},
+            'H1'   :{ 'board': 'FluOpti' , 'chan':11,'value': 0, 'status':0, 'm_type': 'Heater'},
+            'H2'   :{ 'board': 'FluOpti' , 'chan':12,'value': 0, 'status':0, 'm_type': 'Heater'}
         	}
         if self.type == "mini":
-			self._default_modules  = {
-        	#MODULE  #CHANNEL    #VALUE
-        	'R'    :{ 'chan':5, 'value': 0,'status':0},
-        	'G'    :{ 'chan':4, 'value': 0,'status':0},
-        	'B'    :{ 'chan':3, 'value': 0,'status':0},
-        	'W'    :{ 'chan':2, 'value': 0,'status':0},
-        	'H1'   :{ 'chan':0, 'value': 0,'status':0},
-        	'H2'   :{ 'chan':1, 'value': 0,'status':0}
-        	}
+            self._default_modules  = {
+            #MODULE  #CHANNEL    #VALUE
+            'R'    :{ 'chan':5, 'value': 0,'status':0},
+            'G'    :{ 'chan':4, 'value': 0,'status':0},
+            'B'    :{ 'chan':3, 'value': 0,'status':0},
+            'W'    :{ 'chan':2, 'value': 0,'status':0},
+            'H1'   :{ 'chan':0, 'value': 0,'status':0},
+            'H2'   :{ 'chan':1, 'value': 0,'status':0}
+            }
 
 
         for mod in list(self.modules.keys()):
@@ -90,7 +90,7 @@ class FluOpti():
         #self.startCamera()
 
         self.startPWM()
-		self.startTemperatureSensor()
+        self.startTemperatureSensor()
 
     def get_chan(self,module):
         # return the phisical channel conection of a module
@@ -172,34 +172,22 @@ class FluOpti():
             self.pwm_status = False
             print(e, flush=True)
 
-	def startTemperatureSensor(self):
+    def startTemperatureSensor(self):
         try:
-			if self.type == "normal":
-				self.temp_sensor = adc_module()
-			elif self.type == "mini":
-				self.temp_sensor = ntc_module()
-			else:
-				print('Error undefined type')
+            if self.type == "normal":
+                self.temp_sensor = pi_temperature()
+            elif self.type == "mini":
+                self.temp_sensor = ntc_module()
+            else:
+                print('Error undefined type')
 
-			print('temperature sensor module initialized')
-			self.temp_status = True
+            print('temperature sensor module initialized')
+            self.temp_status = True
 
         except  Exception as e:
             print('Problem with the temperature sensor module')
             self.temp_status = False
             print(e, flush=True)
-
-"""
-	def startADC(self):
-        try:
-            print('adc start (temp sensor)')
-            self.adc = pi_temperature()
-            self.adc_status = True
-        except  Exception as e:
-            print('Problem with the adc module')
-            self.adc_status = False
-            print(e, flush=True)
-"""
 
     def startCamera(self):
         try:
@@ -211,20 +199,12 @@ class FluOpti():
         except Exception as e:
             self.camera_status = False
             print(e, flush=True)
-	"""
-	This function updates the power value of a channel in the global dictionary
-	args: 	color 	= the channel to update ;
-			p 		= a value between 0 to 100 for the power.
-	"""
+
+
     def LEDSetPWR(self,color, p):
         self.modules[color]['value'] = p
 
 
-	"""
-	Turns on a given channel with the last power value set in the global dictionary.
-	args: 	color 	= the channel to turn on ;
-
-	"""
     def LEDon(self,color, msj = True):
 
         power = self.modules[color]['value']
@@ -235,11 +215,6 @@ class FluOpti():
         if msj == True:
             print("Channel "+ color +f" turned ON at {power} %" )
 
-	"""
-	Turns on a given channel with the last power value set in the global dictionary.
-	args: 	color 	= the channel to turn on ;
-
-	"""
     def LEDoff(self,color, msj = True):
         # It doesn't change the stored value
         self.pwm.set_pwm(self.modules[color]['chan'],0)
@@ -247,9 +222,7 @@ class FluOpti():
 
         if msj == True:
             print("\nChannel "+ color +" turned OFF" )
-	"""
-	updates the temperature readings from the sensor module.
-	"""
+
     def updateTemps(self):
         self.t1,self.t2 = self.temp_sensor.get_temps()
         print(f"t1: {self.t1},\t t2: {self.t2} ")

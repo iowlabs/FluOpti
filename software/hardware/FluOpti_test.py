@@ -3,16 +3,15 @@
 # import general libraries
 import json, signal, sys, os, glob, datetime, io
 from time import sleep,time
-#from picamera import PiCamera, Color #Pruebas en IOWLABS con Raspi 4 genera errores
+from picamera import PiCamera, Color
 
+#from FluOpti.camera_pi import Camera
 from hardware.pi_pwm import pwm_module
 from hardware.pi_adc import adc_module
 from hardware.pi_ntc import ntc_module
 
 import threading
 from simple_pid import PID
-
-
 
 class fluOpti():
     def __init__(self, type = "normal"):

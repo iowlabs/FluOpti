@@ -1,10 +1,13 @@
 # -*- coding: utf-8 -*-
+import matplotlib
+matplotlib.use('Agg')  # 'Agg' es un backend sin interfaz
+
 from PyQt5 import QtCore,QtGui,QtWidgets
 from PyQt5.QtGui import QImage, QPixmap
 from PyQt5.QtWidgets import  QMainWindow, QApplication, QFileDialog
 
 from GUI.gui import Ui_MainWindow
-from FluOpti.miniFluOpti import miniFluOpti
+from hardware.FluOpti import FluOpti
 
 import cv2
 from pyqtgraph import PlotWidget, plot
@@ -31,11 +34,11 @@ class MainWindow(QtWidgets.QMainWindow):
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
 
-        self.miniFluo   =  miniFluOpti()
+        self.Fluo   =  FluOpti("normal")
         self.temp       = [0.0, 0.0] #pH
         self.temp_sp    = [0.0, 0.0]
         self.temp_pwr   = [0,0]
-        self.led_pwr    = [0,0,0,0]
+        self.led_pwr    = [0,0,0,0,0,0]
         self.t_     = collections.deque([0.0],200)
         self.t1_    = collections.deque([self.temp[0]],200)
         self.t2_    = collections.deque([self.temp[1]],200)
@@ -193,9 +196,9 @@ class MainWindow(QtWidgets.QMainWindow):
 
 
     def updateData(self):
-        self.miniFluo.updateTemps()
-        self.temp[0] = self.miniFluo.t1
-        self.temp[1] = self.miniFluo.t2
+        self.Fluo.updateTemps()
+        self.temp[0] = self.Fluo.t1
+        self.temp[1] = self.Fluo.t2
         self.ui.lineEdit_3.setText(f"{self.temp[0]:.2f}")
         self.ui.lineEdit_5.setText(f"{self.temp[1]:.2f}")
         if self.run_state:
@@ -217,10 +220,10 @@ class MainWindow(QtWidgets.QMainWindow):
             self.ui.lineEdit_6.setText(format(self.temp_pwr[1],'.2f'))
 
             try:
-                self.miniFluo.LEDSetPWR('H1',self.temp_pwr[0])
-                self.miniFluo.LEDSetPWR('H2',self.temp_pwr[1])
-                self.miniFluo.LEDon('H1')
-                self.miniFluo.LEDon('H2')
+                self.Fluo.LEDSetPWR('H1',self.temp_pwr[0])
+                self.Fluo.LEDSetPWR('H2',self.temp_pwr[1])
+                self.Fluo.LEDon('H1')
+                self.Fluo.LEDon('H2')
                 self.writeData()
             except Exception as e:
                 print(e)
@@ -249,8 +252,8 @@ class MainWindow(QtWidgets.QMainWindow):
         self.ui.pushButton_19.setDisabled(False)
         self.ui.pushButton_10.setDisabled(True)
         self.elapsed_time = 0
-        self.miniFluo.LEDoff('H1')
-        self.miniFluo.LEDoff('H2')
+        self.Fluo.LEDoff('H1')
+        self.Fluo.LEDoff('H2')
 
     """
     def start(self):
@@ -320,13 +323,13 @@ class MainWindow(QtWidgets.QMainWindow):
         self.data_file.close()
 """
     def LEDOn(self, ch):
-        self.miniFluo.LEDSetPWR(self.channel[ch],self.led_pwr[ch])
-        self.miniFluo.LEDon(self.channel[ch])
+        self.Fluo.LEDSetPWR(self.channel[ch],self.led_pwr[ch])
+        self.Fluo.LEDon(self.channel[ch])
         self.btnOn[ch].setDisabled(True)
         self.btnOff[ch].setDisabled(False)
 
     def LEDOff(self, ch):
-        self.miniFluo.LEDoff(self.channel[ch])
+        self.Fluo.LEDoff(self.channel[ch])
         self.btnOn[ch].setDisabled(False)
         self.btnOff[ch].setDisabled(True)
 
@@ -334,7 +337,7 @@ class MainWindow(QtWidgets.QMainWindow):
         val = self.sliders[ch].value()
         self.sBox[ch].setValue(val)
         self.led_pwr[ch] = val
-        if self.miniFluo._default_modules[self.channel[ch]]['status']:
+        if self.Fluo._default_modules[self.channel[ch]]['status']:
             self.LEDOn(ch)
 
     def LEDset2(self,ch):
@@ -363,7 +366,7 @@ class MainWindow(QtWidgets.QMainWindow):
     def Close(self):
         self.video_timer.stop()
         self.run_timer.stop()
-        self.miniFluo.close()
+        self.Fluo.close()
 
 if __name__ == "__main__":
 
