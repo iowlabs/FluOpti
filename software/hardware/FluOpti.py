@@ -10,8 +10,9 @@ from time import sleep,time
 #from FluOpti.pi_adc import pi_temperature
 
 #correcion de importacion de elementos
-from hardware.pi_pwm import pwm_module 
-from hardware.pi_adc import pi_temperature
+from hardware.pi_pwm import pwm_module
+from hardware.pi_adc import adc_module
+from hardware.pi_ntc import ntc_module
 
 import threading
 from simple_pid import PID
@@ -22,39 +23,42 @@ GPIO.setwarnings(False)
 GPIO.setmode(GPIO.BOARD) # set BOARD PIN nomenclature
 
 class FluOpti():
-    def __init__(self):
+    def __init__(self,type = "normal"):
 
-        self.modules = {
-                
-        #MODULE #BOARD #CHANNEL   #VALUE  #STATUS
-        
-        #CHANNEL refer to related pin conection in the FluOpti Board or Raspberry Pi GPIO Pin
-        
-        'R'    :{ 'board': 'FluOpti', 'chan':5, 'value': 0,'status':0, 'm_type': 'LED'},
-        'G'    :{ 'board': 'FluOpti','chan':6, 'value': 0,'status':0, 'm_type': 'LED'},
-        'B'    :{ 'board': 'RPI_GPIO','chan':37, 'value': 0,'status':0, 'm_type': 'LED'},
-        'W'    :{ 'board': 'FluOpti','chan':8, 'value': 0,'status':0, 'm_type': 'LED'},
-        #'H1'   :{ 'board': 'FluOpti','chan':10, 'value': 0,'status':0, 'm_type': 'Heater'}, #En pruebas en IOWLABS se determino que H1 y H2 tenian los puertos cambiados
-        #'H2'   :{ 'board': 'FluOpti','chan':11, 'value': 0,'status':0, 'm_type': 'Heater'}
-        'H1'   :{ 'board': 'FluOpti','chan':11, 'value': 0,'status':0, 'm_type': 'Heater'},
-        'H2'   :{ 'board': 'FluOpti','chan':12, 'value': 0,'status':0, 'm_type': 'Heater'}
-        }
-        
-        
+		self.type = type
+		if self.type == "normal":
+        	self.modules = {
+       			#MODULE #BOARD #CHANNEL   #VALUE  #STATUS  #CHANNEL refer to related pin conection in the FluOpti Board or Raspberry Pi GPIO Pin
+        	'R'    :{ 'board': 'FluOpti' , 'chan':5, 'value': 0, 'status':0, 'm_type': 'LED'},
+        	'G'    :{ 'board': 'FluOpti' , 'chan':6, 'value': 0, 'status':0, 'm_type': 'LED'},
+        	'B'    :{ 'board': 'RPI_GPIO', 'chan':37,'value': 0, 'status':0, 'm_type': 'LED'},
+        	'W'    :{ 'board': 'FluOpti' , 'chan':8, 'value': 0, 'status':0, 'm_type': 'LED'},
+        	'H1'   :{ 'board': 'FluOpti' , 'chan':11,'value': 0, 'status':0, 'm_type': 'Heater'},
+        	'H2'   :{ 'board': 'FluOpti' , 'chan':12,'value': 0, 'status':0, 'm_type': 'Heater'}
+        	}
+        if self.type == "mini":
+			self._default_modules  = {
+        	#MODULE  #CHANNEL    #VALUE
+        	'R'    :{ 'chan':5, 'value': 0,'status':0},
+        	'G'    :{ 'chan':4, 'value': 0,'status':0},
+        	'B'    :{ 'chan':3, 'value': 0,'status':0},
+        	'W'    :{ 'chan':2, 'value': 0,'status':0},
+        	'H1'   :{ 'chan':0, 'value': 0,'status':0},
+        	'H2'   :{ 'chan':1, 'value': 0,'status':0}
+        	}
+
+
         for mod in list(self.modules.keys()):
-            
             #correct the digital position (digital start from 0 instead of 1)
-            
             if self.modules[mod]['board'] == 'FluOpti':
                 # perform the correction just for FluOpti board
                 self.modules[mod]['chan'] += -1
-                
             # define all the RPi GPIO pin as OUT
             elif self.modules[mod]['board'] == 'RPI_GPIO':
-                
+
                 pin = self.modules[mod]['chan']
                 GPIO.setup(pin, GPIO.OUT)
-        
+
         #data data path
         self.data_path = "/data"
 
@@ -86,72 +90,71 @@ class FluOpti():
         #self.startCamera()
 
         self.startPWM()
-        #self.startNTC()
-        self.startADC()
-    
+		self.startTemperatureSensor()
+
     def get_chan(self,module):
         # return the phisical channel conection of a module
         chan = self.modules[module]['chan']
         return(chan + 1)
-        
-    
+
+
     def get_modules(self, msj = True, **properties):
         '''
         To get the list with the name of all the present modules on self
         or a subset based on the properties of its modules.
-        e.g: get_modules('m_type'='LED', 'status' = 1) will retrieve the 
+        e.g: get_modules('m_type'='LED', 'status' = 1) will retrieve the
         list of LED modules in ON state.
         '''
-        
+
         mod_names = list(self.modules.keys())
         input_props = list(properties.keys())
-        
+
         # if no properties were indicated --> return the full list of modules names
         if len(input_props) == 0:
             return(mod_names)
-        
-        else: 
+
+        else:
             ##################
             # check if input properties are defined in modules
-            
+
             #use the fist module as reference (it asume all have the same property classes)
             fluopti_props = list(self.modules[mod_names[0]].keys())
-            
+
             for prop in input_props:
                 if prop not in fluopti_props:
-                    
+
                     print('[Error] - Property "' + str(prop) + '" not present in all the modules')
                     exit()
-            
+
             #######################
             # Select the modules based on the given properties and its values
             selected_modules = list()
-            
+
             for m_name in mod_names:
-                
+
                 mod_i = self.modules[m_name]
-                
+
                 selected = True
 
                 for prop in input_props:
-                    
+
                     input_value = properties[prop]
                     module_value = mod_i[prop]
-                    
+
                     # if any property value doesn´t match, module_i is not selected
                     if input_value != module_value:
                         selected = False
-                
+
                 if selected:
-                            
+
                     selected_modules.append(m_name)
-            
-            if len(selected_modules) == 0 and msj:        
+
+            if len(selected_modules) == 0 and msj:
                 print('\nThere is no modules with the given characteristics\n')
-            
+
             return(selected_modules)
-            
-        
+
+
     def gen_frame(self):
         """Video streaming generator function."""
         while True:
@@ -169,7 +172,25 @@ class FluOpti():
             self.pwm_status = False
             print(e, flush=True)
 
-    def startADC(self):
+	def startTemperatureSensor(self):
+        try:
+			if self.type == "normal":
+				self.temp_sensor = adc_module()
+			elif self.type == "mini":
+				self.temp_sensor = ntc_module()
+			else:
+				print('Error undefined type')
+
+			print('temperature sensor module initialized')
+			self.temp_status = True
+
+        except  Exception as e:
+            print('Problem with the temperature sensor module')
+            self.temp_status = False
+            print(e, flush=True)
+
+"""
+	def startADC(self):
         try:
             print('adc start (temp sensor)')
             self.adc = pi_temperature()
@@ -178,6 +199,7 @@ class FluOpti():
             print('Problem with the adc module')
             self.adc_status = False
             print(e, flush=True)
+"""
 
     def startCamera(self):
         try:
@@ -189,30 +211,47 @@ class FluOpti():
         except Exception as e:
             self.camera_status = False
             print(e, flush=True)
-
+	"""
+	This function updates the power value of a channel in the global dictionary
+	args: 	color 	= the channel to update ;
+			p 		= a value between 0 to 100 for the power.
+	"""
     def LEDSetPWR(self,color, p):
         self.modules[color]['value'] = p
 
+
+	"""
+	Turns on a given channel with the last power value set in the global dictionary.
+	args: 	color 	= the channel to turn on ;
+
+	"""
     def LEDon(self,color, msj = True):
-        
+
         power = self.modules[color]['value']
-        
+
         self.pwm.set_pwm(self.modules[color]['chan'],power)
         self.modules[color]['status'] = 1
-        
+
         if msj == True:
             print("Channel "+ color +f" turned ON at {power} %" )
 
-    def LEDoff(self,color, msj = True): 
+	"""
+	Turns on a given channel with the last power value set in the global dictionary.
+	args: 	color 	= the channel to turn on ;
+
+	"""
+    def LEDoff(self,color, msj = True):
         # It doesn't change the stored value
         self.pwm.set_pwm(self.modules[color]['chan'],0)
         self.modules[color]['status'] = 0
-        
+
         if msj == True:
             print("\nChannel "+ color +" turned OFF" )
-
+	"""
+	updates the temperature readings from the sensor module.
+	"""
     def updateTemps(self):
-        self.t1,self.t2 = self.adc.get_temps()
+        self.t1,self.t2 = self.temp_sensor.get_temps()
         print(f"t1: {self.t1},\t t2: {self.t2} ")
         return self.t1,self.t2
 
@@ -270,44 +309,44 @@ class FluOpti():
         self.photo_counter  += 1
         self.photo_output   = self.photo_path + led +str(self.photo_counter)+'.jpg'
         self.camera.capture(file_output_photo)
-    
+
     def add_channel(self, module, channel, board = 'FluOpti'):
         # board = 'FluOpti' or 'RPI_GPIO'
-        
+
         self.modules[module] = {'board': board,'chan': channel, 'value': 0, 'status':0}
-        
+
         if board == 'RPI_GPIO':
             GPIO.setup(channel, GPIO.OUT)
             print('\nModule '+ str(module) + 'set as output in GPIO '+str(channel)+ '\n')
-    
+
     def GPIO_control(self, module, status, msj = True):
-        
+
         pin = self.modules[module]['chan']
-        
+
         if status == 0:
             # Turn OFF
             GPIO.output(pin,GPIO.LOW)
-            
+
             #update the status
             self.modules[module]['status'] = status
-            
+
             if msj == True:
                 print('\nGPIO Pin ' + str(pin) + ' (module '+ str(module) +') turned OFF')
-            
+
         elif status == 1:
             #Turn ON
             GPIO.output(pin,GPIO.HIGH)
-            
+
             #update the status
             self.modules[module]['status'] = status
-            
+
             if msj == True:
                 print('\nGPIO Pin ' + str(pin) + ' (module '+ str(module) +') turned ON')
-        
+
         else:
-            
+
             print('Invalid GPIO state. It have to be 0 or 1')
-        
+
     ''' Clean exit '''
     def close(self, *args):
         try:
