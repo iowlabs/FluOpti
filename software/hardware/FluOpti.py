@@ -28,52 +28,36 @@ class FluOpti():
         self.type = type
         if self.type == "normal":
             self.modules = {
-            #MODULE #BOARD #CHANNEL   #VALUE  #STATUS  #CHANNEL refer to related pin conection in the FluOpti Board or Raspberry Pi GPIO Pin
+            #MODULE     #BOARD              #CHANNEL  #VALUE    #STATUS  
             'R'    :{ 'board': 'FluOpti' , 'chan':5, 'value': 0, 'status':0, 'm_type': 'LED'},
             'G'    :{ 'board': 'FluOpti' , 'chan':6, 'value': 0, 'status':0, 'm_type': 'LED'},
-            'B'    :{ 'board': 'FluOpti', 'chan':7,'value': 0, 'status':0, 'm_type': 'LED'},
-            'W'    :{ 'board': 'FluOpti' , 'chan':8, 'value': 0, 'status':0, 'm_type': 'LED'},
+            'B'    :{ 'board': 'FluOpti', 'chan':9,'value': 0, 'status':0, 'm_type': 'LED'},
+            'W'    :{ 'board': 'FluOpti' , 'chan':10, 'value': 0, 'status':0, 'm_type': 'LED'},
             'H1'   :{ 'board': 'FluOpti' , 'chan':11,'value': 0, 'status':0, 'm_type': 'Heater'},
-            'H2'   :{ 'board': 'FluOpti' , 'chan':12,'value': 0, 'status':0, 'm_type': 'Heater'}
+            'H2'   :{ 'board': 'FluOpti' , 'chan':12,'value': 0, 'status':0, 'm_type': 'Heater'},
+            '37'    :{ 'board': 'GPIO','chan':37, 'value': 0,'status':0, 'm_type': 'LED'}
         	}
+            ## ** CHANNEL refers to related pin connection in the FluOpti Board or Raspberry Pi GPIO Pin
+            
         if self.type == "mini":
             self._default_modules  = {
-            #MODULE  #CHANNEL    #VALUE
-            'R'    :{ 'chan':5, 'value': 0,'status':0},
-            'G'    :{ 'chan':4, 'value': 0,'status':0},
-            'B'    :{ 'chan':3, 'value': 0,'status':0},
-            'W'    :{ 'chan':2, 'value': 0,'status':0},
-            'H1'   :{ 'chan':0, 'value': 0,'status':0},
-            'H2'   :{ 'chan':1, 'value': 0,'status':0}
+            #MODULE    #BOARD               #CHANNEL  #VALUE    #STATUS
+            'R'    :{ 'board': 'FluOpti' , 'chan':5, 'value': 0,'status':0, 'm_type': 'LED'},
+            'G'    :{ 'board': 'FluOpti' , 'chan':4, 'value': 0,'status':0, 'm_type': 'LED'},
+            'B'    :{ 'board': 'FluOpti' , 'chan':3, 'value': 0,'status':0, 'm_type': 'LED'},
+            'W'    :{ 'board': 'FluOpti' , 'chan':2, 'value': 0,'status':0, 'm_type': 'LED'},
+            'H1'   :{ 'board': 'FluOpti' , 'chan':0, 'value': 0,'status':0, 'm_type': 'Heater'},
+            'H2'   :{ 'board': 'FluOpti' , 'chan':1, 'value': 0,'status':0, 'm_type': 'Heater'}
             }
 
 
-<<<<<<< HEAD:software/FluOpti/FluOpti.py
-        self.modules = {
-                
-        #MODULE #BOARD #CHANNEL   #VALUE  #STATUS
-        
-        #CHANNEL refer to related pin conection in the FluOpti Board or Raspberry Pi GPIO Pin
-        
-        'R'    :{ 'board': 'FluOpti', 'chan':5, 'value': 0,'status':0, 'm_type': 'LED'},
-        'G'    :{ 'board': 'FluOpti','chan':6, 'value': 0,'status':0, 'm_type': 'LED'},
-        '37'    :{ 'board': 'RPI_GPIO','chan':37, 'value': 0,'status':0, 'm_type': 'LED'},
-        'W'    :{ 'board': 'FluOpti','chan':8, 'value': 0,'status':0, 'm_type': 'LED'},
-        'B'    :{ 'board': 'FluOpti','chan':9, 'value': 0,'status':0, 'm_type': 'LED'},
-        'H1'   :{ 'board': 'FluOpti','chan':11, 'value': 0,'status':0, 'm_type': 'Heater'},
-        'H2'   :{ 'board': 'FluOpti','chan':12, 'value': 0,'status':0, 'm_type': 'Heater'}
-        }
-        
-        
-=======
->>>>>>> 48d69069f6a6fcc6ca40a3893e8bcec1ffaec750:software/hardware/FluOpti.py
         for mod in list(self.modules.keys()):
             #correct the digital position (digital start from 0 instead of 1)
             if self.modules[mod]['board'] == 'FluOpti':
                 # perform the correction just for FluOpti board
                 self.modules[mod]['chan'] += -1
             # define all the RPi GPIO pin as OUT
-            elif self.modules[mod]['board'] == 'RPI_GPIO':
+            elif self.modules[mod]['board'] == 'GPIO':
 
                 pin = self.modules[mod]['chan']
                 GPIO.setup(pin, GPIO.OUT)
@@ -303,11 +287,11 @@ class FluOpti():
         self.camera.capture(file_output_photo)
 
     def add_channel(self, module, channel, board = 'FluOpti'):
-        # board = 'FluOpti' or 'RPI_GPIO'
+        # board = 'FluOpti' or 'GPIO'
 
         self.modules[module] = {'board': board,'chan': channel, 'value': 0, 'status':0}
 
-        if board == 'RPI_GPIO':
+        if board == 'GPIO':
             GPIO.setup(channel, GPIO.OUT)
             print('\nModule '+ str(module) + 'set as output in GPIO '+str(channel)+ '\n')
 
