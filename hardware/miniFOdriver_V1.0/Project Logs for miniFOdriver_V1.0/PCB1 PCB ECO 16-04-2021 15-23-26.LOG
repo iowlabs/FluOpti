@@ -1,0 +1,4 @@
+Added Pin To Net: NetName=PWM_3 Pin=5-1
+Added Pin To Net: NetName=SCL_BUS Pin=J1-1
+Added Pin To Net: NetName=SCL_BUS Pin=R25-1
+Added Pin To Net: NetName=SCL_BUS Pin=U6-10

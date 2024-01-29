@@ -1,0 +1,139 @@
+Removed Pin From Net: NetName=GND Pin=C1-1
+Removed Pin From Net: NetName=V_PWR Pin=C1-2
+Removed Pin From Net: NetName=GND Pin=C7-1
+Removed Pin From Net: NetName=V_PWR Pin=C7-2
+Removed Pin From Net: NetName=GND Pin=C8-1
+Removed Pin From Net: NetName=GND Pin=D2-1
+Removed Pin From Net: NetName=V_PWR Pin=F2-1
+Removed Pin From Net: NetName=SCL_BUS Pin=J1-1
+Removed Pin From Net: NetName=SDA_BUS Pin=J1-2
+Removed Pin From Net: NetName=GND Pin=J1-3
+Removed Pin From Net: NetName=tempSens Pin=J2-1
+Removed Pin From Net: NetName=GND Pin=J2-2
+Removed Pin From Net: NetName=V_PWR Pin=PWR_IN1-1
+Removed Pin From Net: NetName=GND Pin=PWR_IN1-2
+Removed Pin From Net: NetName=GND Pin=Q1_3-1
+Removed Pin From Net: NetName=GND Pin=Q1_3-2
+Removed Pin From Net: NetName=GND Pin=Q1_3-3
+Removed Pin From Net: NetName=tempSens Pin=R1-1
+Removed Pin From Net: NetName=+5V Pin=R1-2
+Removed Pin From Net: NetName=GND Pin=R3-1
+Removed Pin From Net: NetName=SCL_BUS Pin=R10-2
+Removed Pin From Net: NetName=GND Pin=R21_3-1
+Removed Pin From Net: NetName=V_PWR Pin=RG selector1-2
+Removed Pin From Net: NetName=VCC_low Pin=RG selector1-3
+Removed Pin From Net: NetName=VCC_low Pin=RG selector1-4
+Removed Pin From Net: NetName=GND Pin=tp-3-2
+Removed Pin From Net: NetName=V_PWR Pin=tp-PWR_IN1-1
+Removed Pin From Net: NetName=GND Pin=tp-PWR_IN1-2
+Removed Pin From Net: NetName=GND Pin=U3-3
+Removed Pin From Net: NetName=GND Pin=U3-5
+Removed Pin From Net: NetName=GND Pin=U3-6
+Removed Pin From Net: NetName=SCL_BUS Pin=U5-26
+Removed Member From Class: ClassName=Step-Down Member=C6
+Removed Member From Class: ClassName=Step-Down Member=C7
+Removed Member From Class: ClassName=Step-Down Member=C8
+Removed Member From Class: ClassName=Step-Down Member=D2
+Removed Member From Class: ClassName=Step-Down Member=F2
+Removed Member From Class: ClassName=Step-Down Member=L2
+Removed Member From Class: ClassName=Step-Down Member=R3
+Removed Member From Class: ClassName=Step-Down Member=R4
+Removed Member From Class: ClassName=Drivers Member=RG selector1
+Removed Member From Class: ClassName=Step-Down Member=tp-3
+Removed Member From Class: ClassName=Step-Down Member=U3
+Change Component Designator: OldDesignator=Q1_2 NewDesignator=Q1_3
+Change Component Designator: OldDesignator=R20_2 NewDesignator=R20_3
+Change Component Designator: OldDesignator=R21_2 NewDesignator=R21_3
+Added Component: Designator=Heater2(CONN-TH_430450212)
+Add component (AddParameter): Name = "Manufacturer"; Value = "MOLEX"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Manufacturer Part Number"; Value = "430450212"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Package"; Value = ""; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Supplier 1"; Value = "LCSC"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Supplier Part Number 1"; Value = "C293362"; VariantName = "[No Variations]"
+Added Component: Designator=Q1_2(SOIC8)
+Add component (AddParameter): Name = "Manufacturer"; Value = "Infineon Technologies"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Manufacturer Part Number"; Value = "IRF7401TRPBF"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Package"; Value = "SO-8"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Supplier 1"; Value = "LCSC"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Supplier Part Number 1"; Value = "C169092"; VariantName = "[No Variations]"
+Added Component: Designator=R20_2(J1-0603)
+Add component (AddParameter): Name = "LatestRevisionDate"; Value = "29-May-2009"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "LatestRevisionNote"; Value = "IPC-7351 Footprint Added."; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Manufacturer"; Value = "ROHM Semicon"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Manufacturer Part Number"; Value = "MCR03EZPFX1100"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "PackageDescription"; Value = "Chip Resistor"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "PackageReference"; Value = "J1-0603"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Published"; Value = "8-Jun-2000"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Publisher"; Value = "Altium Limited"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Supplier 1"; Value = "LCSC"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Supplier Part Number 1"; Value = "C308180"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Value"; Value = "110"; VariantName = "[No Variations]"
+Added Component: Designator=R21_2(J1-0603)
+Add component (AddParameter): Name = "LatestRevisionDate"; Value = "29-May-2009"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "LatestRevisionNote"; Value = "IPC-7351 Footprint Added."; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Manufacturer"; Value = "PANASONIC"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Manufacturer Part Number"; Value = "ERJPA3F1002V"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "PackageDescription"; Value = "Chip Resistor"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "PackageReference"; Value = "J1-0603"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Published"; Value = "8-Jun-2000"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Publisher"; Value = "Altium Limited"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Supplier 1"; Value = "LCSC"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Supplier Part Number 1"; Value = "C441927"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Value"; Value = "10K"; VariantName = "[No Variations]"
+Added Pin To Net: NetName=V_PWR Pin=Heater2-1
+Added Pin To Net: NetName=GND Pin=Q1_2-1
+Added Pin To Net: NetName=GND Pin=Q1_2-2
+Added Pin To Net: NetName=GND Pin=Q1_2-3
+Added Pin To Net: NetName=GND Pin=R21_2-1
+Change Net Name : Old Net Name=CH_2 New Net Name=CH_3
+Change Net Name : Old Net Name=NetQ1_2_4 New Net Name=NetQ1_3_4
+Change Net Name : Old Net Name=PWM_2 New Net Name=PWM_3
+Added Pin To Net: NetName=CH_2 Pin=Q1_2-5
+Added Pin To Net: NetName=CH_2 Pin=Q1_2-6
+Added Pin To Net: NetName=CH_2 Pin=Q1_2-7
+Added Pin To Net: NetName=CH_2 Pin=Q1_2-8
+Added Net: Name=CH_2
+Added Pin To Net: NetName=CH_5_out Pin=Heater2-2
+Added Net: Name=CH_5_out
+Added Pin To Net: NetName=NetQ1_2_4 Pin=Q1_2-4
+Added Pin To Net: NetName=NetQ1_2_4 Pin=R20_2-2
+Added Pin To Net: NetName=NetQ1_2_4 Pin=R21_2-2
+Added Net: Name=NetQ1_2_4
+Added Net: Name=NetRPI?_3
+Added Net: Name=NetRPI?_5
+Added Net: Name=NetRPI?_7
+Added Net: Name=NetRPI?_8
+Added Net: Name=NetRPI?_10
+Added Net: Name=NetRPI?_11
+Added Net: Name=NetRPI?_12
+Added Net: Name=NetRPI?_13
+Added Net: Name=NetRPI?_15
+Added Net: Name=NetRPI?_16
+Added Net: Name=NetRPI?_18
+Added Net: Name=NetRPI?_19
+Added Net: Name=NetRPI?_21
+Added Net: Name=NetRPI?_22
+Added Net: Name=NetRPI?_23
+Added Net: Name=NetRPI?_24
+Added Net: Name=NetRPI?_26
+Added Net: Name=NetRPI?_29
+Added Net: Name=NetRPI?_31
+Added Net: Name=NetRPI?_32
+Added Net: Name=NetRPI?_33
+Added Net: Name=NetRPI?_35
+Added Net: Name=NetRPI?_36
+Added Net: Name=NetRPI?_37
+Added Net: Name=NetRPI?_38
+Added Net: Name=NetRPI?_40
+Added Pin To Net: NetName=PWM_2 Pin=R20_2-1
+Added Net: Name=PWM_2
+Change Class Name : Old Net Name=Step-Down New Net Name=U_DCDC_stepdown
+Added Class: Name=U_Rasp
+Added Member To Class: ClassName=Salidas Member=Component Heater2 Power connector 2x1
+Change Room Name: Old Name=Entradas New Name=Salidas
+Change Room Scope: Old Scope=InComponentClass('Entradas') New Scope=InComponentClass('Salidas')
+Change Room Name: Old Name=Step-Down New Name=U_Rasp
+Change Room Scope: Old Scope=InComponentClass('Step-Down') New Scope=InComponentClass('U_Rasp')
+Added Room: Name=ADC
+Added Room: Name=Drivers
+Added Room: Name=U_DCDC_stepdown

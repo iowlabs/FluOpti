@@ -1,0 +1,6 @@
+Removed Pin From Net: NetName=+3V3 Pin=R-1
+Removed Pin From Net: NetName=+3V3 Pin=R-17
+Change Component Description : Designator=Q1 Old Description=MOSFET N Channel 20V 8.7A 700mV @ 250uA 22mO @ 4.1A,4.5V SOIC-8_150mil RoHS New Description=MOSFET N Channel 20V 8.7A 700mV @ 250uA 22mO @ 4.1A,4.5V SOIC-8_150mil RoHS
+Change Component Description : Designator=Q2 Old Description=MOSFET N Channel 20V 8.7A 700mV @ 250uA 22mO @ 4.1A,4.5V SOIC-8_150mil RoHS New Description=MOSFET N Channel 20V 8.7A 700mV @ 250uA 22mO @ 4.1A,4.5V SOIC-8_150mil RoHS
+Change Component Description : Designator=Q3 Old Description=MOSFET N Channel 20V 8.7A 700mV @ 250uA 22mO @ 4.1A,4.5V SOIC-8_150mil RoHS New Description=MOSFET N Channel 20V 8.7A 700mV @ 250uA 22mO @ 4.1A,4.5V SOIC-8_150mil RoHS
+Change Component Description : Designator=Q4 Old Description=MOSFET N Channel 20V 8.7A 700mV @ 250uA 22mO @ 4.1A,4.5V SOIC-8_150mil RoHS New Description=MOSFET N Channel 20V 8.7A 700mV @ 250uA 22mO @ 4.1A,4.5V SOIC-8_150mil RoHS

@@ -1,0 +1,69 @@
+Removed Pin From Net: NetName=V_PWR Pin=Blue1-1
+Removed Pin From Net: NetName=CH_2_aux Pin=Blue1-2
+Removed Member From Class: ClassName=Salidas Member=Blue1
+Added Component: Designator=J3(JST-2x1)
+Add component. Clean all parameters for all variants
+Add component (AddParameter): Name = "Manufacturer"; Value = "CJT(Changjiang Connectors)"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Manufacturer Part Number"; Value = "A2547WV-2P"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Package"; Value = "Through Hole,P=2.54mm"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Pitch"; Value = "2.54mm"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Supplier 1"; Value = "LCSC"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Supplier Part Number 1"; Value = "C239377"; VariantName = "[No Variations]"
+Added Component: Designator=J4(JST-2x1)
+Add component. Clean all parameters for all variants
+Add component (AddParameter): Name = "Manufacturer"; Value = "CJT(Changjiang Connectors)"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Manufacturer Part Number"; Value = "A2547WV-2P"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Package"; Value = "Through Hole,P=2.54mm"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Pitch"; Value = "2.54mm"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Supplier 1"; Value = "LCSC"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Supplier Part Number 1"; Value = "C239377"; VariantName = "[No Variations]"
+Added Component: Designator=J5(JST-2x1)
+Add component. Clean all parameters for all variants
+Add component (AddParameter): Name = "Manufacturer"; Value = "CJT(Changjiang Connectors)"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Manufacturer Part Number"; Value = "A2547WV-2P"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Package"; Value = "Through Hole,P=2.54mm"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Pitch"; Value = "2.54mm"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Supplier 1"; Value = "LCSC"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Supplier Part Number 1"; Value = "C239377"; VariantName = "[No Variations]"
+Added Component: Designator=J6(JST-2x1)
+Add component. Clean all parameters for all variants
+Add component (AddParameter): Name = "Manufacturer"; Value = "CJT(Changjiang Connectors)"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Manufacturer Part Number"; Value = "A2547WV-2P"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Package"; Value = "Through Hole,P=2.54mm"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Pitch"; Value = "2.54mm"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Supplier 1"; Value = "LCSC"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Supplier Part Number 1"; Value = "C239377"; VariantName = "[No Variations]"
+Added Component: Designator=J7(JST-2x1)
+Add component. Clean all parameters for all variants
+Add component (AddParameter): Name = "Manufacturer"; Value = "CJT(Changjiang Connectors)"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Manufacturer Part Number"; Value = "A2547WV-2P"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Package"; Value = "Through Hole,P=2.54mm"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Pitch"; Value = "2.54mm"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Supplier 1"; Value = "LCSC"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Supplier Part Number 1"; Value = "C239377"; VariantName = "[No Variations]"
+Added Component: Designator=J8(JST-2x1)
+Add component. Clean all parameters for all variants
+Add component (AddParameter): Name = "Manufacturer"; Value = "CJT(Changjiang Connectors)"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Manufacturer Part Number"; Value = "A2547WV-2P"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Package"; Value = "Through Hole,P=2.54mm"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Pitch"; Value = "2.54mm"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Supplier 1"; Value = "LCSC"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Supplier Part Number 1"; Value = "C239377"; VariantName = "[No Variations]"
+Added Pin To Net: NetName=V_PWR Pin=J3-1
+Added Pin To Net: NetName=CH_0_aux Pin=J3-2
+Added Pin To Net: NetName=V_PWR Pin=J4-1
+Added Pin To Net: NetName=CH_1_aux Pin=J4-2
+Added Pin To Net: NetName=V_PWR Pin=J5-1
+Added Pin To Net: NetName=CH_2_aux Pin=J5-2
+Added Pin To Net: NetName=V_PWR Pin=J6-1
+Added Pin To Net: NetName=CH_3_aux Pin=J6-2
+Added Pin To Net: NetName=V_PWR Pin=J7-1
+Added Pin To Net: NetName=CH_4_aux Pin=J7-2
+Added Pin To Net: NetName=V_PWR Pin=J8-1
+Added Pin To Net: NetName=CH_5_aux Pin=J8-2
+Added Member To Class: ClassName=Salidas Member=Component J3 Generic header 2x1
+Added Member To Class: ClassName=Salidas Member=Component J4 Generic header 2x1
+Added Member To Class: ClassName=Salidas Member=Component J5 Generic header 2x1
+Added Member To Class: ClassName=Salidas Member=Component J6 Generic header 2x1
+Added Member To Class: ClassName=Salidas Member=Component J7 Generic header 2x1
+Added Member To Class: ClassName=Salidas Member=Component J8 Generic header 2x1

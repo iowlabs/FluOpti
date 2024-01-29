@@ -1,0 +1,3 @@
+Removed Pin From Net: NetName=+5V Pin=GPIO-1
+Removed Member From Class: ClassName=Salidas Member=GPIO
+Removed Member From Class: ClassName=Salidas Member=PWM(RPI)

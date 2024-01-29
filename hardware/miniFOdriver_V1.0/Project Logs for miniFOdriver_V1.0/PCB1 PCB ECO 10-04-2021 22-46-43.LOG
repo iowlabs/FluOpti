@@ -1,0 +1,5 @@
+Removed Pin From Net: NetName=PWM_2 Pin=2-1
+Removed Pin From Net: NetName=PWM_3 Pin=3-1
+Removed Pin From Net: NetName=PWM_3 Pin=4-1
+Removed Pin From Net: NetName=GND Pin=R18-1
+Added Pin To Net: NetName=PWM_2 Pin=3-1

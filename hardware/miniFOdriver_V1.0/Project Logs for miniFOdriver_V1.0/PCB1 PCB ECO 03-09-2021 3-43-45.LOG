@@ -1,0 +1,28 @@
+Change Component Designator: OldDesignator=D? NewDesignator=D2
+Change Component Designator: OldDesignator=D? NewDesignator=D3
+Change Component Designator: OldDesignator=D? NewDesignator=D4
+Change Component Designator: OldDesignator=R? NewDesignator=R1
+Change Component Designator: OldDesignator=R? NewDesignator=R3
+Added Component: Designator=C80(CAP_SMD_Electrolytic_5X5.4)
+Add component. Clean all parameters for all variants
+Add component (AddParameter): Name = "Manufacturer"; Value = ""; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Manufacturer Part Number"; Value = ""; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Package"; Value = ""; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Supplier 1"; Value = "LCSC"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Supplier Part Number 1"; Value = ""; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Value"; Value = "47uF"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Voltage"; Value = ""; VariantName = "[No Variations]"
+Added Pin To Net: NetName=GND Pin=C80-1
+Added Pin To Net: NetName=V_PWR Pin=C80-2
+Change Net Name : Old Net Name=NetD?_1 New Net Name=NetD2_1
+Added Pin To Net: NetName=NetD3_1 Pin=D3-1
+Added Pin To Net: NetName=NetD3_1 Pin=R1-1
+Added Net: Name=NetD3_1
+Added Pin To Net: NetName=NetD4_1 Pin=D4-1
+Added Pin To Net: NetName=NetD4_1 Pin=R3-1
+Added Net: Name=NetD4_1
+Added Member To Class: ClassName=U_DCDC_stepdown Member=Component C2 Cap pol
+Added Member To Class: ClassName=TopLevel Member=Component C80 Cap pol
+Added Member To Class: ClassName=U_DCDC_stepdown Member=Component D3 Generic LED
+Added Member To Class: ClassName=U_DCDC_stepdown Member=Component D4 Generic LED
+Added Member To Class: ClassName=U_DCDC_stepdown Member=Component R1 Res3

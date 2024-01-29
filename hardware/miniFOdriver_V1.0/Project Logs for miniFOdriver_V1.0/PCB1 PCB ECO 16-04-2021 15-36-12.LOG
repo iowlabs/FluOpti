@@ -1,0 +1,10 @@
+Change Net Name : Old Net Name=PWM_0 New Net Name=PWM_0_in
+Change Net Name : Old Net Name=PWM_1 New Net Name=PWM_1_in
+Change Net Name : Old Net Name=PWM_4 New Net Name=PWM_4_in
+Added Pin To Net: NetName=PWM_1 Pin=R20_1-1
+Added Net: Name=PWM_1
+Added Pin To Net: NetName=PWM_2_in Pin=3-1
+Added Net: Name=PWM_2_in
+Added Pin To Net: NetName=PWM_3_in Pin=4-1
+Added Pin To Net: NetName=PWM_3_in Pin=R18-1
+Added Net: Name=PWM_3_in

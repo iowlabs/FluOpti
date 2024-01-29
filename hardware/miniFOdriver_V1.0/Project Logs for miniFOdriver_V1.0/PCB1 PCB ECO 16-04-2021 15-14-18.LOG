@@ -1,0 +1,51 @@
+Change Component Footprint: Designator=PWR_RPI1 Old Footprint=USB-C_SMD 6 contacts New Footprint=USB-A_TH 5 CONTACTS
+Added Component: Designator=ID-ADC1(SJ2)
+Add component. Clean all parameters for all variants
+Added Component: Designator=J1(CONN-TH_A2547WV-3P)
+Add component. Clean all parameters for all variants
+Add component (AddParameter): Name = "Manufacturer"; Value = "CJT(Changjiang Connectors)"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Manufacturer Part Number"; Value = "A2547WV-3P"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Package"; Value = "Through Hole,P=2.54mm"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Pitch"; Value = "2.54"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Supplier 1"; Value = "LCSC"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Supplier Part Number 1"; Value = "C239378"; VariantName = "[No Variations]"
+Added Component: Designator=J2(CONN-TH_A2547WV-2P)
+Add component. Clean all parameters for all variants
+Add component (AddParameter): Name = "Manufacturer"; Value = "CJT(Changjiang Connectors)"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Manufacturer Part Number"; Value = "A2547WV-2P"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Package"; Value = "Through Hole,P=2.54mm"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Pitch"; Value = "2.54mm"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Supplier 1"; Value = "LCSC"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Supplier Part Number 1"; Value = "C239377"; VariantName = "[No Variations]"
+Added Component: Designator=temp_sens1(TP)
+Add component. Clean all parameters for all variants
+Added Component: Designator=U6(VSSOP - 10)
+Add component. Clean all parameters for all variants
+Add component (AddParameter): Name = "Manufacturer"; Value = "Texas Instruments"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Manufacturer Part Number"; Value = "ADS1115QDGSRQ1"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Package"; Value = "VSSOP-10"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Supplier 1"; Value = "LCSC"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Supplier Part Number 1"; Value = "C172375"; VariantName = "[No Variations]"
+Added Pin To Net: NetName=NetID-ADC1_1 Pin=ID-ADC1-1
+Added Pin To Net: NetName=addr_ads1115 Pin=ID-ADC1-2
+Added Pin To Net: NetName=SDA_BUS Pin=J1-2
+Added Pin To Net: NetName=GND Pin=J1-3
+Added Pin To Net: NetName=tempSens Pin=J2-1
+Added Pin To Net: NetName=GND Pin=J2-2
+Added Pin To Net: NetName=GND Pin=PWR_RPI1-5
+Added Pin To Net: NetName=GND Pin=PWR_RPI1-6
+Added Pin To Net: NetName=GND Pin=PWR_RPI1-7
+Added Pin To Net: NetName=GND Pin=PWR_RPI1-8
+Added Pin To Net: NetName=GND Pin=PWR_RPI1-9
+Added Pin To Net: NetName=tempSens Pin=temp_sens1-1
+Added Pin To Net: NetName=addr_ads1115 Pin=U6-1
+Added Pin To Net: NetName=NetR24_2 Pin=U6-2
+Added Pin To Net: NetName=GND Pin=U6-3
+Added Pin To Net: NetName=NetR27_2 Pin=U6-4
+Added Pin To Net: NetName=+3V3 Pin=U6-8
+Added Pin To Net: NetName=SDA_BUS Pin=U6-9
+Added Member To Class: ClassName=ADC Member=Component ID-ADC1 sj
+Added Member To Class: ClassName=Entradas Member=Component J1 Generic Header 3x1
+Added Member To Class: ClassName=Entradas Member=Component J2 Generic header 2x1
+Added Member To Class: ClassName=ADC Member=Component temp_sens1 TP
+Added Member To Class: ClassName=ADC Member=Component U6 ADS1115

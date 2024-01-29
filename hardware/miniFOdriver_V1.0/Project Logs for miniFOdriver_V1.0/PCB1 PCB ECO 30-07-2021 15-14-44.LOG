@@ -1,0 +1,36 @@
+Added Component: Designator=6(TP)
+Added Component: Designator=C80(CAP_SMD_Electrolytic_10x10)
+Add component (AddParameter): Name = "Manufacturer"; Value = "Lelon"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Manufacturer Part Number"; Value = "VEJ470M1HTR-1010"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Package"; Value = "SMD,10x10mm"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Supplier 1"; Value = "LCSC"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Supplier Part Number 1"; Value = "C249662"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Value"; Value = "47uF"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Voltage"; Value = "50V"; VariantName = "[No Variations]"
+Added Component: Designator=PWR_IN1(CONN-TH_430450212)
+Add component (AddParameter): Name = "Manufacturer"; Value = "MOLEX"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Manufacturer Part Number"; Value = "430450212"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Package"; Value = ""; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Supplier 1"; Value = "LCSC"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Supplier Part Number 1"; Value = "C293362"; VariantName = "[No Variations]"
+Added Component: Designator=tp-PWR_IN1(HDR-TH_P2.54-H-M_A2541WV-2P)
+Add component (AddParameter): Name = "Manufacturer"; Value = "CJT(Changjiang Connectors)"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Manufacturer Part Number"; Value = "A2541WV-2P"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Pitch"; Value = "2.54"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Supplier 1"; Value = "LCSC"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Supplier Part Number 1"; Value = "C225477"; VariantName = "[No Variations]"
+Added Pin To Net: NetName=PWM_5_in Pin=6-1
+Added Pin To Net: NetName=GND Pin=C80-1
+Added Pin To Net: NetName=V_PWR Pin=C80-2
+Added Pin To Net: NetName=V_PWR Pin=PWR_IN1-1
+Added Pin To Net: NetName=GND Pin=PWR_IN1-2
+Added Pin To Net: NetName=V_PWR Pin=tp-PWR_IN1-1
+Added Pin To Net: NetName=GND Pin=tp-PWR_IN1-2
+Change Net Name : Old Net Name=SCL_BUS New Net Name=SCLBUS
+Added Pin To Net: NetName=SCL_BUS Pin=R10-2
+Added Pin To Net: NetName=SCL_BUS Pin=U5-26
+Added Net: Name=SCL_BUS
+Added Class: Name=TopLevel
+Added Member To Class: ClassName=Generador PWM Member=Component 6 TP
+Added Room: Name=3
+Added Room: Name=TopLevel

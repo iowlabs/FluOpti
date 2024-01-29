@@ -1,0 +1,49 @@
+Removed Pin From Net: NetName=PWM_2_in Pin=R20-1
+Removed Pin From Net: NetName=PWM_3_in Pin=R20_1-1
+Removed Pin From Net: NetName=PWM_4_in Pin=R20_2-1
+Removed Pin From Net: NetName=PWM_5_in Pin=R20_3-1
+Removed Pin From Net: NetName=PWM_0_in Pin=U4-1
+Removed Pin From Net: NetName=PWM_1_in Pin=U4-2
+Removed Member From Class: ClassName=Generador PWM Member=U2
+Change Component Designator: OldDesignator=Blue + NewDesignator=Blue1
+Change Component Designator: OldDesignator=Green NewDesignator=Green1
+Change Component Designator: OldDesignator=Mini Fluopti V1.0 NewDesignator=R
+Change Component Designator: OldDesignator=PWR_IN + NewDesignator=PWR_IN1
+Change Component Designator: OldDesignator=Red NewDesignator=Red1
+Change Component Designator: OldDesignator=tp-3v3 NewDesignator=tp-2
+Change Component Designator: OldDesignator=tp-5v NewDesignator=tp-1
+Change Component Designator: OldDesignator=White + NewDesignator=White1
+Change Component Description : Designator=Q1 Old Description=MOSFET N Channel 20V 8.7A 700mV @ 250uA 22mO @ 4.1A,4.5V SOIC-8_150mil RoHS New Description=MOSFET N Channel 20V 8.7A 700mV @ 250uA 22mO @ 4.1A,4.5V SOIC-8_150mil RoHS
+Change Component Description : Designator=Q2 Old Description=MOSFET N Channel 20V 8.7A 700mV @ 250uA 22mO @ 4.1A,4.5V SOIC-8_150mil RoHS New Description=MOSFET N Channel 20V 8.7A 700mV @ 250uA 22mO @ 4.1A,4.5V SOIC-8_150mil RoHS
+Change Component Description : Designator=Q3 Old Description=MOSFET N Channel 20V 8.7A 700mV @ 250uA 22mO @ 4.1A,4.5V SOIC-8_150mil RoHS New Description=MOSFET N Channel 20V 8.7A 700mV @ 250uA 22mO @ 4.1A,4.5V SOIC-8_150mil RoHS
+Change Component Description : Designator=Q4 Old Description=MOSFET N Channel 20V 8.7A 700mV @ 250uA 22mO @ 4.1A,4.5V SOIC-8_150mil RoHS New Description=MOSFET N Channel 20V 8.7A 700mV @ 250uA 22mO @ 4.1A,4.5V SOIC-8_150mil RoHS
+Added Component: Designator=J1(JST-2x1)
+Add component. Clean all parameters for all variants
+Add component (AddParameter): Name = "Manufacturer"; Value = "CJT(Changjiang Connectors)"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Manufacturer Part Number"; Value = "A2547WV-2P"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Package"; Value = "Through Hole,P=2.54mm"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Pitch"; Value = "2.54mm"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Supplier 1"; Value = "LCSC"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Supplier Part Number 1"; Value = "C239377"; VariantName = "[No Variations]"
+Added Component: Designator=J2(JST-2x1)
+Add component. Clean all parameters for all variants
+Add component (AddParameter): Name = "Manufacturer"; Value = "CJT(Changjiang Connectors)"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Manufacturer Part Number"; Value = "A2547WV-2P"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Package"; Value = "Through Hole,P=2.54mm"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Pitch"; Value = "2.54mm"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Supplier 1"; Value = "LCSC"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Supplier Part Number 1"; Value = "C239377"; VariantName = "[No Variations]"
+Added Pin To Net: NetName=TempSens1 Pin=J1-1
+Added Pin To Net: NetName=GND Pin=J1-2
+Added Pin To Net: NetName=TempSens2 Pin=J2-1
+Added Pin To Net: NetName=GND Pin=J2-2
+Added Pin To Net: NetName=PWM_0_in Pin=R20-1
+Added Pin To Net: NetName=PWM_1_in Pin=R20_1-1
+Added Pin To Net: NetName=PWM_2_in Pin=R20_2-1
+Added Pin To Net: NetName=PWM_3_in Pin=R20_3-1
+Added Pin To Net: NetName=PWM_4_in Pin=U4-1
+Added Pin To Net: NetName=PWM_5_in Pin=U4-2
+Added Member To Class: ClassName=ADC Member=Component J1 Generic header 2x1
+Added Member To Class: ClassName=ADC Member=Component J2 Generic header 2x1
+Added Member To Class: ClassName=Generador PWM Member=Component U5 PCA9685
+Added Member To Class: ClassName=ADC Member=Component U6 MAX6682MUA+T

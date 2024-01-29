@@ -1,0 +1,77 @@
+Change Component Designator: OldDesignator=0 NewDesignator=1
+Change Component Designator: OldDesignator=1 NewDesignator=2
+Change Component Designator: OldDesignator=2 NewDesignator=3
+Change Component Designator: OldDesignator=3 NewDesignator=4
+Change Component Designator: OldDesignator=4 NewDesignator=5
+Change Component Designator: OldDesignator=Blue NewDesignator=Blue1
+Change Component Designator: OldDesignator=C6 NewDesignator=C7
+Change Component Designator: OldDesignator=C7 NewDesignator=C6
+Change Component Designator: OldDesignator=C9 NewDesignator=C11
+Change Component Designator: OldDesignator=C10 NewDesignator=C12
+Change Component Designator: OldDesignator=C16 NewDesignator=C9
+Change Component Designator: OldDesignator=C19 NewDesignator=C10
+Change Component Designator: OldDesignator=Green NewDesignator=Green1
+Change Component Designator: OldDesignator=Heater NewDesignator=Heater1
+Change Component Designator: OldDesignator=ID-PWM NewDesignator=ID-PWM1
+Change Component Designator: OldDesignator=ON NewDesignator=ON1
+Change Component Designator: OldDesignator=PWR_IN NewDesignator=PWR_IN1
+Change Component Designator: OldDesignator=PWR_RPI NewDesignator=PWR_RPI1
+Change Component Designator: OldDesignator=R2 NewDesignator=R22
+Change Component Designator: OldDesignator=R3 NewDesignator=R23
+Change Component Designator: OldDesignator=R4 NewDesignator=R24
+Change Component Designator: OldDesignator=R5 NewDesignator=R3
+Change Component Designator: OldDesignator=R6 NewDesignator=R4
+Change Component Designator: OldDesignator=R7 NewDesignator=R25
+Change Component Designator: OldDesignator=R8 NewDesignator=R26
+Change Component Designator: OldDesignator=R9 NewDesignator=R27
+Change Component Designator: OldDesignator=R15_1 NewDesignator=R20_1
+Change Component Designator: OldDesignator=R15_2 NewDesignator=R20_2
+Change Component Designator: OldDesignator=R15_3 NewDesignator=R20_3
+Change Component Designator: OldDesignator=R16_1 NewDesignator=R21_1
+Change Component Designator: OldDesignator=R16_2 NewDesignator=R21_2
+Change Component Designator: OldDesignator=R16_3 NewDesignator=R21_3
+Change Component Designator: OldDesignator=R17 NewDesignator=R5
+Change Component Designator: OldDesignator=R18 NewDesignator=R6
+Change Component Designator: OldDesignator=R19 NewDesignator=R7
+Change Component Designator: OldDesignator=R20 NewDesignator=R8
+Change Component Designator: OldDesignator=R21 NewDesignator=R11
+Change Component Designator: OldDesignator=R22 NewDesignator=R12
+Change Component Designator: OldDesignator=R23 NewDesignator=R13
+Change Component Designator: OldDesignator=R24 NewDesignator=R14
+Change Component Designator: OldDesignator=R25 NewDesignator=R15
+Change Component Designator: OldDesignator=R26 NewDesignator=R18
+Change Component Designator: OldDesignator=R27 NewDesignator=R19
+Change Component Designator: OldDesignator=R31 NewDesignator=R9
+Change Component Designator: OldDesignator=R32 NewDesignator=R10
+Change Component Designator: OldDesignator=R41 NewDesignator=R17
+Change Component Designator: OldDesignator=R42 NewDesignator=R16
+Change Component Designator: OldDesignator=R63 NewDesignator=R2
+Change Component Designator: OldDesignator=Red NewDesignator=Red1
+Change Component Designator: OldDesignator=RG selector NewDesignator=RG selector1
+Change Component Designator: OldDesignator=tp-3V3 NewDesignator=tp-2
+Change Component Designator: OldDesignator=tp-5V NewDesignator=tp-1
+Change Component Designator: OldDesignator=tp-9V NewDesignator=tp-3
+Change Component Designator: OldDesignator=tp-PWR_IN NewDesignator=tp-PWR_IN1
+Change Component Designator: OldDesignator=tp-RG> NewDesignator=tp-RG>1
+Change Component Designator: OldDesignator=U6 NewDesignator=U4
+Change Component Designator: OldDesignator=U8 NewDesignator=U5
+Change Component Designator: OldDesignator=U9 NewDesignator=U1
+Change Component Designator: OldDesignator=White NewDesignator=White1
+Change Net Name : Old Net Name=NetC7_1 New Net Name=NetC6_1
+Change Net Name : Old Net Name=NetID-PWM_1 New Net Name=NetID-PWM1_1
+Change Net Name : Old Net Name=NetON_1 New Net Name=NetON1_1
+Change Net Name : Old Net Name=NetR19_2 New Net Name=NetR7_2
+Change Net Name : Old Net Name=NetR20_2 New Net Name=NetR8_2
+Change Net Name : Old Net Name=NetR21_2 New Net Name=NetR11_2
+Change Net Name : Old Net Name=NetR22_2 New Net Name=NetR12_2
+Change Net Name : Old Net Name=NetR23_2 New Net Name=NetR13_2
+Change Net Name : Old Net Name=NetR24_2 New Net Name=NetR14_2
+Change Net Name : Old Net Name=NetR25_2 New Net Name=NetR15_2
+Change Net Name : Old Net Name=NetR26_2 New Net Name=NetR18_2
+Change Net Name : Old Net Name=NetR27_2 New Net Name=NetR19_2
+Change Net Name : Old Net Name=NetR41_2 New Net Name=NetR17_2
+Change Net Name : Old Net Name=NetR42_2 New Net Name=NetR16_2
+Added Pin To Net: NetName=NetR24_2 Pin=R24-2
+Added Net: Name=NetR24_2
+Added Pin To Net: NetName=NetR27_2 Pin=R27-2
+Added Net: Name=NetR27_2

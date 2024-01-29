@@ -1,0 +1,11 @@
+Added Component: Designator=J9(T_BLOCK_2P)
+Add component. Clean all parameters for all variants
+Add component (AddParameter): Name = "Manufacturer"; Value = "CJT(Changjiang Connectors)"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Manufacturer Part Number"; Value = "A2547WV-2P"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Package"; Value = "Through Hole,P=2.54mm"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Pitch"; Value = "2.54mm"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Supplier 1"; Value = "LCSC"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Supplier Part Number 1"; Value = "C239377"; VariantName = "[No Variations]"
+Added Pin To Net: NetName=V_PWR Pin=J9-1
+Added Pin To Net: NetName=GND Pin=J9-2
+Added Member To Class: ClassName=TopLevel Member=Component J9 Tblock 2x1

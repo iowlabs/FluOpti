@@ -1,0 +1,130 @@
+Removed Pin From Net: NetName=GND Pin=C11-1
+Removed Pin From Net: NetName=+3V3 Pin=R22-1
+Removed Pin From Net: NetName=GND Pin=R23-1
+Removed Pin From Net: NetName=+3V3 Pin=R24-1
+Removed Pin From Net: NetName=+3V3 Pin=R25-2
+Removed Pin From Net: NetName=SDA_BUS Pin=R26-1
+Removed Pin From Net: NetName=+3V3 Pin=R26-2
+Removed Pin From Net: NetName=GND Pin=U6-3
+Removed Pin From Net: NetName=SDA_BUS Pin=U6-9
+Removed Member From Class: ClassName=ADC Member=C11
+Removed Member From Class: ClassName=ADC Member=ID-ADC1
+Removed Member From Class: ClassName=ADC Member=R24
+Removed Member From Class: ClassName=ADC Member=R25
+Removed Member From Class: ClassName=ADC Member=R26
+Removed Member From Class: ClassName=ADC Member=R27
+Removed Member From Class: ClassName=ADC Member=temp_sens1
+Change Component Footprint: Designator=R22 Old Footprint=J1-0603 New Footprint=RESC1609X50X30LL10T20
+Change Component Footprint: Designator=R23 Old Footprint=J1-0603 New Footprint=RESC1609X50X30LL10T20
+Change Component Footprint: Designator=U6 Old Footprint=VSSOP - 10 New Footprint=MAXM-U8+1_L
+Change Component Comment : Designator=U6 Old Comment=ADS1115 New Comment=MAX6682MUA+T
+Change Component Comment : Designator=R22 Old Comment=Res3 New Comment=CRCW06033K74FKEA
+Change Component Comment : Designator=R23 Old Comment=Res3 New Comment=CRCW06033K74FKEA
+Change Managed Component Library Link : Designator=R22 Old VaultGUID= New VaultGUID=B7D15EC3-160A-466F-A46C-7801FE6295A7 Old ItemGUID= New ItemGUID=1F55AE24-69EF-4DB6-B042-17EC5B821558 Old RevisionGUID= New RevisionGUID=50A32878-50D4-420C-B91B-7138C4B4657E
+Change Managed Component Library Link : Designator=R23 Old VaultGUID= New VaultGUID=B7D15EC3-160A-466F-A46C-7801FE6295A7 Old ItemGUID= New ItemGUID=1F55AE24-69EF-4DB6-B042-17EC5B821558 Old RevisionGUID= New RevisionGUID=50A32878-50D4-420C-B91B-7138C4B4657E
+Change Managed Component Library Link : Designator=U6 Old VaultGUID= New VaultGUID=B7D15EC3-160A-466F-A46C-7801FE6295A7 Old ItemGUID= New ItemGUID=7ACBA6E4-BE31-4B30-B4A7-6AE495AE1ED4 Old RevisionGUID= New RevisionGUID=6156FE9F-94A8-48C1-B2C9-10D04B6E239C
+Change component parameters: Designator = "R22" ("R22"); Footprint = "J1-0603"; UniqueID = "\NCVPSAEM\AJGDFRTA" ("\NCVPSAEM\AJGDFRTA")
+Change component parameters (AddParameter): Name = "Manufacturer"; Value = "Vishay Dale"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Part Number"; Value = "CRCW06033K74FKEA"; VariantName = "[No Variations]"
+Change component parameters: Designator = "R23" ("R23"); Footprint = "J1-0603"; UniqueID = "\NCVPSAEM\PPZSZSVK" ("\NCVPSAEM\PPZSZSVK")
+Change component parameters (AddParameter): Name = "Manufacturer"; Value = "Vishay Dale"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Part Number"; Value = "CRCW06033K74FKEA"; VariantName = "[No Variations]"
+Change component parameters: Designator = "U6" ("U6"); Footprint = "VSSOP - 10"; UniqueID = "\NCVPSAEM\KKOLYQKB" ("\NCVPSAEM\KKOLYQKB")
+Change component parameters (AddParameter): Name = "Code_JEDEC"; Value = "MO-187"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "ComponentLink1Description"; Value = "Manufacturer URL"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "ComponentLink1URL"; Value = "http://www.maximintegrated.com/"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "ComponentLink2Description"; Value = "Datasheet"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "ComponentLink2URL"; Value = "http://datasheets.maximintegrated.com/en/ds/MAX6682.pdf"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "ComponentLink3Description"; Value = "Package Specification"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "ComponentLink3URL"; Value = "http://pdfserv.maximintegrated.com/package_dwgs/21-0036.PDF"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "DatasheetVersion"; Value = "Rev. 0"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Functions"; Value = "Thermistor-to-Digital Converter"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Generic Part Number"; Value = "MAX6682"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Interface"; Value = "3-Wire/SPI"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Mounting Technology"; Value = "Surface Mount"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "PackageDescription"; Value = "8-Pin Micro-MAX, Thin Shrink Small-Outline (U8+1), Body 3 x 3 mm, Pitch 0.65 mm"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "PackageReference"; Value = "U8+1"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "PackageVersion"; Value = "Rev. L, 08/2009"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Packing"; Value = "Tape and Reel"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Parasite Pwr."; Value = "No"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "PartNumber"; Value = "MAX6682MUA+T"; VariantName = "[No Variations]"
+Added Component: Designator=C13(1608[0603])
+Add component (AddParameter): Name = "LatestRevisionDate"; Value = "29-May-2009"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "LatestRevisionNote"; Value = "IPC-7351 Footprint Added."; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Manufacturer"; Value = "Taiyo Yuden"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Manufacturer Part Number"; Value = "UMK107B104KAHT"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "PackageDescription"; Value = "Chip Capacitor"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "PackageReference"; Value = "C0603"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Published"; Value = "8-Jun-2000"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Publisher"; Value = "Altium Limited"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Supplier 1"; Value = "LCSC"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Supplier Part Number 1"; Value = "C386152"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Value"; Value = "100nF"; VariantName = "[No Variations]"
+Added Component: Designator=P4(HDR1X2)
+Add component (AddParameter): Name = "LatestRevisionDate"; Value = "17-Jul-2002"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "LatestRevisionNote"; Value = "Re-released for DXP Platform."; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Publisher"; Value = "Altium Limited"; VariantName = "[No Variations]"
+Added Component: Designator=P5(HDR1X2)
+Add component (AddParameter): Name = "LatestRevisionDate"; Value = "17-Jul-2002"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "LatestRevisionNote"; Value = "Re-released for DXP Platform."; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Publisher"; Value = "Altium Limited"; VariantName = "[No Variations]"
+Added Component: Designator=U7(MAXM-U8+1_L)
+Add component (AddParameter): Name = "Code_JEDEC"; Value = "MO-187"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "ComponentLink1Description"; Value = "Manufacturer URL"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "ComponentLink1URL"; Value = "http://www.maximintegrated.com/"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "ComponentLink2Description"; Value = "Datasheet"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "ComponentLink2URL"; Value = "http://datasheets.maximintegrated.com/en/ds/MAX6682.pdf"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "ComponentLink3Description"; Value = "Package Specification"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "ComponentLink3URL"; Value = "http://pdfserv.maximintegrated.com/package_dwgs/21-0036.PDF"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "DatasheetVersion"; Value = "Rev. 0"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Functions"; Value = "Thermistor-to-Digital Converter"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Generic Part Number"; Value = "MAX6682"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Interface"; Value = "3-Wire/SPI"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Mounting Technology"; Value = "Surface Mount"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "PackageDescription"; Value = "8-Pin Micro-MAX, Thin Shrink Small-Outline (U8+1), Body 3 x 3 mm, Pitch 0.65 mm"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "PackageReference"; Value = "U8+1"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "PackageVersion"; Value = "Rev. L, 08/2009"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Packing"; Value = "Tape and Reel"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Parasite Pwr."; Value = "No"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "PartNumber"; Value = "MAX6682MUA+T"; VariantName = "[No Variations]"
+Added Pin To Net: NetName=GND Pin=C13-1
+Added Pin To Net: NetName=+3V3 Pin=C13-2
+Added Pin To Net: NetName=GND Pin=P4-2
+Added Pin To Net: NetName=GND Pin=P5-2
+Added Pin To Net: NetName=GND Pin=U6-4
+Added Pin To Net: NetName=GND Pin=U7-4
+Added Pin To Net: NetName=+3V3 Pin=U7-8
+Added Pin To Net: NetName=CS1 Pin=R-24
+Added Pin To Net: NetName=CS1 Pin=U7-5
+Added Net: Name=CS1
+Added Pin To Net: NetName=CS2 Pin=R-26
+Added Pin To Net: NetName=CS2 Pin=U6-5
+Added Net: Name=CS2
+Added Pin To Net: NetName=NetR22_2 Pin=R22-2
+Added Pin To Net: NetName=NetR22_2 Pin=U7-2
+Added Net: Name=NetR22_2
+Added Pin To Net: NetName=NetR23_2 Pin=R23-2
+Added Pin To Net: NetName=NetR23_2 Pin=U6-2
+Added Net: Name=NetR23_2
+Added Pin To Net: NetName=NetR_5 Pin=R-5
+Added Net: Name=NetR_5
+Added Pin To Net: NetName=SCK Pin=R-23
+Added Pin To Net: NetName=SCK Pin=U6-7
+Added Pin To Net: NetName=SCK Pin=U7-7
+Added Net: Name=SCK
+Added Pin To Net: NetName=SO Pin=R-21
+Added Pin To Net: NetName=SO Pin=U6-6
+Added Pin To Net: NetName=SO Pin=U7-6
+Added Net: Name=SO
+Added Pin To Net: NetName=TempSens1 Pin=P4-1
+Added Pin To Net: NetName=TempSens1 Pin=R22-1
+Added Pin To Net: NetName=TempSens1 Pin=U7-3
+Added Net: Name=TempSens1
+Added Pin To Net: NetName=TempSens2 Pin=P5-1
+Added Pin To Net: NetName=TempSens2 Pin=R23-1
+Added Pin To Net: NetName=TempSens2 Pin=U6-3
+Added Net: Name=TempSens2
+Added Member To Class: ClassName=ADC Member=Component C13 Cap Semi
+Added Member To Class: ClassName=ADC Member=Component P4 Header 2
+Added Member To Class: ClassName=ADC Member=Component P5 Header 2
+Added Member To Class: ClassName=ADC Member=Component U7 MAX6682MUA+T

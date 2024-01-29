@@ -1,0 +1,61 @@
+Added Component: Designator=RPI?(rpi)
+Add component (AddParameter): Name = "Accessory Type"; Value = "Connector"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Category"; Value = "Development Boards, Kits, Programmers"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "ComponentLink1Description"; Value = "https://cdn.sparkfun.com/datasheets/Dev/RaspberryPi/12313.pdf"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "ComponentLink1URL"; Value = "https://cdn.sparkfun.com/datasheets/Dev/RaspberryPi/12313.pdf"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "For Use With/Related Products"; Value = "Raspberry Pi"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Manufacturer"; Value = "SparkFun Electronics"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Manufacturer Part Number"; Value = "PRT-14017"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Nils Minor"; Value = "author"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "nilsminor@web.de"; Value = "mail"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Part Status"; Value = "Active"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Pricing 1"; Value = "1=1.84 (EUR)"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "RoHS"; Value = "RoHS Compliant"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Stock 1"; Value = "150"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Supplier 1"; Value = "Digi-Key"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Supplier Part Number 1"; Value = "1568-1462-ND"; VariantName = "[No Variations]"
+Added Pin To Net: NetName=+3V3 Pin=RPI?-1
+Added Pin To Net: NetName=+5V Pin=RPI?-2
+Added Pin To Net: NetName=NetRPI?_3 Pin=RPI?-3
+Added Pin To Net: NetName=+5V Pin=RPI?-4
+Added Pin To Net: NetName=NetRPI?_5 Pin=RPI?-5
+Added Pin To Net: NetName=GND Pin=RPI?-6
+Added Pin To Net: NetName=NetRPI?_7 Pin=RPI?-7
+Added Pin To Net: NetName=NetRPI?_8 Pin=RPI?-8
+Added Pin To Net: NetName=GND Pin=RPI?-9
+Added Pin To Net: NetName=NetRPI?_10 Pin=RPI?-10
+Added Pin To Net: NetName=NetRPI?_11 Pin=RPI?-11
+Added Pin To Net: NetName=NetRPI?_12 Pin=RPI?-12
+Added Pin To Net: NetName=NetRPI?_13 Pin=RPI?-13
+Added Pin To Net: NetName=GND Pin=RPI?-14
+Added Pin To Net: NetName=NetRPI?_15 Pin=RPI?-15
+Added Pin To Net: NetName=NetRPI?_16 Pin=RPI?-16
+Added Pin To Net: NetName=+3V3 Pin=RPI?-17
+Added Pin To Net: NetName=NetRPI?_18 Pin=RPI?-18
+Added Pin To Net: NetName=NetRPI?_19 Pin=RPI?-19
+Added Pin To Net: NetName=GND Pin=RPI?-20
+Added Pin To Net: NetName=NetRPI?_21 Pin=RPI?-21
+Added Pin To Net: NetName=NetRPI?_22 Pin=RPI?-22
+Added Pin To Net: NetName=NetRPI?_23 Pin=RPI?-23
+Added Pin To Net: NetName=NetRPI?_24 Pin=RPI?-24
+Added Pin To Net: NetName=GND Pin=RPI?-25
+Added Pin To Net: NetName=NetRPI?_26 Pin=RPI?-26
+Added Pin To Net: NetName=NetRPI?_29 Pin=RPI?-29
+Added Pin To Net: NetName=GND Pin=RPI?-30
+Added Pin To Net: NetName=NetRPI?_31 Pin=RPI?-31
+Added Pin To Net: NetName=NetRPI?_32 Pin=RPI?-32
+Added Pin To Net: NetName=NetRPI?_33 Pin=RPI?-33
+Added Pin To Net: NetName=GND Pin=RPI?-34
+Added Pin To Net: NetName=NetRPI?_35 Pin=RPI?-35
+Added Pin To Net: NetName=NetRPI?_36 Pin=RPI?-36
+Added Pin To Net: NetName=NetRPI?_37 Pin=RPI?-37
+Added Pin To Net: NetName=NetRPI?_38 Pin=RPI?-38
+Added Pin To Net: NetName=GND Pin=RPI?-39
+Added Pin To Net: NetName=NetRPI?_40 Pin=RPI?-40
+Added Member To Class: ClassName=2 Member=Component Q1_2 (Q1) IRF7401PbF-1
+Added Member To Class: ClassName=3 Member=Component Q1_3 (Q1) IRF7401PbF-1
+Added Member To Class: ClassName=2 Member=Component R20_2 (R20) Res3
+Added Member To Class: ClassName=3 Member=Component R20_3 (R20) Res3
+Added Member To Class: ClassName=2 Member=Component R21_2 (R21) Res3
+Added Member To Class: ClassName=3 Member=Component R21_3 (R21) Res3
+Added Member To Class: ClassName=U_Rasp Member=Component RPI? RPI GPIO Connector

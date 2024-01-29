@@ -1,0 +1,88 @@
+Change Component Designator: OldDesignator=ON1 NewDesignator=D?
+Added Component: Designator=1(TP)
+Add component. Clean all parameters for all variants
+Added Component: Designator=2(TP)
+Add component. Clean all parameters for all variants
+Added Component: Designator=3(TP)
+Add component. Clean all parameters for all variants
+Added Component: Designator=4(TP)
+Add component. Clean all parameters for all variants
+Added Component: Designator=5(TP)
+Add component. Clean all parameters for all variants
+Added Component: Designator=6(TP)
+Add component. Clean all parameters for all variants
+Added Component: Designator=C2(CAP_SMD_Electrolytic_10x10)
+Add component. Clean all parameters for all variants
+Add component (AddParameter): Name = "Manufacturer"; Value = "PANASONIC"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Manufacturer Part Number"; Value = "EEEFK1V681AQ"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Package"; Value = "SMD,12.5x13.5mm"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Supplier 1"; Value = "LCSC"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Supplier Part Number 1"; Value = "C178568"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Value"; Value = "680uF"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Voltage"; Value = "35V"; VariantName = "[No Variations]"
+Added Component: Designator=D?(LED0603)
+Add component. Clean all parameters for all variants
+Add component (AddParameter): Name = "Color"; Value = "Green"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Manufacturer"; Value = "TOGIALED"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Manufacturer Part Number"; Value = "TJ-S1608SW6TGLC2G-A5"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Package"; Value = "0603"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Supplier 1"; Value = "LCSC"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Supplier Part Number 1"; Value = "C192316"; VariantName = "[No Variations]"
+Added Component: Designator=D?(LED0603)
+Add component. Clean all parameters for all variants
+Add component (AddParameter): Name = "Color"; Value = "Green"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Manufacturer"; Value = "TOGIALED"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Manufacturer Part Number"; Value = "TJ-S1608SW6TGLC2G-A5"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Package"; Value = "0603"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Supplier 1"; Value = "LCSC"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Supplier Part Number 1"; Value = "C192316"; VariantName = "[No Variations]"
+Added Component: Designator=R?(J1-0603)
+Add component. Clean all parameters for all variants
+Add component (AddParameter): Name = "LatestRevisionDate"; Value = "29-May-2009"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "LatestRevisionNote"; Value = "IPC-7351 Footprint Added."; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Manufacturer"; Value = "YAGEO"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Manufacturer Part Number"; Value = "AC0603FR-07442RL"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "PackageDescription"; Value = "Chip Resistor"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "PackageReference"; Value = "J1-0603"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Published"; Value = "8-Jun-2000"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Publisher"; Value = "Altium Limited"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Supplier 1"; Value = "LCSC"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Supplier Part Number 1"; Value = "C227905"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Value"; Value = "150"; VariantName = "[No Variations]"
+Added Component: Designator=R?(J1-0603)
+Add component. Clean all parameters for all variants
+Add component (AddParameter): Name = "LatestRevisionDate"; Value = "29-May-2009"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "LatestRevisionNote"; Value = "IPC-7351 Footprint Added."; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Manufacturer"; Value = "YAGEO"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Manufacturer Part Number"; Value = "AC0603FR-07442RL"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "PackageDescription"; Value = "Chip Resistor"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "PackageReference"; Value = "J1-0603"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Published"; Value = "8-Jun-2000"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Publisher"; Value = "Altium Limited"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Supplier 1"; Value = "LCSC"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Supplier Part Number 1"; Value = "C227905"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Value"; Value = "220"; VariantName = "[No Variations]"
+Added Pin To Net: NetName=PWM_0_in Pin=1-1
+Added Pin To Net: NetName=PWM_1_in Pin=2-1
+Added Pin To Net: NetName=PWM_2_in Pin=3-1
+Added Pin To Net: NetName=PWM_3_in Pin=4-1
+Added Pin To Net: NetName=PWM_4_in Pin=5-1
+Added Pin To Net: NetName=PWM_5_in Pin=6-1
+Added Pin To Net: NetName=GND Pin=C2-1
+Added Pin To Net: NetName=V_PWR Pin=C2-2
+Added Pin To Net: NetName=GND Pin=D?-2
+Added Pin To Net: NetName=GND Pin=D?-2
+Added Pin To Net: NetName=+3V3 Pin=R?-2
+Added Pin To Net: NetName=+5V Pin=R?-2
+Change Net Name : Old Net Name=NetON1_1 New Net Name=NetD?_1
+Added Member To Class: ClassName=Generador PWM Member=Component 1 TP
+Added Member To Class: ClassName=Generador PWM Member=Component 2 TP
+Added Member To Class: ClassName=Generador PWM Member=Component 3 TP
+Added Member To Class: ClassName=Generador PWM Member=Component 4 TP
+Added Member To Class: ClassName=Generador PWM Member=Component 5 TP
+Added Member To Class: ClassName=Generador PWM Member=Component 6 TP
+Added Member To Class: ClassName=U_DCDC_stepdown Member=Component C2 Cap pol
+Added Member To Class: ClassName=U_DCDC_stepdown Member=Component D? Generic LED
+Added Member To Class: ClassName=U_DCDC_stepdown Member=Component D? Generic LED
+Added Member To Class: ClassName=U_DCDC_stepdown Member=Component R? Res3
+Added Member To Class: ClassName=U_DCDC_stepdown Member=Component R? Res3
