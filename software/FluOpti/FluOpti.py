@@ -29,10 +29,11 @@ class FluOpti():
         
         'R'    :{ 'board': 'FluOpti', 'chan':5, 'value': 0,'status':0, 'm_type': 'LED'},
         'G'    :{ 'board': 'FluOpti','chan':6, 'value': 0,'status':0, 'm_type': 'LED'},
-        'B'    :{ 'board': 'RPI_GPIO','chan':37, 'value': 0,'status':0, 'm_type': 'LED'},
+        '37'    :{ 'board': 'RPI_GPIO','chan':37, 'value': 0,'status':0, 'm_type': 'LED'},
         'W'    :{ 'board': 'FluOpti','chan':8, 'value': 0,'status':0, 'm_type': 'LED'},
-        'H1'   :{ 'board': 'FluOpti','chan':10, 'value': 0,'status':0, 'm_type': 'Heater'},
-        'H2'   :{ 'board': 'FluOpti','chan':11, 'value': 0,'status':0, 'm_type': 'Heater'}
+        'B'    :{ 'board': 'FluOpti','chan':9, 'value': 0,'status':0, 'm_type': 'LED'},
+        'H1'   :{ 'board': 'FluOpti','chan':11, 'value': 0,'status':0, 'm_type': 'Heater'},
+        'H2'   :{ 'board': 'FluOpti','chan':12, 'value': 0,'status':0, 'm_type': 'Heater'}
         }
         
         
