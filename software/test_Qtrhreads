@@ -1,0 +1,71 @@
+import sys
+from PyQt5.QtCore import QThread, pyqtSignal, QTimer, Qt
+from PyQt5.QtWidgets import QApplication
+import time
+
+class LedThread(QThread):
+    update_signal = pyqtSignal(str)
+
+    def __init__(self, color, duracion, tiempo_inicial):
+        super(LedThread, self).__init__()
+        self.color = color
+        self.duracion = duracion
+        self.tiempo_inicial = tiempo_inicial
+
+    def run(self):
+        time.sleep(self.tiempo_inicial)
+        mensaje_encendido = f"{self.tiempo_inicial:.2f}s - Encendiendo LED {self.color}"
+        self.update_signal.emit(mensaje_encendido)
+        print(mensaje_encendido)
+
+        time.sleep(self.duracion)
+        tiempo_actual = self.tiempo_inicial + self.duracion
+        mensaje_apagado = f"{tiempo_actual:.2f}s - Apagando LED {self.color}"
+        self.update_signal.emit(mensaje_apagado)
+        print(mensaje_apagado)
+
+class ExperimentoThread(QThread):
+    def __init__(self, bloque):
+        super(ExperimentoThread, self).__init__()
+        self.bloque = bloque
+
+    def run(self):
+        t_exp = self.bloque['t_exp']
+        threads = []
+        tiempo_actual = 0
+
+        for color in ['roja', 'verde', 'azul', 'blanca']:
+            ti_color = self.bloque[f'ti_{color}']
+            td_color = self.bloque[f'td_{color}']
+
+            if ti_color >= 0 and td_color > 0:
+                led_thread = LedThread(color, td_color, ti_color)
+                led_thread.update_signal.connect(self.actualizar_interfaz)
+                threads.append(led_thread)
+                led_thread.start()
+
+        time.sleep(t_exp) # Esperar el tiempo total del experimento
+
+        # Esperar a que todos los hilos terminen
+        for thread in threads:
+            thread.wait()
+
+    def actualizar_interfaz(self, mensaje):
+        pass
+        print("mensaje: ", mensaje)
+
+# Diccionarios de ejemplo
+bloques = {
+    'bloque1': {'t_exp': 10, 'N_fotos': 0, 'ti_roja': 2, 'td_roja': 1, 'ti_verde': 0, 'td_verde': 1, 'ti_azul': 2, 'td_azul': 6, 'ti_blanca': 6, 'td_blanca': 1},
+    'bloque2': {'t_exp': 3, 'N_fotos': 0, 'ti_roja': 0, 'td_roja': 0, 'ti_verde': 1, 'td_verde': 2, 'ti_azul': 0, 'td_azul': 0, 'ti_blanca': 0, 'td_blanca': 0},
+    # Agrega más bloques si es necesario
+}
+
+# Ejecutar experimentos para cada bloque
+app = QApplication(sys.argv)
+for nombre_bloque, bloque in bloques.items():
+    print(f"Ejecutando experimento en {nombre_bloque}")
+    experimento_thread = ExperimentoThread(bloque)
+    experimento_thread.start()
+    experimento_thread.wait()
+sys.exit(app.exec_())

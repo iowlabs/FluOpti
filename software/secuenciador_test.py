@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
 import matplotlib
 matplotlib.use('Agg')  # 'Agg' es un backend sin interfaz
-
+from PyQt5.QtCore import QThread, pyqtSignal, QTimer, Qt
+import time
 from PyQt5.uic import loadUi
 from PyQt5 import QtCore,QtGui,QtWidgets
 from PyQt5.QtGui import QImage, QPixmap
@@ -34,6 +35,17 @@ class MainWindow(QMainWindow):
         self.dic_bloques = {}
         self.sec.senal_dic_final.connect(self.recibir_diccionario)
         self.button_aceptar.clicked.connect(self.configurar_secuenciador)
+        self.pushButton_run.clicked.connect(self.comenzar_experimentos)
+
+    def comenzar_experimentos(self):
+        self.experimentos = ExperimentosManagerThread(self.dic_bloques, self)
+        self.experimentos.start()
+        self.experimentos.senal_final.connect(self.experimentos_terminados)
+        self.tabWidget.setEnabled(False)
+
+    def experimentos_terminados(self):
+        print('Experimentos terminados')
+        self.tabWidget.setEnabled(True)
 
     def configurar_secuenciador(self):
         n_bloques = int(self.run_spinBox_bloques.value())
@@ -75,6 +87,12 @@ class MainWindow(QMainWindow):
             label.setFont(font)
             new_group.layout().addWidget(label)
             self.groupBox_estado_bloques.layout().addWidget(new_group)
+
+    def LEDOn(self, channel):
+        print(f"Encendiendo LED {channel} desde app")
+    
+    def LEDOff(self, channel):
+        print(f"Apagando LED {channel} desde app")
 
 class Secuenciador(QMainWindow):
     senal_dic_final = QtCore.pyqtSignal(dict)
@@ -267,6 +285,78 @@ class Secuenciador(QMainWindow):
                 self.status.showMessage(str(e), 3000)
                 return False
         return True
+
+class LedThread(QThread):
+    update_signal = pyqtSignal(str)
+
+    def __init__(self, color, duracion, tiempo_inicial, channel, app):
+        super(LedThread, self).__init__()
+        self.color = color
+        self.duracion = duracion
+        self.tiempo_inicial = tiempo_inicial
+        self.channel = channel
+        self.app = app
+
+    def run(self):
+        time.sleep(self.tiempo_inicial)
+        mensaje_encendido = f"{self.tiempo_inicial:.2f}s - Encendiendo LED {self.color}"
+        self.update_signal.emit(mensaje_encendido)
+        self.app.LEDOn(self.channel)
+        print(mensaje_encendido)
+
+        time.sleep(self.duracion)
+        tiempo_actual = self.tiempo_inicial + self.duracion
+        mensaje_apagado = f"{tiempo_actual:.2f}s - Apagando LED {self.color}"
+        self.update_signal.emit(mensaje_apagado)
+        self.app.LEDOff(self.channel)
+        print(mensaje_apagado)
+
+class ExperimentoThread(QThread):
+    def __init__(self, bloque, app):
+        super(ExperimentoThread, self).__init__()
+        self.bloque = bloque
+        self.app = app
+
+    def run(self):
+        t_exp = self.bloque['t_exp']
+        threads = []
+        #map chanel to color
+        channel_dic = {'roja': 2, 'verde': 1, 'azul': 0, 'blanca': 3}
+        for color in ['roja', 'verde', 'azul', 'blanca']:
+            ti_color = self.bloque[f'ti_{color}']
+            td_color = self.bloque[f'td_{color}']
+
+            if ti_color >= 0 and td_color > 0:
+                led_thread = LedThread(color, td_color, ti_color, channel_dic[color], self.app)
+                led_thread.update_signal.connect(self.actualizar_interfaz)
+                threads.append(led_thread)
+                led_thread.start()
+
+        time.sleep(t_exp) # Esperar el tiempo total del experimento
+
+        # Esperar a que todos los hilos terminen
+        for thread in threads:
+            thread.wait()
+
+    def actualizar_interfaz(self, mensaje):
+        pass
+        #print("mensaje: ", mensaje)
+
+
+class ExperimentosManagerThread(QThread):
+    senal_final = pyqtSignal()
+    def __init__(self, bloques, app):
+        super(ExperimentosManagerThread, self).__init__()
+        self.bloques = bloques
+        self.app = app
+
+    def run(self):
+        for nombre_bloque, bloque in self.bloques.items():
+            print(f"Ejecutando experimento en {nombre_bloque}")
+            experimento_thread = ExperimentoThread(bloque, self.app)
+            experimento_thread.start()
+            experimento_thread.wait()
+        self.senal_final.emit()
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)

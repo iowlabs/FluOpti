@@ -1,63 +1,43 @@
-import sys
-from PyQt5.QtWidgets import QApplication, QMainWindow, QPushButton, QLabel, QVBoxLayout, QWidget
-from PyQt5.QtCore import QPropertyAnimation, Qt
+import threading
+import time
 
-class MainWindow(QMainWindow):
-    def __init__(self):
-        super(MainWindow, self).__init__()
+def prender_led(color, duracion, tiempo_inicial):
+    time.sleep(tiempo_inicial)
+    print(f"{tiempo_inicial:.2f}s - Encendiendo LED {color}")
+    time.sleep(duracion)
+    tiempo_actual = tiempo_inicial + duracion
+    print(f"{tiempo_actual:.2f}s - Apagando LED {color}")
+    return tiempo_actual
 
-        self.setWindowTitle("Ventana Principal")
+def ejecutar_experimento(bloque):
+    t_exp = bloque['t_exp']
+    tiempo_actual = 0
+    threads = []
 
-        self.button = QPushButton("Abrir Segunda Ventana", self)
-        self.button.clicked.connect(self.abrir_segunda_ventana)
+    for color in ['roja', 'verde', 'azul', 'blanca']:
+        ti_color = bloque[f'ti_{color}']
+        td_color = bloque[f'td_{color}']
 
-        self.label_animation = QLabel("¡La primera ventana está deshabilitada!", self)
-        self.label_animation.setStyleSheet("color: red;")
-        self.label_animation.setAlignment(Qt.AlignCenter)
-        self.label_animation.hide()
+        if ti_color >= 0 and td_color > 0:
+            thread = threading.Thread(target=prender_led, args=(color, td_color, ti_color))
+            thread.start()
+            threads.append(thread)
 
-        layout = QVBoxLayout()
-        layout.addWidget(self.button)
-        layout.addWidget(self.label_animation)
+    # Esperar el tiempo total del experimento
+    time.sleep(t_exp)
 
-        container = QWidget()
-        container.setLayout(layout)
+    # Esperar a que todos los hilos terminen
+    for thread in threads:
+        thread.join()
 
-        self.setCentralWidget(container)
+# Diccionarios de ejemplo
+bloques = {
+    'bloque1': {'t_exp': 10, 'N_fotos': 0, 'ti_roja': 2, 'td_roja': 1, 'ti_verde': 0, 'td_verde': 1, 'ti_azul': 2, 'td_azul': 6, 'ti_blanca': 6, 'td_blanca': 1},
+    'bloque2': {'t_exp': 3, 'N_fotos': 0, 'ti_roja': 0, 'td_roja': 0, 'ti_verde': 1, 'td_verde': 2, 'ti_azul': 0, 'td_azul': 0, 'ti_blanca': 0, 'td_blanca': 0},
+    # Agrega más bloques si es necesario
+}
 
-    def abrir_segunda_ventana(self):
-        self.second_window = SecondWindow(self)
-
-        # Deshabilitar la ventana principal temporalmente
-        self.setEnabled(False)
-
-        # Mostrar la etiqueta de animación
-        self.label_animation.show()
-
-        # Animación para resaltar el estado
-        animation = QPropertyAnimation(self.label_animation, b"opacity")
-        animation.setDuration(2000)
-        animation.setStartValue(1.0)
-        animation.setEndValue(0.0)
-        animation.finished.connect(self.restore_main_window)
-
-        animation.start()
-
-        self.second_window.show()
-
-    def restore_main_window(self):
-        # Restaurar la ventana principal cuando la animación ha terminado
-        self.setEnabled(True)
-        self.label_animation.hide()
-
-class SecondWindow(QMainWindow):
-    def __init__(self, parent=None):
-        super(SecondWindow, self).__init__(parent)
-
-        self.setWindowTitle("Segunda Ventana")
-
-if __name__ == '__main__':
-    app = QApplication(sys.argv)
-    main_window = MainWindow()
-    main_window.show()
-    sys.exit(app.exec_())
+# Ejecutar experimentos para cada bloque
+for nombre_bloque, bloque in bloques.items():
+    print(f"Ejecutando experimento en {nombre_bloque}")
+    ejecutar_experimento(bloque)
