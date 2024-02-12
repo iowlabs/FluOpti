@@ -4,7 +4,7 @@ matplotlib.use('Agg')  # 'Agg' es un backend sin interfaz
 
 from PyQt5 import QtCore,QtGui,QtWidgets
 from PyQt5.QtGui import QImage, QPixmap
-from PyQt5.QtWidgets import  QMainWindow, QApplication, QFileDialog
+from PyQt5.QtWidgets import  QMainWindow, QApplication, QFileDialog, QWidget
 
 from GUI.gui import Ui_MainWindow
 from hardware.FluOpti import FluOpti
@@ -367,6 +367,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self.video_timer.stop()
         self.run_timer.stop()
         self.Fluo.close()
+
 
 if __name__ == "__main__":
 
