@@ -96,12 +96,6 @@ class MainWindow(QtWidgets.QMainWindow):
         #TIME AND DATE
         self.date_now = QtCore.QDate.currentDate()
 
-        #MGMT UPDATE DATA
-        self.run_timer = QtCore.QTimer()
-        self.run_timer.setInterval(1000*self.sample_time)
-        self.run_timer.timeout.connect(self.updateData)
-        self.run_timer.start()
-
         #
         self.lineEdit.setText(str(self.temp_sp[0]))
         self.lineEdit_2.setText(str(self.temp_sp[1]))
@@ -180,6 +174,14 @@ class MainWindow(QtWidgets.QMainWindow):
         #self.video_timer.start()
 
         #timer for Video
+
+
+        #MGMT UPDATE DATA
+        self.run_timer = QtCore.QTimer()
+        self.run_timer.setInterval(1000*self.sample_time)
+        self.run_timer.timeout.connect(self.updateData)
+        self.run_timer.start()
+
 
     def comenzar_experimentos(self):
         self.experimentos = ExperimentosManagerThread(self.dic_bloques, self)
