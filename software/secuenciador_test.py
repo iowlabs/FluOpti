@@ -36,16 +36,59 @@ class MainWindow(QMainWindow):
         self.sec.senal_dic_final.connect(self.recibir_diccionario)
         self.button_aceptar.clicked.connect(self.configurar_secuenciador)
         self.pushButton_run.clicked.connect(self.comenzar_experimentos)
+        self.status = QtWidgets.QStatusBar()
+        self.setStatusBar(self.status)
+        #aumentar fuente de status bar
+        font = self.status.font()
+        font.setPointSize(12)
+        self.status.setFont(font)
+
+        self.colores = {0: 'blue', 1: 'yellowgreen', 2: 'red', 3: 'lightgray'}
+        self.map_color_to_label = {0: self.label_luz_azul, 1: self.label_luz_verde, 2: self.label_luz_roja, 3: self.label_luz_blanca}
 
     def comenzar_experimentos(self):
         self.experimentos = ExperimentosManagerThread(self.dic_bloques, self)
         self.experimentos.start()
         self.experimentos.senal_final.connect(self.experimentos_terminados)
+        self.experimentos.senal_inicio_bloque.connect(self.inicio_bloque)
+        self.experimentos.senal_fin_bloque.connect(self.fin_bloque)
         self.tabWidget.setEnabled(False)
+
+    def inicio_bloque(self, bloque, t_exp):
+        self.time_elapsed = 0
+        print(f'Iniciando bloque {bloque}')
+
+        # DESCOMENTAR ESTO AL PASAR EL T_EXP A MINUTOS        
+        # hours, remainder = divmod(t_exp * 60, 3600)
+        # minutes, seconds = divmod(remainder, 60)
+        # time_format = "{:02}:{:02}:{:02}".format(int(hours), int(minutes), int(seconds))
+        # self.status.showMessage(f'Corriendo {bloque} de duración {time_format}')
+
+        self.status.showMessage(f'Corriendo {bloque} de duración {t_exp}')
+        # crear timer para actualizar el tiempo desde el inicio del bloque
+        self.bloque_timer = QtCore.QTimer()
+        self.bloque_timer.setInterval(1000)
+        self.bloque_timer.timeout.connect(self.updateTime)
+        self.bloque_timer.start()
+
+    def fin_bloque(self, bloque):
+        print(f'Finalizando  {bloque}')
+        self.status.showMessage(f'Finalizando {bloque}', 3000)
+        self.bloque_timer.stop()
+
+    def updateTime(self):
+        #print('Actualizando tiempo...')
+        self.time_elapsed += 1
+        # convertir self.time_elapsed a formato hh:mm:ss
+        hours, remainder = divmod(self.time_elapsed, 3600)
+        minutes, seconds = divmod(remainder, 60)
+        time_format = "{:02}:{:02}:{:02}".format(int(hours), int(minutes), int(seconds))
+        self.label_tiempo.setText(f'Tiempo transcurrido: {time_format}')
 
     def experimentos_terminados(self):
         print('Experimentos terminados')
         self.tabWidget.setEnabled(True)
+        self.label_tiempo.setText('Experimentos terminados')
 
     def configurar_secuenciador(self):
         n_bloques = int(self.run_spinBox_bloques.value())
@@ -88,11 +131,26 @@ class MainWindow(QMainWindow):
             new_group.layout().addWidget(label)
             self.groupBox_estado_bloques.layout().addWidget(new_group)
 
+
+    def actualizar_estilo_led(self, label, estado, color):
+        # Actualizar el estilo del QLabel para representar el estado del LED
+        if estado:
+            label.setStyleSheet(f'QLabel {{ background-color: {color}; border-radius: 50px; }}')
+            print(f'stylesheet LED {color}')
+        else:
+            label.setStyleSheet('QLabel {}')
+
     def LEDOn(self, channel):
         print(f"Encendiendo LED {channel} desde app")
-    
+        color = self.colores[channel]
+        label = self.map_color_to_label[channel]
+        self.actualizar_estilo_led(label, True, color)
+
     def LEDOff(self, channel):
         print(f"Apagando LED {channel} desde app")
+        color = self.colores[channel]
+        label = self.map_color_to_label[channel]
+        self.actualizar_estilo_led(label, False, color)
 
 class Secuenciador(QMainWindow):
     senal_dic_final = QtCore.pyqtSignal(dict)
@@ -299,12 +357,15 @@ class LedThread(QThread):
 
     def run(self):
         time.sleep(self.tiempo_inicial)
+        #time.sleep(self.tiempo_inicial * 60)
+
         mensaje_encendido = f"{self.tiempo_inicial:.2f}s - Encendiendo LED {self.color}"
         self.update_signal.emit(mensaje_encendido)
         self.app.LEDOn(self.channel)
         print(mensaje_encendido)
 
         time.sleep(self.duracion)
+        #time.sleep(self.duracion * 60)
         tiempo_actual = self.tiempo_inicial + self.duracion
         mensaje_apagado = f"{tiempo_actual:.2f}s - Apagando LED {self.color}"
         self.update_signal.emit(mensaje_apagado)
@@ -333,7 +394,8 @@ class ExperimentoThread(QThread):
                 led_thread.start()
 
         time.sleep(t_exp) # Esperar el tiempo total del experimento
-
+        #time.sleep(t_exp * 60)  
+        
         # Esperar a que todos los hilos terminen
         for thread in threads:
             thread.wait()
@@ -345,6 +407,8 @@ class ExperimentoThread(QThread):
 
 class ExperimentosManagerThread(QThread):
     senal_final = pyqtSignal()
+    senal_inicio_bloque = pyqtSignal(str, int)
+    senal_fin_bloque = pyqtSignal(str)
     def __init__(self, bloques, app):
         super(ExperimentosManagerThread, self).__init__()
         self.bloques = bloques
@@ -355,9 +419,11 @@ class ExperimentosManagerThread(QThread):
             print(f"Ejecutando experimento en {nombre_bloque}")
             experimento_thread = ExperimentoThread(bloque, self.app)
             experimento_thread.start()
+            self.senal_inicio_bloque.emit(nombre_bloque, int(bloque["t_exp"]))
             experimento_thread.wait()
-        self.senal_final.emit()
+            self.senal_fin_bloque.emit(nombre_bloque)
 
+        self.senal_final.emit()
 if __name__ == '__main__':
     app = QApplication(sys.argv)
     window = MainWindow()

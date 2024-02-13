@@ -2,14 +2,12 @@
 import matplotlib
 matplotlib.use('Agg')  # 'Agg' es un backend sin interfaz
 
-from PyQt5 import QtCore,QtGui,QtWidgets
+from PyQt5 import QtCore
 from PyQt5.QtGui import QImage, QPixmap
-from PyQt5.QtWidgets import  QMainWindow, QApplication, QFileDialog, QWidget
+from PyQt5.QtWidgets import  QMainWindow, QApplication, QFileDialog, QGroupBox, QLabel, QVBoxLayout, QStatusBar
 from PyQt5.uic import loadUi
 from PyQt5.QtCore import QThread, pyqtSignal, QTimer, Qt
 
-
-from GUI.gui import Ui_MainWindow
 from hardware.FluOpti import FluOpti
 
 import cv2
@@ -19,8 +17,6 @@ from time import sleep
 from pandas import *
 import numpy as np
 from simple_pid import PID
-import threading
-import json
 import datetime
 import csv
 import time
@@ -31,7 +27,7 @@ debug = True
 DATA_PATH = "data/"
 
 
-class MainWindow(QtWidgets.QMainWindow):
+class MainWindow(QMainWindow):
     def __init__(self):
         super(MainWindow,self).__init__()
         loadUi('GUI/gui_test.ui', self)
@@ -172,7 +168,6 @@ class MainWindow(QtWidgets.QMainWindow):
         self.video_timer.setInterval(10)
         self.video_timer.timeout.connect(self.updateFrame)
         #self.video_timer.start()
-
         #timer for Video
 
 
@@ -183,15 +178,55 @@ class MainWindow(QtWidgets.QMainWindow):
         self.run_timer.start()
 
 
+        #STATUS BAR
+        self.status = QStatusBar()
+        self.setStatusBar(self.status)
+        #aumentar fuente de status bar
+        font = self.status.font()
+        font.setPointSize(12)
+        self.status.setFont(font)
+
+        # DICCIONARIOS PARA MOSTRAR COLORES EN INTERFAZ
+        self.colores = {0: 'blue', 1: 'yellowgreen', 2: 'red', 3: 'lightgray'}
+        self.map_color_to_label = {0: self.label_luz_azul, 1: self.label_luz_verde, 2: self.label_luz_roja, 3: self.label_luz_blanca}
+
     def comenzar_experimentos(self):
         self.experimentos = ExperimentosManagerThread(self.dic_bloques, self)
         self.experimentos.start()
         self.experimentos.senal_final.connect(self.experimentos_terminados)
+        self.experimentos.senal_inicio_bloque.connect(self.inicio_bloque)
+        self.experimentos.senal_fin_bloque.connect(self.fin_bloque)
         self.tabWidget.setEnabled(False)
+
+    def inicio_bloque(self, bloque, t_exp):
+        self.time_elapsed = 0
+        print(f'Iniciando bloque {bloque}')
+        self.status.showMessage(f'Corriendo {bloque} de duración {t_exp} segundos')
+        # crear timer para actualizar el tiempo desde el inicio del bloque
+        self.bloque_timer = QtCore.QTimer()
+        self.bloque_timer.setInterval(1000)
+        self.bloque_timer.timeout.connect(self.updateTime)
+        self.bloque_timer.start()
+
+    def fin_bloque(self, bloque):
+        print(f'Finalizando  {bloque}')
+        self.status.showMessage(f'Finalizando {bloque}', 3000)
+        self.bloque_timer.stop()
+
+    def updateTime(self):
+        #print('Actualizando tiempo...')
+        self.time_elapsed += 1
+        # convertir self.time_elapsed a formato hh:mm:ss
+        hours, remainder = divmod(self.time_elapsed, 3600)
+        minutes, seconds = divmod(remainder, 60)
+        time_format = "{:02}:{:02}:{:02}".format(int(hours), int(minutes), int(seconds))
+        self.label_tiempo.setText(f'Tiempo transcurrido: {time_format}')
 
     def experimentos_terminados(self):
         print('Experimentos terminados')
         self.tabWidget.setEnabled(True)
+        self.label_tiempo.setText('Experimentos terminados')
+
 
     def updateFrame(self):
         ret, self.image = self.capture.read()
@@ -418,17 +453,17 @@ class MainWindow(QtWidgets.QMainWindow):
         for bloque, dic in self.dic_bloques.items():
             str_label = ""
             for key, value in dic.items():
-                # label = QtWidgets.QLabel(f'{key}: {value}')
+                # label = QLabel(f'{key}: {value}')
                 # self.groupBox_estado_bloques.layout().addWidget(label)
                 if key != "N_fotos":
                     str_label += f'{key}: {value} min\n'
                 else:
                     str_label += f'{key}: {value}\n'
-            new_group = QtWidgets.QGroupBox()
+            new_group = QGroupBox()
             new_group.setTitle(bloque)
             new_group.setStyleSheet("QGroupBox { font: bold; }")
-            new_group.setLayout(QtWidgets.QVBoxLayout())
-            label = QtWidgets.QLabel(str_label)
+            new_group.setLayout(QVBoxLayout())
+            label = QLabel(str_label)
             #center label
             label.setAlignment(QtCore.Qt.AlignCenter)
             #grow font size
@@ -447,7 +482,7 @@ class Secuenciador(QMainWindow):
         super().__init__()
         loadUi('GUI/secuenciador_v2.ui', self)
         #create status bar
-        self.status = QtWidgets.QStatusBar()
+        self.status = QStatusBar()
         self.setStatusBar(self.status)
         self.status.showMessage('Secuenciador de luces', 3000)
         self.tabs = [self.tab_1, self.tab_2, self.tab_3, self.tab_4, self.tab_5, self.tab_6]
@@ -692,6 +727,8 @@ class ExperimentoThread(QThread):
 
 class ExperimentosManagerThread(QThread):
     senal_final = pyqtSignal()
+    senal_inicio_bloque = pyqtSignal(str, int)
+    senal_fin_bloque = pyqtSignal(str)
     def __init__(self, bloques, app):
         super(ExperimentosManagerThread, self).__init__()
         self.bloques = bloques
@@ -702,13 +739,16 @@ class ExperimentosManagerThread(QThread):
             print(f"Ejecutando experimento en {nombre_bloque}")
             experimento_thread = ExperimentoThread(bloque, self.app)
             experimento_thread.start()
+            self.senal_inicio_bloque.emit(nombre_bloque, int(bloque["t_exp"]))
             experimento_thread.wait()
+            self.senal_fin_bloque.emit(nombre_bloque)
+
         self.senal_final.emit()
 
 
 if __name__ == "__main__":
 
-    app = QtWidgets.QApplication([])
+    app = QApplication([])
     main = MainWindow()
     main.show()
     #
