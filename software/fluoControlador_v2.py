@@ -359,7 +359,9 @@ class MainWindow(QtWidgets.QMainWindow):
         val = self.sliders[ch].value()
         self.sBox[ch].setValue(val)
         self.led_pwr[ch] = val
-        if self.Fluo._default_modules[self.channel[ch]]['status']:
+        #if self.Fluo._default_modules[self.channel[ch]]['status']:
+        if self.Fluo.modules[self.channel[ch]]['status']:
+        
             self.LEDOn(ch)
 
     def LEDset2(self,ch):
