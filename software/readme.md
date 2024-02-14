@@ -1,25 +1,28 @@
 # Hardware
 
-En la raspberry:
+En la Raspberry Pi:
   - pin 3 (GPIO2): SDA
   - pin 5 (GPIO3): SCL
   - pin 6 :        GND
 
 En la tarjeta FLuOpti
-  Esquina superior izquierda:
-    - 1 SCL             - 8 PWM in 1
-    - 2 SDA             - 7 PWM in 2
-    - 3 NotConnected    - 6 GPIO1
-    - 4 GND             - 5 GPIO2
+  Esquina superior izquierda:<br>
+    1 - SCL &emsp; &emsp; &emsp; &emsp; &emsp;8 - PWM in 1<br>
+    2 - SDA &emsp; &emsp; &emsp; &emsp; &ensp;&nbsp;7 - PWM in 2<br>
+    3 - NotConnected   &emsp; 6 - GPIO1<br>
+    4 - GND &emsp; &emsp; &emsp; &emsp; &ensp;5 - GPIO2<br>
+  
+  Los conectores GPIO y PWM estan diseñados para conectar cualquier pin de la Raspberry Pi, los cuales son clonados a la parte inferior de la placa. *e.g.* puedo conectar el pin15 de la raspberry Pi al conector GPIO1, y luego conectarme directamente al GPIO1 de la parte inferior de la placa para acceder a él.
 
- De manera alternativa, es preferible usar el conector i2c (esquina superior derecha)para mayor simpleza:
-    - 1 SCL
-    - 2 SDA
-    - 3 GND
+ De manera alternativa, es preferible usar el conector i2c (esquina superior derecha) para mayor simpleza:<br>
+  1 - SCL<br>
+  2 - SDA<br>
+  3 - GND
 
-![Conectores_RPI](/README_images/conectores_RPI.png)
-
-
+<p align="center">
+<img width="600" src="/README_images/conectores_RPI.png">
+</p>
+  
 # Instalación
 
 ## Sistemas operativos previos a BookWorm
@@ -28,7 +31,7 @@ Instalar las librerias necesarias para el funcionamiento de la placa:
 ```
 sudo pip install adafruit-ADS1x15
 sudo pip install adafruit-pca9685
-sudo  pip install simple-pid
+sudo pip install simple-pid
 ```
 
 ## Sistema operativo BookWorm
@@ -42,7 +45,7 @@ sudo apt install --upgrade python3-setuptools
 sudo apt install python3.11-venv
 ```
 
-Crear el ambiente fluop_env:
+Crear el ambiente *fluop_env*:
 ```
 python3 -m venv fluop_env --system-site-packages
 ```
@@ -51,7 +54,7 @@ y activarlo
 source fluop_env/bin/activate
 ```
 
-ahora se deben instalar las librerias en el:
+ahora se deben instalar las librerias en él:
 ```
 pip3 install adafruit-ADS1x15
 pip3 install adafruit-pca9685
@@ -63,7 +66,7 @@ Alternativamente se pueden instalar las librerias directamente en el sistema (si
 sudo pip install adafruit-ADS1x15 --break-system-packages
 ```
 
-## Activar comunicaci�n I2C
+## Activar comunicación I2C
 
 Ejecutar *sudo raspi-config*, ir a *opciones de interface* y activar la comunicación I2C.
 
