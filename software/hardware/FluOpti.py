@@ -3,6 +3,10 @@
 # import general libraries
 import json, signal, sys, os, glob, datetime, io
 from time import sleep,time
+import numpy as np
+from picamera2 import Picamera2, Preview
+from PIL import Image
+from pprint import *
 #from picamera import PiCamera, Color #Pruebas en IOWLABS con Raspi 4 genera errores
 
 #from FluOpti.camera_pi import Camera #Esta libreria no esta en la carpeta
@@ -28,20 +32,20 @@ class FluOpti():
         self.type = type
         if self.type == "normal":
             self.modules = {
-            #MODULE     #BOARD              #CHANNEL  #VALUE    #STATUS  
+            #MODULE_NAME  #BOARD           #CHANNEL  #VALUE    #STATUS  
             'R'    :{ 'board': 'FluOpti' , 'chan':5, 'value': 0, 'status':0, 'm_type': 'LED'},
             'G'    :{ 'board': 'FluOpti' , 'chan':6, 'value': 0, 'status':0, 'm_type': 'LED'},
-            'B'    :{ 'board': 'FluOpti', 'chan':9,'value': 0, 'status':0, 'm_type': 'LED'},
-            'W'    :{ 'board': 'FluOpti' , 'chan':10, 'value': 0, 'status':0, 'm_type': 'LED'},
+            'B'    :{ 'board': 'FluOpti', 'chan':9,'value': 100, 'status':0, 'm_type': 'LED'},
+            'W'    :{ 'board': 'FluOpti' , 'chan':10, 'value': 100, 'status':0, 'm_type': 'LED'},
             'H1'   :{ 'board': 'FluOpti' , 'chan':11,'value': 0, 'status':0, 'm_type': 'Heater'},
             'H2'   :{ 'board': 'FluOpti' , 'chan':12,'value': 0, 'status':0, 'm_type': 'Heater'},
-            '37'    :{ 'board': 'GPIO','chan':37, 'value': 0,'status':0, 'm_type': 'LED'}
+            '37'    :{ 'board': 'GPIO','chan':37, 'value': 100,'status':0, 'm_type': 'LED'}
         	}
             ## ** CHANNEL refers to related pin connection in the FluOpti Board or Raspberry Pi GPIO Pin
             
         if self.type == "mini":
             self._default_modules  = {
-            #MODULE    #BOARD               #CHANNEL  #VALUE    #STATUS
+            #MODULE_NAME   #BOARD               #CHANNEL  #VALUE    #STATUS
             'R'    :{ 'board': 'FluOpti' , 'chan':5, 'value': 0,'status':0, 'm_type': 'LED'},
             'G'    :{ 'board': 'FluOpti' , 'chan':4, 'value': 0,'status':0, 'm_type': 'LED'},
             'B'    :{ 'board': 'FluOpti' , 'chan':3, 'value': 0,'status':0, 'm_type': 'LED'},
@@ -64,7 +68,19 @@ class FluOpti():
 
         #data data path
         self.data_path = "/data"
-
+        
+        #schedule control regimes
+        self.sch = dict()        
+        self.sch['times'] = {
+                'th': [24,48],   # schedule module time limits
+                }
+        
+        self.sch['leds'] = {
+                'R': [100,0],   # R light power percetage in each schedule module
+                'G': [0,100]    # G light power percetage in each schedule module
+                }
+        self.css = 0            # current schedule step number
+        
         #Temperature control parameters
         self.t1 = 0.0
         self.t2 = 0.0
@@ -87,17 +103,74 @@ class FluOpti():
 
         #Temp threading
         self.temp_thread = None
-
+        
+        #Timelapse parameters
+        self.cicle = 0          # current cicle
+        self.time = {
+                'init' : 0, # to store the time at the begginig of the timelapse
+                'cicle_init' : 0, # time from the beggining of the cicle
+                'cicle_end' : 0, #to store the time to finish the current cicle
+                'cicle' : 0 # time per cicle
+                } 
+        
         # Start hardware components
         self.camera_status = False
-        #self.startCamera()
 
         self.startPWM()
         self.startTemperatureSensor()
-
-    def get_chan(self,module):
+        
+    def init_timer(self, tpc):
+        # tpc = time per cicle in seconds
+        
+        self.time['init'] = time()  # the init of the timelapse in seconds
+        self.time['cicle'] = tpc
+        self.time['cicle_end'] = tpc
+        
+    def check_timer(self):
+        #return true if the end of the cicle time was reached
+        
+        t0 = self.time['init']
+        tf = self.time['cicle_end']
+        elapsed = time() - t0
+        
+        if elapsed < tf:
+            return(True)
+        
+        else:
+            
+            #update the cicle end time
+            self.time['cicle_end'] = (self.cicle + 1) * self.time['cicle']
+            return(False)
+    
+    def update_power(self):
+        # to update the optogenetic LEDs power accord the schedule
+        for led in self.sch['leds'].keys():
+            
+            power = self.sch['leds'][led][self.css]
+            self.LEDSetPWR(led,power)
+    
+    def opto_ON(self):
+        #turn ON the optogenetics light control
+        for led in self.sch['leds'].keys():
+            
+            self.module_switch(led, 'ON', msj = True)
+    
+    def update_schedule(self, t_key = 'ts'):
+        # Check the schedule time
+        t0 = self.time['init']
+        
+        if time() - t0 > self.sch['times'][t_key][self.css]:
+            
+            # go to next schedule step
+            self.css += 1
+            
+            #update and turn ON the proper optogenetics lights
+            self.update_power()
+            self.opto_ON()
+        
+    def get_chan(self,name):
         # return the phisical channel conection of a module
-        chan = self.modules[module]['chan']
+        chan = self.modules[name]['chan']
         return(chan + 1)
 
 
@@ -156,7 +229,17 @@ class FluOpti():
                 print('\nThere is no modules with the given characteristics\n')
 
             return(selected_modules)
+    
+    def check_sch(self):
+        
+        n_modules = len(self.sch['times']['th']) # number of schedule modules
 
+        for key in self.sch['leds'].keys():
+            m_number = len(self.sch['leds'][key])
+            
+            if m_number != n_modules:
+                print("\n[Fatal Error] - Optogenetics Schedule definition lengths doesn't match\n")
+                sys.exit()
 
     def gen_frame(self):
         """Video streaming generator function."""
@@ -194,37 +277,216 @@ class FluOpti():
 
     def startCamera(self):
         try:
-            print("Starting camera", flush=True)
+            print("\nStarting camera\n", flush=True)
             try: self.camera.close()
             except: pass
-            self.camera = PiCamera()
+            #init the camera object
+            self.camera = Picamera2()
             self.camera_status = True
+            
         except Exception as e:
             self.camera_status = False
             print(e, flush=True)
+    
+    def setCamera(self, fpath = False, mode_number = 3, configuration_values = False):
+        # to set the camera configurations
+        # fpath = full path of txt file to store the camera configuration values
+        
+        try:
+            try:
+                camera = self.camera
+            except:
+                # start camera object if neccesary
+                self.startCamera()
+                
+            modes = camera.sensor_modes
+            mode = modes[mode_number]
+            print('\nSelected sensor mode properties:')
+            pprint(mode)
+            
+            print('\n')
+            
+            msize = mode['size']
+            mformat = mode['format']
+            
+            # use default configuration values in case they were not indicated
+            if type(configuration_values) != dict:
+                
+                configuration_values = {
+                # high resolution still configuration  
+                                                    #(min, max, default_value)
+                'AeConstraintMode': 0,                  #(0, 3, 0) - AEC/AGC constrain mode - 0 = Normal
+                'AeEnable': False,                      #(False, True, None) - When if is False ( = AEC/AGC off), there will be no automatic updates to the camera’s gain or exposure settings
+                'AeExposureMode': 0,                    #(0, 3, 0) - 0 = normal exposures, 1 = shorter exposures, 2 = longer exposures, 3= custom exposures
+                'AeMeteringMode': 0,                    #(0, 3, 0) - Metering mode for AEC/AGC
+                'AnalogueGain': 1,                      #(1.0, 10.666666984558105, Undefined) - Analogue gain applied by the sensor
+                'AwbEnable': False,                     #(False, True, None) When it is False (AutoWhiteBalance off), there will be no automatic updates to the colour gains
+                'AwbMode': 0,                           #(0, 7, 0)
+                'Brightness': 0.0,                      #(-1.0, 1.0, 0.0) - (-1.0) is very dark, 1.0 is very brigh
+                'ColourGains': (1,1),                   #tuple (red_gain, blue_gain), each value: (0.0, 32.0, Undefined) - Setting these numbers disables AWB.
+                'Contrast': 1.0,                        #(0.0, 32.0, 1.0) -  zero means "no contrast", 1.0 is the default "normal" contrast
+                'ExposureTime': 10000,                   #(75, 11766829, Undefined). unit microseconds.
+                'ExposureValue': 0.0,                   #(-8.0, 8.0, 0.0) - Zero is the base exposure level. Positive values increase the target brightness, and negative values decrease it 
+                'FrameDurationLimits': (47183,11767556),   # tuple, each value: (47183, 11767556, Undefined). The maximum and minimum time that the sensor can take to deliver a frame (microseconds). Reciprocal of frame rate
+                'NoiseReductionMode': 0,                #(0, 4, 0) - 0 is off.
+                'Saturation': 1.0,                      #(0.0, 32.0, 1.0) - zero greyscale images, 1.0 "normal" saturation, higher values for more saturated colours.
+                'ScalerCrop': (0, 2, 3280, 2460),       #((0, 0, 64, 64), (0, 0, 3280, 2464), (0, 2, 3280, 2460)) - to use just a sub part of the sensor area: (x_offset, y_offset, width, height)
+                'Sharpness': 0.0                        #(0.0, 16.0, 1.0)} - zero no additional sharpening, 1.0 is "normal" level of sharpening, larger values apply proportionately stronger sharpening
+                }
+            
+            capture_config = camera.create_still_configuration(
+                    controls=configuration_values,
+                    main={'size': msize},
+                    raw ={'format': mformat}
+                    ) 
 
+            # AEC/AGC = Automatic Exposure Control/Automatic Gain Control Mode
+            
+            # assign the configuration
+            camera.configure(capture_config)
+            
+            camera.options["quality"] = 90          #JPEG quality level, 90 is default, 0 is the worst quality and 95 is best
+            camera.options["compress_level"] = 1    #PNG compression level, where 0 gives no compression, 1 is the fastest that actually does any compression, and 9 is the slowest
+            
+            #save the camera and sensor mode properties to a file:
+            # These are not the capture configurations
+            if type(fpath) == str:
+                cam_props = camera.camera_configuration()
+                with open(fpath, 'w') as f:
+                    
+                    	for key in cam_props.keys():
+                    		f.write(str(key)+': ')
+                    		f.write(str(cam_props[key])+'\n')        
+        
+        # in case something fails at camera configuration                
+        except Exception as e:
+    
+            print(e, flush=True)
+            print('\n[Error]Fail to configure the camera\n')
+    
+    def im_capture(self, impath, n_imgs = 1, mfpath = False, printm = False, display = False):
+        # to capture an image
+        # mfpath: filename/path to store the metadata
+        
+        camera = self.camera
+        
+        ## Capture the image
+        request = camera.capture_request()
+        im_array = request.make_array("main")  # array from the "main" stream
+        metadata = request.get_metadata()
+        request.release()                      # requests must always be returned to libcamera
+        
+        if printm:
+            print('\nMetadata of image:\n')
+            pprint(metadata)
+        
+        # create a dict to store all the metadata values
+        metadata_all = dict()
+        
+        for key in metadata.keys():
+            metadata_all[key] = list() #make a list for each parameter
+            metadata_all[key].append(metadata[key])
+    
+            
+        sumv = np.longdouble(im_array)
+            
+        for i in range(1,n_imgs):
+            
+            request = camera.capture_request()
+            metadata = request.get_metadata()
+            sumv += np.longdouble(request.make_array("main"))
+            request.release()
+            
+            if printm:
+                print('\nMetadata of image '+str(i)+':')
+                pprint(metadata)
+            
+            
+            #Store the metadata in just one file
+            for key in metadata.keys():
+                try:
+                    metadata_all[key].append(metadata[key])
+                except:
+                    if key not in metadata.keys():
+                        metadata_all[key] = list()
+                        metadata_all[key].append(metadata[key])
+                    else:
+                        print(str(key)+' value fail to be stored')
+            
+        #save the metadata of the captures in one file:       
+        if type(mfpath) == str:
+            with open(mfpath, 'w') as f:
+                
+                for key in metadata_all.keys():
+                    f.write(str(key)+': ')
+                    f.write(str(metadata_all[key])+'\n')
+        
+        # average them
+        img = Image.fromarray(np.uint8(sumv / n_imgs))
+        img.save(impath)
+        
+        if display == True:
+            img.show() # display the image
+        
+        print('\nFilename '+impath+' stored successfully\n')
+        
+       # return(img)
+    
+    def LEDSetPWR(self,name, p):
+        # just to set the power of module indicated by name
+        self.modules[name]['value'] = p
 
-    def LEDSetPWR(self,color, p):
-        self.modules[color]['value'] = p
-
-
-    def LEDon(self,color, msj = True):
-
-        power = self.modules[color]['value']
-
-        self.pwm.set_pwm(self.modules[color]['chan'],power)
-        self.modules[color]['status'] = 1
-
-        if msj == True:
-            print("Channel "+ color +f" turned ON at {power} %" )
-
-    def LEDoff(self,color, msj = True):
-        # It doesn't change the stored value
-        self.pwm.set_pwm(self.modules[color]['chan'],0)
-        self.modules[color]['status'] = 0
-
-        if msj == True:
-            print("\nChannel "+ color +" turned OFF" )
+        
+    def module_switch(self,names, turn, msj = True):
+        # it replaces LEDon LEDoff/moduleOFF
+        # Turn ON or OFF the LED module indicated by name
+        # It doesn't change the stored power value
+        
+        #make names a list in case it is a single string
+        if type(names) != list:
+            names = [names]
+        
+        for name in names:
+        
+            if turn == 'ON':
+                # The actual power is obtained from its module's attribute
+                power = self.modules[name]['value']
+                status = 1
+                switch_msj = "Channel "+ name + f" turned ON at {power} %\n"
+            
+            elif turn == 'OFF':
+                
+                power = 0
+                status = 0
+                switch_msj = "\nChannel "+ name + " turned OFF\n"
+                
+            else:
+                print('\nIt is a toggle switch. "turn" parameter accept only "ON" or "OFF"\n')
+                sys.exit()
+                
+            # board where channel is connected
+            board = self.modules[name]['board']  
+            
+            # for LEDs conected at FluOpti board
+            if board == 'FluOpti':    
+                
+                    # switch the power and the status
+                    self.pwm.set_pwm(self.modules[name]['chan'],power)
+                    self.modules[name]['status'] = status
+                    
+                    if msj == True:
+                        print(switch_msj)
+            
+            # for LEDs conected at GPIO board
+            elif board == 'GPIO':
+                
+                # Switch the value
+                self.GPIO_control(name, status = status, msj = msj)
+            
+            # if use another non-defined board
+            else:
+                print('Indefined action for board '+ board +' of channel '+ str(name) +'\n')
+            
 
     def updateTemps(self):
         self.t1,self.t2 = self.temp_sensor.get_temps()
@@ -241,8 +503,8 @@ class FluOpti():
 
     def stopTempCtrl(self):
         self.temp_ctrl_run = False
-        self.LEDoff('H1')
-        self.LEDoff('H2')
+        self.module_switch('H1','OFF')
+        self.module_switch('H2','OFF')
 
     def setTempSP(self, ch,new_tsp):
         if ch == 1:
@@ -266,63 +528,98 @@ class FluOpti():
             self.t_pwr2 = self.pid_temp2(self.t2)
             self.LEDSetPWR('H1',self.t_pwr1)
             self.LEDSetPWR('H2',self.t_pwr2)
-            self.LEDon('H1')
-            self.LEDon('H2')
+            self.module_switch('H1','ON')
+            self.module_switch('H2','ON')
             print(f"CH1 - t:\t{self.t1} tsp:\t{self.t_sp1} pwr :\t{self.t_pwr1}\nCH2 - t:\t{self.t2} tsp:\t{self.t_sp2} pwr :\t{self.t_pwr2}")
             sleep(self.temp_ctrl_update_time)
 
-    def takePicture(self, led,end=False, preview_time = 5, speed = 100000, _contrast = 0, res = [960,600]):
-        for k in list(self.modules.keys()):
-            if k == led:
-                self.LEDon(k)
+    def takePicture(self, led_name,end=False, preview_time = 5, speed = 100000, _contrast = 0, res = [960,600]):
+        
+        for name in list(self.modules.keys()):
+            if name == led_name:
+                self.module_switch(name,'ON')
             else:
-                self.LEDoff(k)
+                self.module_switch(name,'OFF')
+        
         self.camera.resolution = res
         self.camera.start_preview()
         sleep(preview_time)
         self.camera.shutter_speed = speed
         self.camera.contrast = _contrast
         self.photo_counter  += 1
-        self.photo_output   = self.photo_path + led +str(self.photo_counter)+'.jpg'
+        self.photo_output   = self.photo_path + led_name +str(self.photo_counter)+'.jpg'
         self.camera.capture(file_output_photo)
 
-    def add_channel(self, module, channel, board = 'FluOpti'):
+    def add_channel(self, name, channel, board = 'FluOpti'):
         # board = 'FluOpti' or 'GPIO'
 
-        self.modules[module] = {'board': board,'chan': channel, 'value': 0, 'status':0}
+        self.modules[name] = {'board': board,'chan': channel, 'value': 0, 'status':0}
 
         if board == 'GPIO':
             GPIO.setup(channel, GPIO.OUT)
-            print('\nModule '+ str(module) + 'set as output in GPIO '+str(channel)+ '\n')
+            print('\nModule '+ str(name) + 'set as output in GPIO '+str(channel)+ '\n')
 
-    def GPIO_control(self, module, status, msj = True):
+    def GPIO_control(self, name, status, msj = True):
 
-        pin = self.modules[module]['chan']
+        pin = self.modules[name]['chan']
 
         if status == 0:
             # Turn OFF
             GPIO.output(pin,GPIO.LOW)
 
             #update the status
-            self.modules[module]['status'] = status
+            self.modules[name]['status'] = status
 
             if msj == True:
-                print('\nGPIO Pin ' + str(pin) + ' (module '+ str(module) +') turned OFF')
+                print('\nModule '+ str(name) + ' (GPIO Pin ' + str(pin) + ') turned OFF')
 
         elif status == 1:
             #Turn ON
             GPIO.output(pin,GPIO.HIGH)
 
             #update the status
-            self.modules[module]['status'] = status
+            self.modules[name]['status'] = status
 
             if msj == True:
-                print('\nGPIO Pin ' + str(pin) + ' (module '+ str(module) +') turned ON')
+                print('\nModule '+ str(name) + ' (GPIO Pin ' + str(pin) + ') turned ON')
 
         else:
 
             print('Invalid GPIO state. It have to be 0 or 1')
 
+    def autotest(self, values = [30,65,100]):
+        # to perform an autotest of the hardware
+        # values: list with the power values to test. each value int between [0-100]
+        
+        leds = self.get_modules(m_type = 'LED')
+        
+        for led in leds:
+            
+            basal_pwr = self.modules[led]['value']
+            
+            board = self.modules[led]['board']  
+        
+            # for LEDs conected at FluOpti board
+            if board == 'FluOpti':
+                # test different power values
+                for power in values:
+                    
+                    self.LEDSetPWR(led,power)
+                    self.module_switch(led,'ON')
+                    sleep(0.5)
+            # for LEDs conected to GPIO at RPI
+            elif board == 'GPIO':
+                self.module_switch(led,'ON')
+                sleep(1)
+                
+            #turn OFF
+            self.module_switch(led, 'OFF')
+            #return to basal power    
+            self.LEDSetPWR(led,basal_pwr)
+        
+        print('\n-- AutoTest Finished --\n')
+            
+    
     ''' Clean exit '''
     def close(self, *args):
         try:
@@ -346,7 +643,7 @@ if __name__ == '__main__':
     for prcnt in seq:
         sys.stdout.flush()
         Fluopti.LEDSetPWR('B',prcnt)
-        Fluopti.LEDon('B')
+        Fluopti.module_switch('B', 'ON')
         sleep(5)
     #Fluo.stopTempCtrl()
-    Fluopti.LEDoff('B')
+    Fluopti.module_switch('B','OFF')
