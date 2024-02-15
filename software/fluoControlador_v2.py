@@ -1,4 +1,11 @@
 # -*- coding: utf-8 -*-
+"""
+Created on Wed Feb 7 2024
+
+@author: Cristobal Vasquez
+
+Codigo modificado de fluoControlador.py para agregar nueva interfaz y funcionalidades
+"""
 import matplotlib
 matplotlib.use('Agg')  # 'Agg' es un backend sin interfaz
 
