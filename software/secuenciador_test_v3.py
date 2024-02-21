@@ -51,30 +51,29 @@ class MainWindow(QMainWindow):
         self.experimentos.start()
         self.experimentos.senal_final.connect(self.experimentos_terminados)
         self.experimentos.senal_inicio_bloque.connect(self.inicio_bloque)
+        self.experimentos.senal_inicio_total.connect(self.inicio_total_experimentos)
         self.experimentos.senal_fin_bloque.connect(self.fin_bloque)
         self.tabWidget.setEnabled(False)
 
-    def inicio_bloque(self, bloque, t_exp):
+    def inicio_total_experimentos(self, tiempo_total):
+
+        self.tiempo_total_exp = tiempo_total
         self.time_elapsed = 0
-        print(f'Iniciando bloque {bloque}')
 
-        # DESCOMENTAR ESTO AL PASAR EL T_EXP A MINUTOS        
-        # hours, remainder = divmod(t_exp * 60, 3600)
-        # minutes, seconds = divmod(remainder, 60)
-        # time_format = "{:02}:{:02}:{:02}".format(int(hours), int(minutes), int(seconds))
-        # self.status.showMessage(f'Corriendo {bloque} de duración {time_format}')
-
-        self.status.showMessage(f'Corriendo {bloque} de duración {t_exp}')
-        # crear timer para actualizar el tiempo desde el inicio del bloque
         self.bloque_timer = QtCore.QTimer()
         self.bloque_timer.setInterval(1000)
         self.bloque_timer.timeout.connect(self.updateTime)
         self.bloque_timer.start()
 
+    def inicio_bloque(self, bloque, t_exp):
+        #self.time_elapsed = 0
+        print(f'Iniciando bloque {bloque}')
+        self.status.showMessage(f'Corriendo {bloque} de duración {t_exp:02} horas')
+        
+
     def fin_bloque(self, bloque):
         print(f'Finalizando  {bloque}')
         self.status.showMessage(f'Finalizando {bloque}', 3000)
-        self.bloque_timer.stop()
 
     def updateTime(self):
         #print('Actualizando tiempo...')
@@ -83,12 +82,15 @@ class MainWindow(QMainWindow):
         hours, remainder = divmod(self.time_elapsed, 3600)
         minutes, seconds = divmod(remainder, 60)
         time_format = "{:02}:{:02}:{:02}".format(int(hours), int(minutes), int(seconds))
-        self.label_tiempo.setText(f'Tiempo transcurrido: {time_format}')
+        string_label = "Tiempo transcurrido: {} / {}:00:00".format(time_format, self.tiempo_total_exp)
+        self.label_tiempo.setText(string_label)
 
     def experimentos_terminados(self):
         print('Experimentos terminados')
         self.tabWidget.setEnabled(True)
         self.label_tiempo.setText('Experimentos terminados')
+        self.bloque_timer.stop()
+
 
     def configurar_secuenciador(self):
         n_bloques = int(self.run_spinBox_bloques.value())
@@ -114,10 +116,12 @@ class MainWindow(QMainWindow):
             for key, value in dic.items():
                 # label = QtWidgets.QLabel(f'{key}: {value}')
                 # self.groupBox_estado_bloques.layout().addWidget(label)
-                if key != "N_fotos":
-                    str_label += f'{key}: {value} min\n'
+                if key == "t_exp":
+                    str_label += f'{key}: {value} h\n'
+                elif key == "t_control":
+                    str_label += f'{key}: {value} °C\n'
                 else:
-                    str_label += f'{key}: {value}\n'
+                    str_label += f'{key}: {value} %\n'
             new_group = QtWidgets.QGroupBox()
             new_group.setTitle(bloque)
             new_group.setStyleSheet("QGroupBox { font: bold; }")
@@ -172,8 +176,8 @@ class MainWindow(QMainWindow):
         # self.grafico_bloques.canvas.axes[0].plot(t_exp_acum, I_rojo_acum, label='Rojo', color='red')
         # self.grafico_bloques.canvas.axes[1].plot(t_exp_acum, I_verde_acum, label='Verde', color='green')
 
-        self.grafico_bloques.canvas.axes[0].step(t_exp_acum, I_rojo_acum, where='post', label='Rojo', color='red')
-        self.grafico_bloques.canvas.axes[1].step(t_exp_acum, I_verde_acum, where='post', label='Verde', color='green')
+        self.grafico_bloques.canvas.axes[0].step(t_exp_acum, I_rojo_acum, where='pre', label='Rojo', color='red')
+        self.grafico_bloques.canvas.axes[1].step(t_exp_acum, I_verde_acum, where='pre', label='Verde', color='green')
 
         # self.grafico_bloques.canvas.axes[2].step(t_exp_acum, T_control_acum, where='post', label='Control', color='blue')
         self.grafico_bloques.canvas.axes[2].plot(t_exp_acum, T_control_acum, label='Control')
@@ -194,25 +198,32 @@ class MainWindow(QMainWindow):
                 pos_x = (tiempo_cambio + tiempos_cambio_bloque[i - 2]) / 2
 
                 # Añadir área bajo la curva
-
-            self.grafico_bloques.canvas.axes[0].fill_between(t_exp_acum[:tiempo_cambio], 0, I_rojo_acum[:tiempo_cambio], alpha=0.3, color='red')
-            self.grafico_bloques.canvas.axes[1].fill_between(t_exp_acum[:tiempo_cambio], 0, I_verde_acum[:tiempo_cambio], alpha=0.3, color='green')
-            #self.grafico_bloques.canvas.axes[2].fill_between(t_exp_acum[:tiempo_cambio], 0, T_control_acum[:tiempo_cambio], alpha=0.3, color='blue')
-
+            #rint(t_exp_acum[:tiempo_cambio + 1])
+            #self.grafico_bloques.canvas.axes[0].fill_between(t_exp_acum[:tiempo_cambio + 1], 0, I_rojo_acum[:tiempo_cambio] + [I_rojo_acum[-1]], step='pre', alpha=0.3, color='red')
+            #self.grafico_bloques.canvas.axes[1].fill_between(t_exp_acum[:tiempo_cambio + 1], 0, I_verde_acum[:tiempo_cambio], step='pre', alpha=0.3, color='green')
+            #self.grafico_bloques.canvas.axes[2].fill_between(t_exp_acum[:tiempo_cambio + 1], 0, T_control_acum[:tiempo_cambio], step='pre', alpha=0.3, color='blue')
 
             #self.grafico_bloques.canvas.axes[0].fill_between(t_exp_acum[:tiempo_cambio + 1], 0, I_rojo_acum[:tiempo_cambio], alpha=0.3, color='red')
             #self.grafico_bloques.canvas.axes[1].fill_between(t_exp_acum[:tiempo_cambio + 1], 0, I_verde_acum[:tiempo_cambio], alpha=0.3, color='green')
             
             #self.grafico_bloques.canvas.axes[2].fill_between(t_exp_acum[:tiempo_cambio + 1], 0, T_control_acum[:tiempo_cambio], alpha=0.3, color='blue')
 
-            self.grafico_bloques.canvas.axes[0].text(pos_x, max(I_rojo_acum) + 2, bloque_text, rotation=0, ha='center', va='bottom')
+            self.grafico_bloques.canvas.axes[0].text(pos_x, 100 + 2, bloque_text, rotation=0, ha='center', va='bottom')
+
+        self.grafico_bloques.canvas.axes[0].fill_between(t_exp_acum, 0, I_rojo_acum, step='pre', alpha=0.3, color='red')
+        self.grafico_bloques.canvas.axes[1].fill_between(t_exp_acum, 0, I_verde_acum, step='pre', alpha=0.3, color='green')
+        self.grafico_bloques.canvas.axes[0].set_yticks([0, 50, 100])
+        self.grafico_bloques.canvas.axes[0].set_yticklabels(['', '50%', '100%'])
+        self.grafico_bloques.canvas.axes[1].set_yticks([0, 50, 100])
+        self.grafico_bloques.canvas.axes[1].set_yticklabels(['', '50%', '100%'])
+
 
         # Configurar leyendas y etiquetas
         self.grafico_bloques.canvas.axes[0].legend()
-        self.grafico_bloques.canvas.axes[0].set_ylabel('LED Rojo')
+        self.grafico_bloques.canvas.axes[0].set_ylabel('Rojo')
 
         self.grafico_bloques.canvas.axes[1].legend()
-        self.grafico_bloques.canvas.axes[1].set_ylabel('LED Verde')
+        self.grafico_bloques.canvas.axes[1].set_ylabel('Verde')
 
         self.grafico_bloques.canvas.axes[2].legend()
         self.grafico_bloques.canvas.axes[2].set_xlabel('Tiempo acumulado (horas)')
@@ -229,12 +240,11 @@ class MainWindow(QMainWindow):
         # Actualizar el estilo del QLabel para representar el estado del LED
         if estado:
             label.setStyleSheet(f'QLabel {{ background-color: {color}; border-radius: 50px; }}')
-            print(f'stylesheet LED {color}')
         else:
             label.setStyleSheet('QLabel {}')
 
-    def LEDOn(self, channel):
-        print(f"Encendiendo LED {channel} desde app")
+    def LEDOn(self, channel, intensidad):
+        print(f"Encendiendo LED {channel} con intensidad {intensidad} desde app")
         color = self.colores[channel]
         label = self.map_color_to_label[channel]
         self.actualizar_estilo_led(label, True, color)
@@ -290,35 +300,6 @@ class Secuenciador(QMainWindow):
 
         self.senal_dic_final.emit(dic_final)
         return dic_final
- 
-
-class LedThread(QThread):
-    update_signal = pyqtSignal(str)
-
-    def __init__(self, color, duracion, tiempo_inicial, channel, app):
-        super(LedThread, self).__init__()
-        self.color = color
-        self.duracion = duracion
-        self.tiempo_inicial = tiempo_inicial
-        self.channel = channel
-        self.app = app
-
-    def run(self):
-        time.sleep(self.tiempo_inicial)
-        #time.sleep(self.tiempo_inicial * 60)
-
-        mensaje_encendido = f"{self.tiempo_inicial:.2f}s - Encendiendo LED {self.color}"
-        self.update_signal.emit(mensaje_encendido)
-        self.app.LEDOn(self.channel)
-        print(mensaje_encendido)
-
-        time.sleep(self.duracion)
-        #time.sleep(self.duracion * 60)
-        tiempo_actual = self.tiempo_inicial + self.duracion
-        mensaje_apagado = f"{tiempo_actual:.2f}s - Apagando LED {self.color}"
-        self.update_signal.emit(mensaje_apagado)
-        self.app.LEDOff(self.channel)
-        print(mensaje_apagado)
 
 class ExperimentoThread(QThread):
     def __init__(self, bloque, app):
@@ -330,23 +311,24 @@ class ExperimentoThread(QThread):
         t_exp = self.bloque['t_exp']
         threads = []
         #map chanel to color
-        channel_dic = {'roja': 2, 'verde': 1, 'azul': 0, 'blanca': 3}
-        for color in ['roja', 'verde', 'azul', 'blanca']:
-            ti_color = self.bloque[f'ti_{color}']
-            td_color = self.bloque[f'td_{color}']
-
-            if ti_color >= 0 and td_color > 0:
-                led_thread = LedThread(color, td_color, ti_color, channel_dic[color], self.app)
-                led_thread.update_signal.connect(self.actualizar_interfaz)
-                threads.append(led_thread)
-                led_thread.start()
+        channel_dic = {'rojo': 2, 'verde': 1, 'azul': 0, 'blanca': 3}
+        intensidad_rojo = self.bloque['I_rojo']
+        intensidad_verde = self.bloque['I_verde']
+        
+        print(f"Bloque de {t_exp} minutos")
+        print(f"LED Rojo: {intensidad_rojo}")
+        print(f"LED Verde: {intensidad_verde}")
+        print("Encendiendo LEDs...")
+        self.app.LEDOn(channel_dic['rojo'], intensidad_rojo)
+        self.app.LEDOn(channel_dic['verde'], intensidad_verde)
 
         time.sleep(t_exp) # Esperar el tiempo total del experimento
-        #time.sleep(t_exp * 60)  
-        
-        # Esperar a que todos los hilos terminen
-        for thread in threads:
-            thread.wait()
+        #time.sleep(t_exp * 60 * 60) # Esperar el tiempo total del experimento
+
+        print("Apagando LEDs...")
+        self.app.LEDOff(channel_dic['rojo'])
+        self.app.LEDOff(channel_dic['verde'])
+
 
     def actualizar_interfaz(self, mensaje):
         pass
@@ -355,6 +337,7 @@ class ExperimentoThread(QThread):
 
 class ExperimentosManagerThread(QThread):
     senal_final = pyqtSignal()
+    senal_inicio_total = pyqtSignal(int)
     senal_inicio_bloque = pyqtSignal(str, int)
     senal_fin_bloque = pyqtSignal(str)
     def __init__(self, bloques, app):
@@ -363,10 +346,17 @@ class ExperimentosManagerThread(QThread):
         self.app = app
 
     def run(self):
+        tiempo_total = 0
+        for nombre_bloque, bloque in self.bloques.items():
+            tiempo_total += int(bloque["t_exp"])
+        print(f"Tiempo total de experimentos: {tiempo_total} minutos")
+        self.senal_inicio_total.emit(tiempo_total)
         for nombre_bloque, bloque in self.bloques.items():
             print(f"Ejecutando experimento en {nombre_bloque}")
             experimento_thread = ExperimentoThread(bloque, self.app)
             experimento_thread.start()
+
+
             self.senal_inicio_bloque.emit(nombre_bloque, int(bloque["t_exp"]))
             experimento_thread.wait()
             self.senal_fin_bloque.emit(nombre_bloque)
