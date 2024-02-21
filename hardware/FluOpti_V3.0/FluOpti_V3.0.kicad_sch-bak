@@ -1842,105 +1842,6 @@
         )
       )
     )
-    (symbol "Jumper:SolderJumper_3_Open" (pin_names (offset 0) hide) (in_bom yes) (on_board yes)
-      (property "Reference" "JP" (at -2.54 -2.54 0)
-        (effects (font (size 1.27 1.27)))
-      )
-      (property "Value" "SolderJumper_3_Open" (at 0 2.794 0)
-        (effects (font (size 1.27 1.27)))
-      )
-      (property "Footprint" "" (at 0 0 0)
-        (effects (font (size 1.27 1.27)) hide)
-      )
-      (property "Datasheet" "~" (at 0 0 0)
-        (effects (font (size 1.27 1.27)) hide)
-      )
-      (property "ki_keywords" "Solder Jumper SPDT" (at 0 0 0)
-        (effects (font (size 1.27 1.27)) hide)
-      )
-      (property "ki_description" "Solder Jumper, 3-pole, open" (at 0 0 0)
-        (effects (font (size 1.27 1.27)) hide)
-      )
-      (property "ki_fp_filters" "SolderJumper*Open*" (at 0 0 0)
-        (effects (font (size 1.27 1.27)) hide)
-      )
-      (symbol "SolderJumper_3_Open_0_1"
-        (arc (start -1.016 1.016) (mid -2.0276 0) (end -1.016 -1.016)
-          (stroke (width 0) (type default))
-          (fill (type none))
-        )
-        (arc (start -1.016 1.016) (mid -2.0276 0) (end -1.016 -1.016)
-          (stroke (width 0) (type default))
-          (fill (type outline))
-        )
-        (rectangle (start -0.508 1.016) (end 0.508 -1.016)
-          (stroke (width 0) (type default))
-          (fill (type outline))
-        )
-        (polyline
-          (pts
-            (xy -2.54 0)
-            (xy -2.032 0)
-          )
-          (stroke (width 0) (type default))
-          (fill (type none))
-        )
-        (polyline
-          (pts
-            (xy -1.016 1.016)
-            (xy -1.016 -1.016)
-          )
-          (stroke (width 0) (type default))
-          (fill (type none))
-        )
-        (polyline
-          (pts
-            (xy 0 -1.27)
-            (xy 0 -1.016)
-          )
-          (stroke (width 0) (type default))
-          (fill (type none))
-        )
-        (polyline
-          (pts
-            (xy 1.016 1.016)
-            (xy 1.016 -1.016)
-          )
-          (stroke (width 0) (type default))
-          (fill (type none))
-        )
-        (polyline
-          (pts
-            (xy 2.54 0)
-            (xy 2.032 0)
-          )
-          (stroke (width 0) (type default))
-          (fill (type none))
-        )
-        (arc (start 1.016 -1.016) (mid 2.0276 0) (end 1.016 1.016)
-          (stroke (width 0) (type default))
-          (fill (type none))
-        )
-        (arc (start 1.016 -1.016) (mid 2.0276 0) (end 1.016 1.016)
-          (stroke (width 0) (type default))
-          (fill (type outline))
-        )
-      )
-      (symbol "SolderJumper_3_Open_1_1"
-        (pin passive line (at -5.08 0 0) (length 2.54)
-          (name "A" (effects (font (size 1.27 1.27))))
-          (number "1" (effects (font (size 1.27 1.27))))
-        )
-        (pin passive line (at 0 -3.81 90) (length 2.54)
-          (name "C" (effects (font (size 1.27 1.27))))
-          (number "2" (effects (font (size 1.27 1.27))))
-        )
-        (pin passive line (at 5.08 0 180) (length 2.54)
-          (name "B" (effects (font (size 1.27 1.27))))
-          (number "3" (effects (font (size 1.27 1.27))))
-        )
-      )
-    )
     (symbol "RF_Module:ESP32-WROOM-32D" (in_bom yes) (on_board yes)
       (property "Reference" "U" (at -12.7 34.29 0)
         (effects (font (size 1.27 1.27)) (justify left))
@@ -2374,6 +2275,58 @@
         )
       )
     )
+    (symbol "power:+3.3V" (power) (pin_names (offset 0)) (in_bom yes) (on_board yes)
+      (property "Reference" "#PWR" (at 0 -3.81 0)
+        (effects (font (size 1.27 1.27)) hide)
+      )
+      (property "Value" "+3.3V" (at 0 3.556 0)
+        (effects (font (size 1.27 1.27)))
+      )
+      (property "Footprint" "" (at 0 0 0)
+        (effects (font (size 1.27 1.27)) hide)
+      )
+      (property "Datasheet" "" (at 0 0 0)
+        (effects (font (size 1.27 1.27)) hide)
+      )
+      (property "ki_keywords" "power-flag" (at 0 0 0)
+        (effects (font (size 1.27 1.27)) hide)
+      )
+      (property "ki_description" "Power symbol creates a global label with name \"+3.3V\"" (at 0 0 0)
+        (effects (font (size 1.27 1.27)) hide)
+      )
+      (symbol "+3.3V_0_1"
+        (polyline
+          (pts
+            (xy -0.762 1.27)
+            (xy 0 2.54)
+          )
+          (stroke (width 0) (type default))
+          (fill (type none))
+        )
+        (polyline
+          (pts
+            (xy 0 0)
+            (xy 0 2.54)
+          )
+          (stroke (width 0) (type default))
+          (fill (type none))
+        )
+        (polyline
+          (pts
+            (xy 0 2.54)
+            (xy 0.762 1.27)
+          )
+          (stroke (width 0) (type default))
+          (fill (type none))
+        )
+      )
+      (symbol "+3.3V_1_1"
+        (pin power_in line (at 0 0 90) (length 0) hide
+          (name "+3V3" (effects (font (size 1.27 1.27))))
+          (number "1" (effects (font (size 1.27 1.27))))
+        )
+      )
+    )
     (symbol "power:GND" (power) (pin_names (offset 0)) (in_bom yes) (on_board yes)
       (property "Reference" "#PWR" (at 0 -6.35 0)
         (effects (font (size 1.27 1.27)) hide)
@@ -2491,9 +2444,6 @@
   )
   (junction (at 385.445 254) (diameter 0) (color 0 0 0 0)
     (uuid 4ac4f7c1-a050-43bc-a7ca-88b543465584)
-  )
-  (junction (at 97.155 113.03) (diameter 0) (color 0 0 0 0)
-    (uuid 52865d51-3b46-42b8-8451-10064da06c41)
   )
   (junction (at 384.81 294.005) (diameter 0) (color 0 0 0 0)
     (uuid 56950f29-230a-4a93-b758-bf513a49c0ff)
@@ -2752,10 +2702,6 @@
     (stroke (width 0) (type default))
     (uuid 1de7ed16-9a0b-4adc-83a7-7b737f4205b7)
   )
-  (wire (pts (xy 262.255 160.02) (xy 259.715 160.02))
-    (stroke (width 0) (type default))
-    (uuid 1e94b48a-cc4a-478d-b2f4-081846fd3675)
-  )
   (wire (pts (xy 43.815 187.96) (xy 48.895 187.96))
     (stroke (width 0) (type default))
     (uuid 1ef2e328-c81d-4496-a14d-c477d735e271)
@@ -2852,10 +2798,6 @@
     (stroke (width 0) (type default))
     (uuid 2c3c9207-fa4d-4ce4-8027-4ab0e1b4b18b)
   )
-  (wire (pts (xy 248.92 51.435) (xy 245.11 51.435))
-    (stroke (width 0) (type default))
-    (uuid 2f5c3f09-8be3-45bd-9df2-02b60751bdd8)
-  )
   (wire (pts (xy 318.77 137.795) (xy 330.835 137.795))
     (stroke (width 0) (type default))
     (uuid 30d78ad0-f255-48e0-8e62-9e3a52ed6608)
@@ -2896,6 +2838,10 @@
     (stroke (width 0) (type default))
     (uuid 382169b7-fb99-464b-a088-8a5556c5c7f8)
   )
+  (wire (pts (xy 229.235 173.99) (xy 225.425 173.99))
+    (stroke (width 0) (type default))
+    (uuid 38501d86-b178-4b1f-ba21-9cc3743d1911)
+  )
   (wire (pts (xy 56.515 187.96) (xy 59.055 187.96))
     (stroke (width 0) (type default))
     (uuid 385fce98-59ea-43c7-ae32-d0568e5af4a1)
@@ -2932,7 +2878,11 @@
     (stroke (width 0) (type default))
     (uuid 4124c210-cc0c-43e6-833c-430f7cb05e5e)
   )
-  (wire (pts (xy 262.255 160.02) (xy 262.255 165.1))
+  (wire (pts (xy 235.585 190.5) (xy 233.045 190.5))
+    (stroke (width 0) (type default))
+    (uuid 419fc91a-65d4-4a3f-9d0f-1a28fd7fa0c3)
+  )
+  (wire (pts (xy 262.255 165.1) (xy 262.255 163.83))
     (stroke (width 0) (type default))
     (uuid 41e95717-75d8-4dfd-aed1-d759b259518e)
   )
@@ -3096,7 +3046,7 @@
     (stroke (width 0) (type default))
     (uuid 5b07106b-58e1-407e-b4a0-266466f298d5)
   )
-  (wire (pts (xy 93.98 113.03) (xy 97.155 113.03))
+  (wire (pts (xy 93.98 113.03) (xy 97.79 113.03))
     (stroke (width 0) (type default))
     (uuid 5b5bb736-c28e-4576-8c33-c16cd8cd722b)
   )
@@ -3191,10 +3141,6 @@
   (wire (pts (xy 316.23 50.165) (xy 308.61 50.165))
     (stroke (width 0) (type default))
     (uuid 6d751c6c-9440-42a5-83dc-16d31c772b18)
-  )
-  (wire (pts (xy 97.155 113.03) (xy 97.155 118.745))
-    (stroke (width 0) (type default))
-    (uuid 6e1e8936-05d3-4701-a2d8-a3361c7071a5)
   )
   (wire (pts (xy 161.925 161.925) (xy 156.845 161.925))
     (stroke (width 0) (type default))
@@ -3372,7 +3318,7 @@
     (stroke (width 0) (type default))
     (uuid 8bef7b7b-6bff-4106-b83a-98b184105857)
   )
-  (wire (pts (xy 233.045 190.5) (xy 238.125 190.5))
+  (wire (pts (xy 243.205 190.5) (xy 245.745 190.5))
     (stroke (width 0) (type default))
     (uuid 8cc2440f-03f0-4469-be8d-a31d42ca8495)
   )
@@ -3764,7 +3710,7 @@
     (stroke (width 0) (type default))
     (uuid cd72be16-e110-4af9-8410-94e4a9d80ebb)
   )
-  (wire (pts (xy 225.425 173.99) (xy 230.505 173.99))
+  (wire (pts (xy 236.855 173.99) (xy 239.395 173.99))
     (stroke (width 0) (type default))
     (uuid cdbf5159-0d0b-4e93-9e7c-6a9cc209e54c)
   )
@@ -3803,10 +3749,6 @@
   (wire (pts (xy 361.315 150.495) (xy 365.125 150.495))
     (stroke (width 0) (type default))
     (uuid d541c2bd-0f95-45f0-a3ce-e1da5fa0c3a2)
-  )
-  (wire (pts (xy 97.155 113.03) (xy 97.79 113.03))
-    (stroke (width 0) (type default))
-    (uuid d545b6ac-90f6-41b7-a683-25977ba97feb)
   )
   (wire (pts (xy 123.19 96.52) (xy 123.19 99.06))
     (stroke (width 0) (type default))
@@ -4137,7 +4079,7 @@
     (effects (font (size 1.27 1.27)) (justify left bottom))
     (uuid 2d9b6596-1a3f-43e0-94da-4b2b9225dfcc)
   )
-  (label "IO0" (at 230.505 173.99 0) (fields_autoplaced)
+  (label "IO0" (at 239.395 173.99 0) (fields_autoplaced)
     (effects (font (size 1.27 1.27)) (justify left bottom))
     (uuid 2fb60d8d-3c3c-4aee-87f9-8215103472d2)
   )
@@ -4145,7 +4087,7 @@
     (effects (font (size 1.27 1.27)) (justify right bottom))
     (uuid 3cd193e5-4704-4d09-bbdf-84f72ffa29c7)
   )
-  (label "RESET" (at 238.125 190.5 0) (fields_autoplaced)
+  (label "RESET" (at 245.745 190.5 0) (fields_autoplaced)
     (effects (font (size 1.27 1.27)) (justify left bottom))
     (uuid 41ef662b-b529-4cf8-bf6f-7a3b07d5f7b1)
   )
@@ -4276,13 +4218,6 @@
       (effects (font (size 1.27 1.27)) (justify right) hide)
     )
   )
-  (global_label "3.3V" (shape input) (at 92.075 122.555 180) (fields_autoplaced)
-    (effects (font (size 1.27 1.27)) (justify right))
-    (uuid 0dd0da34-3125-46f2-9612-e33f2252ba25)
-    (property "Intersheetrefs" "${INTERSHEET_REFS}" (at 84.9774 122.555 0)
-      (effects (font (size 1.27 1.27)) (justify right) hide)
-    )
-  )
   (global_label "20V" (shape input) (at 115.57 96.52 180) (fields_autoplaced)
     (effects (font (size 1.27 1.27)) (justify right))
     (uuid 0edb5270-07db-4909-8523-923935d5f9cb)
@@ -4350,13 +4285,6 @@
     (effects (font (size 1.27 1.27)) (justify right))
     (uuid 28624ca3-139e-4557-a7b3-7eec37835ea8)
     (property "Intersheetrefs" "${INTERSHEET_REFS}" (at 339.3592 184.15 0)
-      (effects (font (size 1.27 1.27)) (justify right) hide)
-    )
-  )
-  (global_label "SCL" (shape input) (at 432.435 252.095 180) (fields_autoplaced)
-    (effects (font (size 1.27 1.27)) (justify right))
-    (uuid 29a0cfae-ef5e-466b-b086-9ed0b3f2c203)
-    (property "Intersheetrefs" "${INTERSHEET_REFS}" (at 426.0216 252.095 0)
       (effects (font (size 1.27 1.27)) (justify right) hide)
     )
   )
@@ -4500,13 +4428,6 @@
       (effects (font (size 1.27 1.27)) (justify left) hide)
     )
   )
-  (global_label "EN_V" (shape input) (at 102.235 122.555 0) (fields_autoplaced)
-    (effects (font (size 1.27 1.27)) (justify left))
-    (uuid 527006d5-f6e9-46b3-bd85-3cebf7bc3f5d)
-    (property "Intersheetrefs" "${INTERSHEET_REFS}" (at 109.6765 122.555 0)
-      (effects (font (size 1.27 1.27)) (justify left) hide)
-    )
-  )
   (global_label "+12V" (shape input) (at 54.61 91.44 180) (fields_autoplaced)
     (effects (font (size 1.27 1.27)) (justify right))
     (uuid 53c8ae25-50f2-4fdd-ad8c-621377d8d876)
@@ -4528,13 +4449,6 @@
       (effects (font (size 1.27 1.27)) (justify right) hide)
     )
   )
-  (global_label "3.3V" (shape input) (at 259.715 160.02 180) (fields_autoplaced)
-    (effects (font (size 1.27 1.27)) (justify right))
-    (uuid 5a292922-3e60-4ff9-b5bc-3c2206a064e9)
-    (property "Intersheetrefs" "${INTERSHEET_REFS}" (at 252.6174 160.02 0)
-      (effects (font (size 1.27 1.27)) (justify right) hide)
-    )
-  )
   (global_label "16V" (shape input) (at 172.085 100.965 180) (fields_autoplaced)
     (effects (font (size 1.27 1.27)) (justify right))
     (uuid 614b67a1-3cd7-460a-8d4d-74d24b8d2bc5)
@@ -4553,6 +4467,13 @@
     (effects (font (size 1.27 1.27)) (justify right))
     (uuid 64074112-3d98-4dd2-b27c-7d90b9213137)
     (property "Intersheetrefs" "${INTERSHEET_REFS}" (at 25.6692 187.96 0)
+      (effects (font (size 1.27 1.27)) (justify right) hide)
+    )
+  )
+  (global_label "SDA" (shape input) (at 432.435 252.095 180) (fields_autoplaced)
+    (effects (font (size 1.27 1.27)) (justify right))
+    (uuid 6415b33d-a02b-469c-96f4-94eb1816950a)
+    (property "Intersheetrefs" "${INTERSHEET_REFS}" (at 425.9611 252.095 0)
       (effects (font (size 1.27 1.27)) (justify right) hide)
     )
   )
@@ -4612,13 +4533,6 @@
       (effects (font (size 1.27 1.27)) (justify left) hide)
     )
   )
-  (global_label "EN_V" (shape input) (at 248.92 51.435 0) (fields_autoplaced)
-    (effects (font (size 1.27 1.27)) (justify left))
-    (uuid 7657a5b6-a3c9-4124-a7d8-76d4bdfde99d)
-    (property "Intersheetrefs" "${INTERSHEET_REFS}" (at 256.3615 51.435 0)
-      (effects (font (size 1.27 1.27)) (justify left) hide)
-    )
-  )
   (global_label "I_H1" (shape input) (at 416.56 220.345 180) (fields_autoplaced)
     (effects (font (size 1.27 1.27)) (justify right))
     (uuid 769e14ba-dd97-49db-bd1c-2efd1f34d9d0)
@@ -4658,6 +4572,13 @@
     (effects (font (size 1.27 1.27)) (justify right))
     (uuid 7d47a46d-b653-4ca6-8efe-651ae0020c48)
     (property "Intersheetrefs" "${INTERSHEET_REFS}" (at 286.5144 241.3 0)
+      (effects (font (size 1.27 1.27)) (justify right) hide)
+    )
+  )
+  (global_label "SCL" (shape input) (at 432.435 254.635 180) (fields_autoplaced)
+    (effects (font (size 1.27 1.27)) (justify right))
+    (uuid 81d74c2e-b597-4d0d-92ca-6154e41e6618)
+    (property "Intersheetrefs" "${INTERSHEET_REFS}" (at 426.0216 254.635 0)
       (effects (font (size 1.27 1.27)) (justify right) hide)
     )
   )
@@ -4710,10 +4631,10 @@
       (effects (font (size 1.27 1.27)) (justify right) hide)
     )
   )
-  (global_label "3.3V" (shape input) (at 144.145 237.49 180) (fields_autoplaced)
+  (global_label "3.3V_Disp" (shape input) (at 144.145 237.49 180) (fields_autoplaced)
     (effects (font (size 1.27 1.27)) (justify right))
     (uuid 9813e954-3961-48be-8144-a50184db3099)
-    (property "Intersheetrefs" "${INTERSHEET_REFS}" (at 137.1268 237.49 0)
+    (property "Intersheetrefs" "${INTERSHEET_REFS}" (at 132.0279 237.49 0)
       (effects (font (size 1.27 1.27)) (justify right) hide)
     )
   )
@@ -4806,6 +4727,13 @@
     (uuid bfaa429f-e194-4058-9d11-7b59f71fa6db)
     (property "Intersheetrefs" "${INTERSHEET_REFS}" (at 338.0892 259.715 0)
       (effects (font (size 1.27 1.27)) (justify right) hide)
+    )
+  )
+  (global_label "3.3V" (shape input) (at 97.79 113.03 0) (fields_autoplaced)
+    (effects (font (size 1.27 1.27)) (justify left))
+    (uuid c43fa453-2c5f-4a54-9669-5121be69af9d)
+    (property "Intersheetrefs" "${INTERSHEET_REFS}" (at 104.8876 113.03 0)
+      (effects (font (size 1.27 1.27)) (justify left) hide)
     )
   )
   (global_label "3.3V" (shape input) (at 379.095 31.75 0) (fields_autoplaced)
@@ -4924,13 +4852,6 @@
     (effects (font (size 1.27 1.27)) (justify right))
     (uuid eb4abce8-7b0b-44d2-b810-7eb43dc66ac3)
     (property "Intersheetrefs" "${INTERSHEET_REFS}" (at 409.2092 173.355 0)
-      (effects (font (size 1.27 1.27)) (justify right) hide)
-    )
-  )
-  (global_label "SDA" (shape input) (at 432.435 254.635 180) (fields_autoplaced)
-    (effects (font (size 1.27 1.27)) (justify right))
-    (uuid eb6f3000-7e2a-4f29-aa13-611b5df117d7)
-    (property "Intersheetrefs" "${INTERSHEET_REFS}" (at 425.9611 254.635 0)
       (effects (font (size 1.27 1.27)) (justify right) hide)
     )
   )
@@ -5110,7 +5031,7 @@
   (symbol (lib_id "power:GND") (at 298.45 53.34 0) (unit 1)
     (in_bom yes) (on_board yes) (dnp no)
     (uuid 0958a772-78a0-4551-8a5a-4686a11c1832)
-    (property "Reference" "#PWR030" (at 298.45 59.69 0)
+    (property "Reference" "#PWR032" (at 298.45 59.69 0)
       (effects (font (size 1.27 1.27)) hide)
     )
     (property "Value" "GND" (at 295.91 52.705 0)
@@ -5126,7 +5047,7 @@
     (instances
       (project "FluOpti_V3.0"
         (path "/a7d210b0-29ee-4db1-96c4-600f3ef4cf17"
-          (reference "#PWR030") (unit 1)
+          (reference "#PWR032") (unit 1)
         )
       )
     )
@@ -5189,7 +5110,7 @@
       )
       (project "FluOpti_V3.0"
         (path "/a7d210b0-29ee-4db1-96c4-600f3ef4cf17"
-          (reference "R11") (unit 1)
+          (reference "R12") (unit 1)
         )
       )
       (project "ESP32 - iow Labs v1.3.0"
@@ -5208,7 +5129,7 @@
   (symbol (lib_id "Device:R") (at 294.005 145.415 180) (unit 1)
     (in_bom yes) (on_board yes) (dnp no) (fields_autoplaced)
     (uuid 0fa1c3c1-84ff-42bb-996d-b3cb65412ef6)
-    (property "Reference" "R16" (at 296.545 144.145 0)
+    (property "Reference" "R19" (at 296.545 144.145 0)
       (effects (font (size 1.27 1.27)) (justify right))
     )
     (property "Value" "2k" (at 296.545 146.685 0)
@@ -5225,7 +5146,7 @@
     (instances
       (project "FluOpti_V3.0"
         (path "/a7d210b0-29ee-4db1-96c4-600f3ef4cf17"
-          (reference "R16") (unit 1)
+          (reference "R19") (unit 1)
         )
       )
     )
@@ -5268,7 +5189,7 @@
       )
       (project "FluOpti_V3.0"
         (path "/a7d210b0-29ee-4db1-96c4-600f3ef4cf17"
-          (reference "C22") (unit 1)
+          (reference "C20") (unit 1)
         )
       )
       (project "ESP32 - iow Labs v1.3.0"
@@ -5287,7 +5208,7 @@
   (symbol (lib_id "Device:R") (at 385.445 258.445 180) (unit 1)
     (in_bom yes) (on_board yes) (dnp no) (fields_autoplaced)
     (uuid 10ed4814-ad8d-4aa9-9a1b-204729ea6431)
-    (property "Reference" "R34" (at 387.35 257.175 0)
+    (property "Reference" "R37" (at 387.35 257.175 0)
       (effects (font (size 1.27 1.27)) (justify right))
     )
     (property "Value" "5" (at 387.35 259.715 0)
@@ -5304,7 +5225,7 @@
     (instances
       (project "FluOpti_V3.0"
         (path "/a7d210b0-29ee-4db1-96c4-600f3ef4cf17"
-          (reference "R34") (unit 1)
+          (reference "R37") (unit 1)
         )
       )
     )
@@ -5570,7 +5491,7 @@
   (symbol (lib_id "Device:R") (at 320.04 50.165 90) (unit 1)
     (in_bom yes) (on_board yes) (dnp no)
     (uuid 1605e84b-a153-4ef0-8906-981b6116135e)
-    (property "Reference" "R22" (at 315.595 49.53 90)
+    (property "Reference" "R25" (at 315.595 49.53 90)
       (effects (font (size 1.27 1.27)))
     )
     (property "Value" "220" (at 325.12 48.895 90)
@@ -5587,7 +5508,47 @@
     (instances
       (project "FluOpti_V3.0"
         (path "/a7d210b0-29ee-4db1-96c4-600f3ef4cf17"
-          (reference "R22") (unit 1)
+          (reference "R25") (unit 1)
+        )
+      )
+    )
+  )
+
+  (symbol (lib_id "power:+3.3V") (at 262.255 163.83 0) (unit 1)
+    (in_bom yes) (on_board yes) (dnp no)
+    (uuid 1787ceac-04c3-4767-9e3c-1d02076c1261)
+    (property "Reference" "#PWR044" (at 262.255 167.64 0)
+      (effects (font (size 1.27 1.27)) hide)
+    )
+    (property "Value" "+3.3V" (at 262.636 159.4358 0)
+      (effects (font (size 1.27 1.27)))
+    )
+    (property "Footprint" "" (at 262.255 163.83 0)
+      (effects (font (size 1.27 1.27)) hide)
+    )
+    (property "Datasheet" "" (at 262.255 163.83 0)
+      (effects (font (size 1.27 1.27)) hide)
+    )
+    (pin "1" (uuid 76e79027-3bc5-4a30-a36c-7b3d37a8b4c4))
+    (instances
+      (project "Transiluminador"
+        (path "/3bccb558-cfc1-47b0-87de-a688fdd981c6"
+          (reference "#PWR044") (unit 1)
+        )
+      )
+      (project "FluOpti_V3.0"
+        (path "/a7d210b0-29ee-4db1-96c4-600f3ef4cf17"
+          (reference "#PWR027") (unit 1)
+        )
+      )
+      (project "ESP32 - iow Labs v1.3.0"
+        (path "/c2510de5-5b0d-48b5-b8b5-0b382d7d09dd"
+          (reference "#PWR035") (unit 1)
+        )
+      )
+      (project "ESP32_iow-Labs_v1"
+        (path "/e63e39d7-6ac0-4ffd-8aa3-1841a4541b55"
+          (reference "#PWR028") (unit 1)
         )
       )
     )
@@ -5641,7 +5602,7 @@
   (symbol (lib_id "Device:R") (at 412.115 39.37 180) (unit 1)
     (in_bom yes) (on_board yes) (dnp no) (fields_autoplaced)
     (uuid 1aea545e-eae8-4fab-8b88-df0160232484)
-    (property "Reference" "R35" (at 414.655 38.1 0)
+    (property "Reference" "R38" (at 414.655 38.1 0)
       (effects (font (size 1.27 1.27)) (justify right))
     )
     (property "Value" "2k" (at 414.655 40.64 0)
@@ -5658,7 +5619,7 @@
     (instances
       (project "FluOpti_V3.0"
         (path "/a7d210b0-29ee-4db1-96c4-600f3ef4cf17"
-          (reference "R35") (unit 1)
+          (reference "R38") (unit 1)
         )
       )
     )
@@ -5703,7 +5664,7 @@
   (symbol (lib_id "power:GND") (at 347.345 233.045 0) (unit 1)
     (in_bom yes) (on_board yes) (dnp no) (fields_autoplaced)
     (uuid 1e3b9842-d7b7-4c7b-a37c-732e3587987e)
-    (property "Reference" "#PWR040" (at 347.345 239.395 0)
+    (property "Reference" "#PWR057" (at 347.345 239.395 0)
       (effects (font (size 1.27 1.27)) hide)
     )
     (property "Value" "GND" (at 347.345 238.125 0)
@@ -5719,7 +5680,7 @@
     (instances
       (project "FluOpti_V3.0"
         (path "/a7d210b0-29ee-4db1-96c4-600f3ef4cf17"
-          (reference "#PWR040") (unit 1)
+          (reference "#PWR057") (unit 1)
         )
       )
     )
@@ -5754,7 +5715,7 @@
   (symbol (lib_id "power:GND") (at 346.075 268.605 0) (unit 1)
     (in_bom yes) (on_board yes) (dnp no) (fields_autoplaced)
     (uuid 2294110d-4cda-49eb-b688-70c710e29d60)
-    (property "Reference" "#PWR038" (at 346.075 274.955 0)
+    (property "Reference" "#PWR056" (at 346.075 274.955 0)
       (effects (font (size 1.27 1.27)) hide)
     )
     (property "Value" "GND" (at 346.075 273.685 0)
@@ -5770,7 +5731,7 @@
     (instances
       (project "FluOpti_V3.0"
         (path "/a7d210b0-29ee-4db1-96c4-600f3ef4cf17"
-          (reference "#PWR038") (unit 1)
+          (reference "#PWR056") (unit 1)
         )
       )
     )
@@ -5779,7 +5740,7 @@
   (symbol (lib_id "power:GND") (at 327.66 222.885 0) (unit 1)
     (in_bom yes) (on_board yes) (dnp no) (fields_autoplaced)
     (uuid 22e9eb77-a615-4843-87bb-c42dbbbd115c)
-    (property "Reference" "#PWR035" (at 327.66 229.235 0)
+    (property "Reference" "#PWR037" (at 327.66 229.235 0)
       (effects (font (size 1.27 1.27)) hide)
     )
     (property "Value" "GND" (at 327.66 227.965 0)
@@ -5795,7 +5756,51 @@
     (instances
       (project "FluOpti_V3.0"
         (path "/a7d210b0-29ee-4db1-96c4-600f3ef4cf17"
-          (reference "#PWR035") (unit 1)
+          (reference "#PWR037") (unit 1)
+        )
+      )
+    )
+  )
+
+  (symbol (lib_id "IoWLabs:RES") (at 233.045 173.99 270) (unit 1)
+    (in_bom yes) (on_board yes) (dnp no)
+    (uuid 244da48a-2e6a-4f40-8d69-8dbcf2a7de5e)
+    (property "Reference" "R20" (at 233.045 168.275 90)
+      (effects (font (size 1.27 1.27)))
+    )
+    (property "Value" "200" (at 233.045 170.5864 90)
+      (effects (font (size 1.27 1.27)))
+    )
+    (property "Footprint" "Resistor_SMD:R_0603_1608Metric" (at 227.965 176.53 0)
+      (effects (font (size 1.27 1.27)) hide)
+    )
+    (property "Datasheet" "" (at 227.965 176.53 0)
+      (effects (font (size 1.27 1.27)) hide)
+    )
+    (property "Supplier" "LCSC" (at 233.045 173.99 0)
+      (effects (font (size 1.27 1.27)) hide)
+    )
+    (pin "1" (uuid dada869e-e895-485f-8467-5b7c7872a15b))
+    (pin "2" (uuid 2203cbd0-855e-49c3-bf91-0536a5b0f6e9))
+    (instances
+      (project "Transiluminador"
+        (path "/3bccb558-cfc1-47b0-87de-a688fdd981c6"
+          (reference "R20") (unit 1)
+        )
+      )
+      (project "FluOpti_V3.0"
+        (path "/a7d210b0-29ee-4db1-96c4-600f3ef4cf17"
+          (reference "R13") (unit 1)
+        )
+      )
+      (project "ESP32 - iow Labs v1.3.0"
+        (path "/c2510de5-5b0d-48b5-b8b5-0b382d7d09dd"
+          (reference "R16") (unit 1)
+        )
+      )
+      (project "ESP32_iow-Labs_v1"
+        (path "/e63e39d7-6ac0-4ffd-8aa3-1841a4541b55"
+          (reference "R11") (unit 1)
         )
       )
     )
@@ -5951,7 +5956,7 @@
       )
       (project "FluOpti_V3.0"
         (path "/a7d210b0-29ee-4db1-96c4-600f3ef4cf17"
-          (reference "#PWR023") (unit 1)
+          (reference "#PWR024") (unit 1)
         )
       )
       (project "ESP32 - iow Labs v1.3.0"
@@ -5995,7 +6000,7 @@
   (symbol (lib_id "power:GND") (at 385.445 262.89 0) (unit 1)
     (in_bom yes) (on_board yes) (dnp no) (fields_autoplaced)
     (uuid 2f25ed1a-dfc0-4380-9dde-0120d52aeabf)
-    (property "Reference" "#PWR048" (at 385.445 269.24 0)
+    (property "Reference" "#PWR045" (at 385.445 269.24 0)
       (effects (font (size 1.27 1.27)) hide)
     )
     (property "Value" "GND" (at 385.445 267.97 0)
@@ -6011,7 +6016,7 @@
     (instances
       (project "FluOpti_V3.0"
         (path "/a7d210b0-29ee-4db1-96c4-600f3ef4cf17"
-          (reference "#PWR048") (unit 1)
+          (reference "#PWR045") (unit 1)
         )
       )
     )
@@ -6042,7 +6047,7 @@
       )
       (project "FluOpti_V3.0"
         (path "/a7d210b0-29ee-4db1-96c4-600f3ef4cf17"
-          (reference "D7") (unit 1)
+          (reference "D8") (unit 1)
         )
       )
       (project "ESP32 - iow Labs v1.3.0"
@@ -6082,7 +6087,7 @@
       )
       (project "FluOpti_V3.0"
         (path "/a7d210b0-29ee-4db1-96c4-600f3ef4cf17"
-          (reference "#PWR029") (unit 1)
+          (reference "#PWR031") (unit 1)
         )
       )
       (project "ESP32 - iow Labs v1.3.0"
@@ -6101,7 +6106,7 @@
   (symbol (lib_id "Device:R") (at 368.3 41.91 180) (unit 1)
     (in_bom yes) (on_board yes) (dnp no) (fields_autoplaced)
     (uuid 31d0db21-abad-4c60-9b97-2b12ac04bdab)
-    (property "Reference" "R30" (at 370.205 40.64 0)
+    (property "Reference" "R33" (at 370.205 40.64 0)
       (effects (font (size 1.27 1.27)) (justify right))
     )
     (property "Value" "10k" (at 370.205 43.18 0)
@@ -6118,7 +6123,7 @@
     (instances
       (project "FluOpti_V3.0"
         (path "/a7d210b0-29ee-4db1-96c4-600f3ef4cf17"
-          (reference "R30") (unit 1)
+          (reference "R33") (unit 1)
         )
       )
     )
@@ -6264,7 +6269,7 @@
   (symbol (lib_id "power:GND") (at 379.095 119.38 0) (unit 1)
     (in_bom yes) (on_board yes) (dnp no) (fields_autoplaced)
     (uuid 3744d32b-cf26-4a4e-a7e9-512b0f2d606d)
-    (property "Reference" "#PWR045" (at 379.095 125.73 0)
+    (property "Reference" "#PWR055" (at 379.095 125.73 0)
       (effects (font (size 1.27 1.27)) hide)
     )
     (property "Value" "GND" (at 379.095 124.46 0)
@@ -6280,7 +6285,7 @@
     (instances
       (project "FluOpti_V3.0"
         (path "/a7d210b0-29ee-4db1-96c4-600f3ef4cf17"
-          (reference "#PWR045") (unit 1)
+          (reference "#PWR055") (unit 1)
         )
       )
     )
@@ -6310,7 +6315,7 @@
       )
       (project "FluOpti_V3.0"
         (path "/a7d210b0-29ee-4db1-96c4-600f3ef4cf17"
-          (reference "#PWR026") (unit 1)
+          (reference "#PWR028") (unit 1)
         )
       )
       (project "ESP32 - iow Labs v1.3.0"
@@ -6350,7 +6355,7 @@
       )
       (project "FluOpti_V3.0"
         (path "/a7d210b0-29ee-4db1-96c4-600f3ef4cf17"
-          (reference "#PWR027") (unit 1)
+          (reference "#PWR029") (unit 1)
         )
       )
       (project "ESP32 - iow Labs v1.3.0"
@@ -6398,7 +6403,7 @@
   (symbol (lib_id "Device:R") (at 379.095 46.355 180) (unit 1)
     (in_bom yes) (on_board yes) (dnp no) (fields_autoplaced)
     (uuid 3823bf71-9df6-49ea-896f-c9433f4ad4dc)
-    (property "Reference" "R31" (at 381.635 45.085 0)
+    (property "Reference" "R34" (at 381.635 45.085 0)
       (effects (font (size 1.27 1.27)) (justify right))
     )
     (property "Value" "2k" (at 381.635 47.625 0)
@@ -6415,7 +6420,7 @@
     (instances
       (project "FluOpti_V3.0"
         (path "/a7d210b0-29ee-4db1-96c4-600f3ef4cf17"
-          (reference "R31") (unit 1)
+          (reference "R34") (unit 1)
         )
       )
     )
@@ -6542,7 +6547,7 @@
   (symbol (lib_id "power:GND") (at 302.26 251.46 0) (unit 1)
     (in_bom yes) (on_board yes) (dnp no) (fields_autoplaced)
     (uuid 3fb574a8-b2c8-4195-aa77-959cb6af170e)
-    (property "Reference" "#PWR031" (at 302.26 257.81 0)
+    (property "Reference" "#PWR033" (at 302.26 257.81 0)
       (effects (font (size 1.27 1.27)) hide)
     )
     (property "Value" "GND" (at 302.26 256.54 0)
@@ -6558,7 +6563,7 @@
     (instances
       (project "FluOpti_V3.0"
         (path "/a7d210b0-29ee-4db1-96c4-600f3ef4cf17"
-          (reference "#PWR031") (unit 1)
+          (reference "#PWR033") (unit 1)
         )
       )
     )
@@ -6567,7 +6572,7 @@
   (symbol (lib_id "power:GND") (at 441.325 117.475 0) (unit 1)
     (in_bom yes) (on_board yes) (dnp no) (fields_autoplaced)
     (uuid 403abc56-7037-4487-9f41-4a27cda041ed)
-    (property "Reference" "#PWR056" (at 441.325 123.825 0)
+    (property "Reference" "#PWR053" (at 441.325 123.825 0)
       (effects (font (size 1.27 1.27)) hide)
     )
     (property "Value" "GND" (at 441.325 122.555 0)
@@ -6583,7 +6588,7 @@
     (instances
       (project "FluOpti_V3.0"
         (path "/a7d210b0-29ee-4db1-96c4-600f3ef4cf17"
-          (reference "#PWR056") (unit 1)
+          (reference "#PWR053") (unit 1)
         )
       )
     )
@@ -6592,7 +6597,7 @@
   (symbol (lib_id "power:GND") (at 412.115 133.985 0) (unit 1)
     (in_bom yes) (on_board yes) (dnp no) (fields_autoplaced)
     (uuid 403dee15-cf64-43e4-a3d3-0e2175a06d73)
-    (property "Reference" "#PWR053" (at 412.115 140.335 0)
+    (property "Reference" "#PWR050" (at 412.115 140.335 0)
       (effects (font (size 1.27 1.27)) hide)
     )
     (property "Value" "GND" (at 412.115 139.065 0)
@@ -6608,7 +6613,7 @@
     (instances
       (project "FluOpti_V3.0"
         (path "/a7d210b0-29ee-4db1-96c4-600f3ef4cf17"
-          (reference "#PWR053") (unit 1)
+          (reference "#PWR050") (unit 1)
         )
       )
     )
@@ -6617,7 +6622,7 @@
   (symbol (lib_id "Device:R") (at 360.045 41.91 180) (unit 1)
     (in_bom yes) (on_board yes) (dnp no) (fields_autoplaced)
     (uuid 43ed2bcd-8f9e-486d-a3d7-cf82ee808c29)
-    (property "Reference" "R29" (at 362.585 40.64 0)
+    (property "Reference" "R32" (at 362.585 40.64 0)
       (effects (font (size 1.27 1.27)) (justify right))
     )
     (property "Value" "10k" (at 362.585 43.18 0)
@@ -6634,7 +6639,7 @@
     (instances
       (project "FluOpti_V3.0"
         (path "/a7d210b0-29ee-4db1-96c4-600f3ef4cf17"
-          (reference "R29") (unit 1)
+          (reference "R32") (unit 1)
         )
       )
     )
@@ -6643,7 +6648,7 @@
   (symbol (lib_id "power:GND") (at 375.92 194.31 0) (unit 1)
     (in_bom yes) (on_board yes) (dnp no) (fields_autoplaced)
     (uuid 44b3f05d-afac-4e59-9b99-a3d66964ca58)
-    (property "Reference" "#PWR044" (at 375.92 200.66 0)
+    (property "Reference" "#PWR042" (at 375.92 200.66 0)
       (effects (font (size 1.27 1.27)) hide)
     )
     (property "Value" "GND" (at 375.92 199.39 0)
@@ -6659,7 +6664,7 @@
     (instances
       (project "FluOpti_V3.0"
         (path "/a7d210b0-29ee-4db1-96c4-600f3ef4cf17"
-          (reference "#PWR044") (unit 1)
+          (reference "#PWR042") (unit 1)
         )
       )
     )
@@ -6712,7 +6717,7 @@
   (symbol (lib_id "power:GND") (at 328.295 262.89 0) (unit 1)
     (in_bom yes) (on_board yes) (dnp no) (fields_autoplaced)
     (uuid 4aa93adb-36ee-41a9-8f95-d555921ae719)
-    (property "Reference" "#PWR037" (at 328.295 269.24 0)
+    (property "Reference" "#PWR039" (at 328.295 269.24 0)
       (effects (font (size 1.27 1.27)) hide)
     )
     (property "Value" "GND" (at 328.295 267.97 0)
@@ -6728,7 +6733,7 @@
     (instances
       (project "FluOpti_V3.0"
         (path "/a7d210b0-29ee-4db1-96c4-600f3ef4cf17"
-          (reference "#PWR037") (unit 1)
+          (reference "#PWR039") (unit 1)
         )
       )
     )
@@ -6799,7 +6804,7 @@
   (symbol (lib_id "power:GND") (at 412.115 118.745 0) (unit 1)
     (in_bom yes) (on_board yes) (dnp no) (fields_autoplaced)
     (uuid 4d960958-66b6-45fc-b2a4-3565bbda38c9)
-    (property "Reference" "#PWR052" (at 412.115 125.095 0)
+    (property "Reference" "#PWR049" (at 412.115 125.095 0)
       (effects (font (size 1.27 1.27)) hide)
     )
     (property "Value" "GND" (at 412.115 123.825 0)
@@ -6815,7 +6820,7 @@
     (instances
       (project "FluOpti_V3.0"
         (path "/a7d210b0-29ee-4db1-96c4-600f3ef4cf17"
-          (reference "#PWR052") (unit 1)
+          (reference "#PWR049") (unit 1)
         )
       )
     )
@@ -6900,7 +6905,7 @@
   (symbol (lib_id "power:GND") (at 347.345 191.77 0) (unit 1)
     (in_bom yes) (on_board yes) (dnp no) (fields_autoplaced)
     (uuid 51a20981-ef65-447a-9cc7-9a25c181009e)
-    (property "Reference" "#PWR039" (at 347.345 198.12 0)
+    (property "Reference" "#PWR058" (at 347.345 198.12 0)
       (effects (font (size 1.27 1.27)) hide)
     )
     (property "Value" "GND" (at 347.345 196.85 0)
@@ -6916,7 +6921,7 @@
     (instances
       (project "FluOpti_V3.0"
         (path "/a7d210b0-29ee-4db1-96c4-600f3ef4cf17"
-          (reference "#PWR039") (unit 1)
+          (reference "#PWR058") (unit 1)
         )
       )
     )
@@ -7006,7 +7011,7 @@
   (symbol (lib_id "Device:R") (at 320.04 52.705 90) (unit 1)
     (in_bom yes) (on_board yes) (dnp no)
     (uuid 53e05cd5-5fdf-4fca-bc8b-b0e16427cb22)
-    (property "Reference" "R23" (at 320.04 54.61 90)
+    (property "Reference" "R26" (at 320.04 54.61 90)
       (effects (font (size 1.27 1.27)))
     )
     (property "Value" "220" (at 325.12 51.435 90)
@@ -7023,7 +7028,7 @@
     (instances
       (project "FluOpti_V3.0"
         (path "/a7d210b0-29ee-4db1-96c4-600f3ef4cf17"
-          (reference "R23") (unit 1)
+          (reference "R26") (unit 1)
         )
       )
     )
@@ -7032,7 +7037,7 @@
   (symbol (lib_id "power:GND") (at 374.015 274.32 0) (unit 1)
     (in_bom yes) (on_board yes) (dnp no) (fields_autoplaced)
     (uuid 563c25c8-63c3-494b-8ba8-eedb7c62f3a2)
-    (property "Reference" "#PWR043" (at 374.015 280.67 0)
+    (property "Reference" "#PWR041" (at 374.015 280.67 0)
       (effects (font (size 1.27 1.27)) hide)
     )
     (property "Value" "GND" (at 374.015 279.4 0)
@@ -7048,7 +7053,7 @@
     (instances
       (project "FluOpti_V3.0"
         (path "/a7d210b0-29ee-4db1-96c4-600f3ef4cf17"
-          (reference "#PWR043") (unit 1)
+          (reference "#PWR041") (unit 1)
         )
       )
     )
@@ -7174,7 +7179,7 @@
   (symbol (lib_id "power:GND") (at 302.895 66.04 0) (unit 1)
     (in_bom yes) (on_board yes) (dnp no) (fields_autoplaced)
     (uuid 5bda40db-521e-4b60-a4ba-c7e7a58ee0cb)
-    (property "Reference" "#PWR032" (at 302.895 72.39 0)
+    (property "Reference" "#PWR034" (at 302.895 72.39 0)
       (effects (font (size 1.27 1.27)) hide)
     )
     (property "Value" "GND" (at 302.895 71.12 0)
@@ -7190,7 +7195,7 @@
     (instances
       (project "FluOpti_V3.0"
         (path "/a7d210b0-29ee-4db1-96c4-600f3ef4cf17"
-          (reference "#PWR032") (unit 1)
+          (reference "#PWR034") (unit 1)
         )
       )
     )
@@ -7271,7 +7276,7 @@
   (symbol (lib_id "Device:R") (at 327.66 218.44 180) (unit 1)
     (in_bom yes) (on_board yes) (dnp no) (fields_autoplaced)
     (uuid 5fb89c2f-1870-4253-9048-03f378d4a959)
-    (property "Reference" "R24" (at 330.2 217.17 0)
+    (property "Reference" "R27" (at 330.2 217.17 0)
       (effects (font (size 1.27 1.27)) (justify right))
     )
     (property "Value" "5" (at 330.2 219.71 0)
@@ -7288,7 +7293,7 @@
     (instances
       (project "FluOpti_V3.0"
         (path "/a7d210b0-29ee-4db1-96c4-600f3ef4cf17"
-          (reference "R24") (unit 1)
+          (reference "R27") (unit 1)
         )
       )
     )
@@ -7413,7 +7418,7 @@
       )
       (project "FluOpti_V3.0"
         (path "/a7d210b0-29ee-4db1-96c4-600f3ef4cf17"
-          (reference "#PWR025") (unit 1)
+          (reference "#PWR026") (unit 1)
         )
       )
       (project "ESP32 - iow Labs v1.3.0"
@@ -7461,7 +7466,7 @@
   (symbol (lib_id "Device:R") (at 327.66 298.45 180) (unit 1)
     (in_bom yes) (on_board yes) (dnp no) (fields_autoplaced)
     (uuid 6a96b142-17ac-4ef3-b70b-a16d676bb1c2)
-    (property "Reference" "R25" (at 330.2 297.18 0)
+    (property "Reference" "R28" (at 330.2 297.18 0)
       (effects (font (size 1.27 1.27)) (justify right))
     )
     (property "Value" "5" (at 330.2 299.72 0)
@@ -7478,7 +7483,7 @@
     (instances
       (project "FluOpti_V3.0"
         (path "/a7d210b0-29ee-4db1-96c4-600f3ef4cf17"
-          (reference "R25") (unit 1)
+          (reference "R28") (unit 1)
         )
       )
     )
@@ -7666,7 +7671,7 @@
   (symbol (lib_id "power:GND") (at 327.66 302.895 0) (unit 1)
     (in_bom yes) (on_board yes) (dnp no) (fields_autoplaced)
     (uuid 75d59bd3-9301-4815-b542-024b78924e02)
-    (property "Reference" "#PWR036" (at 327.66 309.245 0)
+    (property "Reference" "#PWR038" (at 327.66 309.245 0)
       (effects (font (size 1.27 1.27)) hide)
     )
     (property "Value" "GND" (at 327.66 307.975 0)
@@ -7682,7 +7687,7 @@
     (instances
       (project "FluOpti_V3.0"
         (path "/a7d210b0-29ee-4db1-96c4-600f3ef4cf17"
-          (reference "#PWR036") (unit 1)
+          (reference "#PWR038") (unit 1)
         )
       )
     )
@@ -7868,7 +7873,7 @@
   (symbol (lib_id "power:GND") (at 314.325 67.945 0) (unit 1)
     (in_bom yes) (on_board yes) (dnp no) (fields_autoplaced)
     (uuid 8116fd4c-2b5b-49f6-88b3-1ae142d0e443)
-    (property "Reference" "#PWR033" (at 314.325 74.295 0)
+    (property "Reference" "#PWR035" (at 314.325 74.295 0)
       (effects (font (size 1.27 1.27)) hide)
     )
     (property "Value" "GND" (at 314.325 73.025 0)
@@ -7884,7 +7889,7 @@
     (instances
       (project "FluOpti_V3.0"
         (path "/a7d210b0-29ee-4db1-96c4-600f3ef4cf17"
-          (reference "#PWR033") (unit 1)
+          (reference "#PWR035") (unit 1)
         )
       )
     )
@@ -8019,7 +8024,7 @@
   (symbol (lib_id "Device:R") (at 315.595 154.305 270) (unit 1)
     (in_bom yes) (on_board yes) (dnp no) (fields_autoplaced)
     (uuid 83abe462-a864-43a6-ba67-76bb890cf93f)
-    (property "Reference" "R18" (at 315.595 147.955 90)
+    (property "Reference" "R21" (at 315.595 147.955 90)
       (effects (font (size 1.27 1.27)))
     )
     (property "Value" "10k" (at 315.595 150.495 90)
@@ -8036,7 +8041,7 @@
     (instances
       (project "FluOpti_V3.0"
         (path "/a7d210b0-29ee-4db1-96c4-600f3ef4cf17"
-          (reference "R18") (unit 1)
+          (reference "R21") (unit 1)
         )
       )
     )
@@ -8045,7 +8050,7 @@
   (symbol (lib_id "Device:R") (at 320.04 45.085 90) (unit 1)
     (in_bom yes) (on_board yes) (dnp no) (fields_autoplaced)
     (uuid 8836f235-7f5f-4274-8102-05a9e9f4151d)
-    (property "Reference" "R20" (at 320.04 38.735 90)
+    (property "Reference" "R23" (at 320.04 38.735 90)
       (effects (font (size 1.27 1.27)))
     )
     (property "Value" "220" (at 320.04 41.275 90)
@@ -8062,7 +8067,7 @@
     (instances
       (project "FluOpti_V3.0"
         (path "/a7d210b0-29ee-4db1-96c4-600f3ef4cf17"
-          (reference "R20") (unit 1)
+          (reference "R23") (unit 1)
         )
       )
     )
@@ -8167,7 +8172,7 @@
   (symbol (lib_id "Device:R") (at 328.295 258.445 180) (unit 1)
     (in_bom yes) (on_board yes) (dnp no) (fields_autoplaced)
     (uuid 8aa47d3d-8b0c-4637-b6c8-8cccbac20f01)
-    (property "Reference" "R26" (at 330.2 257.175 0)
+    (property "Reference" "R29" (at 330.2 257.175 0)
       (effects (font (size 1.27 1.27)) (justify right))
     )
     (property "Value" "5" (at 330.2 259.715 0)
@@ -8184,7 +8189,51 @@
     (instances
       (project "FluOpti_V3.0"
         (path "/a7d210b0-29ee-4db1-96c4-600f3ef4cf17"
-          (reference "R26") (unit 1)
+          (reference "R29") (unit 1)
+        )
+      )
+    )
+  )
+
+  (symbol (lib_id "IoWLabs:RES") (at 239.395 190.5 270) (unit 1)
+    (in_bom yes) (on_board yes) (dnp no)
+    (uuid 8d7fb52f-744f-4145-9434-6eef3ddaa474)
+    (property "Reference" "R21" (at 239.395 184.785 90)
+      (effects (font (size 1.27 1.27)))
+    )
+    (property "Value" "200" (at 239.395 187.0964 90)
+      (effects (font (size 1.27 1.27)))
+    )
+    (property "Footprint" "Resistor_SMD:R_0603_1608Metric" (at 234.315 193.04 0)
+      (effects (font (size 1.27 1.27)) hide)
+    )
+    (property "Datasheet" "" (at 234.315 193.04 0)
+      (effects (font (size 1.27 1.27)) hide)
+    )
+    (property "Supplier" "LCSC" (at 239.395 190.5 0)
+      (effects (font (size 1.27 1.27)) hide)
+    )
+    (pin "1" (uuid db15fa3a-2485-4921-a60e-c451f488723d))
+    (pin "2" (uuid a22dafc2-a272-4d4c-8237-a4f28536a1ba))
+    (instances
+      (project "Transiluminador"
+        (path "/3bccb558-cfc1-47b0-87de-a688fdd981c6"
+          (reference "R21") (unit 1)
+        )
+      )
+      (project "FluOpti_V3.0"
+        (path "/a7d210b0-29ee-4db1-96c4-600f3ef4cf17"
+          (reference "R14") (unit 1)
+        )
+      )
+      (project "ESP32 - iow Labs v1.3.0"
+        (path "/c2510de5-5b0d-48b5-b8b5-0b382d7d09dd"
+          (reference "R17") (unit 1)
+        )
+      )
+      (project "ESP32_iow-Labs_v1"
+        (path "/e63e39d7-6ac0-4ffd-8aa3-1841a4541b55"
+          (reference "R12") (unit 1)
         )
       )
     )
@@ -8306,7 +8355,7 @@
   (symbol (lib_id "power:GND") (at 432.435 249.555 180) (unit 1)
     (in_bom yes) (on_board yes) (dnp no) (fields_autoplaced)
     (uuid 94898f3b-0942-49f7-8aa1-78ff7c88a81f)
-    (property "Reference" "#PWR054" (at 432.435 243.205 0)
+    (property "Reference" "#PWR051" (at 432.435 243.205 0)
       (effects (font (size 1.27 1.27)) hide)
     )
     (property "Value" "GND" (at 432.435 244.475 0)
@@ -8322,7 +8371,7 @@
     (instances
       (project "FluOpti_V3.0"
         (path "/a7d210b0-29ee-4db1-96c4-600f3ef4cf17"
-          (reference "#PWR054") (unit 1)
+          (reference "#PWR051") (unit 1)
         )
       )
     )
@@ -8392,7 +8441,7 @@
       )
       (project "FluOpti_V3.0"
         (path "/a7d210b0-29ee-4db1-96c4-600f3ef4cf17"
-          (reference "C18") (unit 1)
+          (reference "C23") (unit 1)
         )
       )
       (project "ESP32 - iow Labs v1.3.0"
@@ -8411,7 +8460,7 @@
   (symbol (lib_id "power:GND") (at 374.015 235.585 0) (unit 1)
     (in_bom yes) (on_board yes) (dnp no) (fields_autoplaced)
     (uuid 96dcefd7-ad7c-4b72-a8b7-a23cb447d472)
-    (property "Reference" "#PWR042" (at 374.015 241.935 0)
+    (property "Reference" "#PWR040" (at 374.015 241.935 0)
       (effects (font (size 1.27 1.27)) hide)
     )
     (property "Value" "GND" (at 374.015 240.665 0)
@@ -8427,7 +8476,7 @@
     (instances
       (project "FluOpti_V3.0"
         (path "/a7d210b0-29ee-4db1-96c4-600f3ef4cf17"
-          (reference "#PWR042") (unit 1)
+          (reference "#PWR040") (unit 1)
         )
       )
     )
@@ -8470,7 +8519,7 @@
       )
       (project "FluOpti_V3.0"
         (path "/a7d210b0-29ee-4db1-96c4-600f3ef4cf17"
-          (reference "C20") (unit 1)
+          (reference "C22") (unit 1)
         )
       )
       (project "ESP32 - iow Labs v1.3.0"
@@ -8489,7 +8538,7 @@
   (symbol (lib_id "Device:R") (at 320.04 47.625 90) (unit 1)
     (in_bom yes) (on_board yes) (dnp no)
     (uuid 998da971-b529-47e2-a400-71e4d6ffa84d)
-    (property "Reference" "R21" (at 315.595 46.99 90)
+    (property "Reference" "R24" (at 315.595 46.99 90)
       (effects (font (size 1.27 1.27)))
     )
     (property "Value" "220" (at 325.12 46.355 90)
@@ -8506,7 +8555,7 @@
     (instances
       (project "FluOpti_V3.0"
         (path "/a7d210b0-29ee-4db1-96c4-600f3ef4cf17"
-          (reference "R21") (unit 1)
+          (reference "R24") (unit 1)
         )
       )
     )
@@ -8721,7 +8770,7 @@
   (symbol (lib_id "power:GND") (at 433.705 62.865 0) (unit 1)
     (in_bom yes) (on_board yes) (dnp no) (fields_autoplaced)
     (uuid a4801170-0c0a-4f45-b774-db6b8c99fc7d)
-    (property "Reference" "#PWR055" (at 433.705 69.215 0)
+    (property "Reference" "#PWR052" (at 433.705 69.215 0)
       (effects (font (size 1.27 1.27)) hide)
     )
     (property "Value" "GND" (at 433.705 67.31 0)
@@ -8737,7 +8786,7 @@
     (instances
       (project "FluOpti_V3.0"
         (path "/a7d210b0-29ee-4db1-96c4-600f3ef4cf17"
-          (reference "#PWR055") (unit 1)
+          (reference "#PWR052") (unit 1)
         )
       )
     )
@@ -8772,7 +8821,7 @@
   (symbol (lib_id "Device:R") (at 318.77 127 180) (unit 1)
     (in_bom yes) (on_board yes) (dnp no) (fields_autoplaced)
     (uuid a55b2851-0e76-4f65-b004-2cf046976195)
-    (property "Reference" "R19" (at 320.675 125.73 0)
+    (property "Reference" "R22" (at 320.675 125.73 0)
       (effects (font (size 1.27 1.27)) (justify right))
     )
     (property "Value" "10k" (at 320.675 128.27 0)
@@ -8789,7 +8838,7 @@
     (instances
       (project "FluOpti_V3.0"
         (path "/a7d210b0-29ee-4db1-96c4-600f3ef4cf17"
-          (reference "R19") (unit 1)
+          (reference "R22") (unit 1)
         )
       )
     )
@@ -8798,7 +8847,7 @@
   (symbol (lib_id "power:GND") (at 384.81 302.895 0) (unit 1)
     (in_bom yes) (on_board yes) (dnp no) (fields_autoplaced)
     (uuid a6807311-b659-4c08-bc68-eabb44fe7d84)
-    (property "Reference" "#PWR047" (at 384.81 309.245 0)
+    (property "Reference" "#PWR044" (at 384.81 309.245 0)
       (effects (font (size 1.27 1.27)) hide)
     )
     (property "Value" "GND" (at 384.81 307.975 0)
@@ -8814,7 +8863,7 @@
     (instances
       (project "FluOpti_V3.0"
         (path "/a7d210b0-29ee-4db1-96c4-600f3ef4cf17"
-          (reference "#PWR047") (unit 1)
+          (reference "#PWR044") (unit 1)
         )
       )
     )
@@ -8893,7 +8942,7 @@
   (symbol (lib_id "Device:R") (at 356.87 66.04 270) (unit 1)
     (in_bom yes) (on_board yes) (dnp no) (fields_autoplaced)
     (uuid a91c67ee-2b15-46a8-9b4a-18d2036c5a6f)
-    (property "Reference" "R28" (at 356.87 59.69 90)
+    (property "Reference" "R31" (at 356.87 59.69 90)
       (effects (font (size 1.27 1.27)))
     )
     (property "Value" "10k" (at 356.87 62.23 90)
@@ -8910,7 +8959,7 @@
     (instances
       (project "FluOpti_V3.0"
         (path "/a7d210b0-29ee-4db1-96c4-600f3ef4cf17"
-          (reference "R28") (unit 1)
+          (reference "R31") (unit 1)
         )
       )
     )
@@ -8919,7 +8968,7 @@
   (symbol (lib_id "power:GND") (at 410.845 148.59 0) (unit 1)
     (in_bom yes) (on_board yes) (dnp no) (fields_autoplaced)
     (uuid ab222b16-dab0-4766-94bd-58a9efa6dbe3)
-    (property "Reference" "#PWR050" (at 410.845 154.94 0)
+    (property "Reference" "#PWR047" (at 410.845 154.94 0)
       (effects (font (size 1.27 1.27)) hide)
     )
     (property "Value" "GND" (at 410.845 153.67 0)
@@ -8935,7 +8984,7 @@
     (instances
       (project "FluOpti_V3.0"
         (path "/a7d210b0-29ee-4db1-96c4-600f3ef4cf17"
-          (reference "#PWR050") (unit 1)
+          (reference "#PWR047") (unit 1)
         )
       )
     )
@@ -9038,7 +9087,7 @@
   (symbol (lib_id "power:GND") (at 412.115 61.595 0) (unit 1)
     (in_bom yes) (on_board yes) (dnp no) (fields_autoplaced)
     (uuid b395eebb-0fc6-426a-b2e8-df9e4ed4cad1)
-    (property "Reference" "#PWR051" (at 412.115 67.945 0)
+    (property "Reference" "#PWR048" (at 412.115 67.945 0)
       (effects (font (size 1.27 1.27)) hide)
     )
     (property "Value" "GND" (at 412.115 66.04 0)
@@ -9054,7 +9103,7 @@
     (instances
       (project "FluOpti_V3.0"
         (path "/a7d210b0-29ee-4db1-96c4-600f3ef4cf17"
-          (reference "#PWR051") (unit 1)
+          (reference "#PWR048") (unit 1)
         )
       )
     )
@@ -9223,7 +9272,7 @@
   (symbol (lib_id "Device:R") (at 433.705 39.37 180) (unit 1)
     (in_bom yes) (on_board yes) (dnp no)
     (uuid b9eeb1c1-79b1-44cc-b3ac-654ea7e93c6b)
-    (property "Reference" "R36" (at 436.245 38.1 0)
+    (property "Reference" "R39" (at 436.245 38.1 0)
       (effects (font (size 1.27 1.27)) (justify right))
     )
     (property "Value" "2k" (at 436.245 40.64 0)
@@ -9240,7 +9289,7 @@
     (instances
       (project "FluOpti_V3.0"
         (path "/a7d210b0-29ee-4db1-96c4-600f3ef4cf17"
-          (reference "R36") (unit 1)
+          (reference "R39") (unit 1)
         )
       )
     )
@@ -9331,7 +9380,7 @@
   (symbol (lib_id "power:GND") (at 384.81 222.885 0) (unit 1)
     (in_bom yes) (on_board yes) (dnp no) (fields_autoplaced)
     (uuid bd4e84e7-05f6-42b6-97b9-4daff36c8414)
-    (property "Reference" "#PWR046" (at 384.81 229.235 0)
+    (property "Reference" "#PWR043" (at 384.81 229.235 0)
       (effects (font (size 1.27 1.27)) hide)
     )
     (property "Value" "GND" (at 384.81 227.965 0)
@@ -9347,7 +9396,7 @@
     (instances
       (project "FluOpti_V3.0"
         (path "/a7d210b0-29ee-4db1-96c4-600f3ef4cf17"
-          (reference "#PWR046") (unit 1)
+          (reference "#PWR043") (unit 1)
         )
       )
     )
@@ -9415,7 +9464,7 @@
       )
       (project "FluOpti_V3.0"
         (path "/a7d210b0-29ee-4db1-96c4-600f3ef4cf17"
-          (reference "C19") (unit 1)
+          (reference "C21") (unit 1)
         )
       )
       (project "ESP32 - iow Labs v1.3.0"
@@ -9510,7 +9559,7 @@
       )
       (project "FluOpti_V3.0"
         (path "/a7d210b0-29ee-4db1-96c4-600f3ef4cf17"
-          (reference "R13") (unit 1)
+          (reference "R16") (unit 1)
         )
       )
       (project "ESP32 - iow Labs v1.3.0"
@@ -9584,7 +9633,7 @@
   (symbol (lib_id "power:GND") (at 387.35 62.865 0) (unit 1)
     (in_bom yes) (on_board yes) (dnp no) (fields_autoplaced)
     (uuid c5abbc03-fc0f-4cf7-90e4-e8a6c93bbbf6)
-    (property "Reference" "#PWR049" (at 387.35 69.215 0)
+    (property "Reference" "#PWR046" (at 387.35 69.215 0)
       (effects (font (size 1.27 1.27)) hide)
     )
     (property "Value" "GND" (at 387.35 67.945 0)
@@ -9600,7 +9649,7 @@
     (instances
       (project "FluOpti_V3.0"
         (path "/a7d210b0-29ee-4db1-96c4-600f3ef4cf17"
-          (reference "#PWR049") (unit 1)
+          (reference "#PWR046") (unit 1)
         )
       )
     )
@@ -9652,7 +9701,7 @@
   (symbol (lib_id "power:GND") (at 322.58 158.115 0) (unit 1)
     (in_bom yes) (on_board yes) (dnp no) (fields_autoplaced)
     (uuid cded813f-57eb-494f-bde6-fbbb32470135)
-    (property "Reference" "#PWR034" (at 322.58 164.465 0)
+    (property "Reference" "#PWR036" (at 322.58 164.465 0)
       (effects (font (size 1.27 1.27)) hide)
     )
     (property "Value" "GND" (at 322.58 163.195 0)
@@ -9668,7 +9717,7 @@
     (instances
       (project "FluOpti_V3.0"
         (path "/a7d210b0-29ee-4db1-96c4-600f3ef4cf17"
-          (reference "#PWR034") (unit 1)
+          (reference "#PWR036") (unit 1)
         )
       )
     )
@@ -9704,7 +9753,7 @@
   (symbol (lib_id "Device:R") (at 310.515 127 180) (unit 1)
     (in_bom yes) (on_board yes) (dnp no) (fields_autoplaced)
     (uuid d0687711-b6e5-45a9-a320-bf5115a6a938)
-    (property "Reference" "R17" (at 313.055 125.73 0)
+    (property "Reference" "R20" (at 313.055 125.73 0)
       (effects (font (size 1.27 1.27)) (justify right))
     )
     (property "Value" "10k" (at 313.055 128.27 0)
@@ -9721,7 +9770,7 @@
     (instances
       (project "FluOpti_V3.0"
         (path "/a7d210b0-29ee-4db1-96c4-600f3ef4cf17"
-          (reference "R17") (unit 1)
+          (reference "R20") (unit 1)
         )
       )
     )
@@ -9800,7 +9849,7 @@
   (symbol (lib_id "Jumper:Jumper_2_Open") (at 372.745 66.04 0) (unit 1)
     (in_bom yes) (on_board yes) (dnp no) (fields_autoplaced)
     (uuid d38d14ba-ac41-41ed-8fd9-a4bd3e5efa7e)
-    (property "Reference" "JP3" (at 372.745 59.69 0)
+    (property "Reference" "JP2" (at 372.745 59.69 0)
       (effects (font (size 1.27 1.27)))
     )
     (property "Value" "Jumper_2_Open" (at 372.745 62.23 0)
@@ -9817,7 +9866,7 @@
     (instances
       (project "FluOpti_V3.0"
         (path "/a7d210b0-29ee-4db1-96c4-600f3ef4cf17"
-          (reference "JP3") (unit 1)
+          (reference "JP2") (unit 1)
         )
       )
     )
@@ -9938,7 +9987,7 @@
       )
       (project "FluOpti_V3.0"
         (path "/a7d210b0-29ee-4db1-96c4-600f3ef4cf17"
-          (reference "C21") (unit 1)
+          (reference "C19") (unit 1)
         )
       )
       (project "ESP32 - iow Labs v1.3.0"
@@ -9957,7 +10006,7 @@
   (symbol (lib_id "Device:R") (at 384.81 218.44 180) (unit 1)
     (in_bom yes) (on_board yes) (dnp no) (fields_autoplaced)
     (uuid dc43b514-0ddb-426f-b1ab-633af0d640f3)
-    (property "Reference" "R32" (at 387.35 217.17 0)
+    (property "Reference" "R35" (at 387.35 217.17 0)
       (effects (font (size 1.27 1.27)) (justify right))
     )
     (property "Value" "5" (at 387.35 219.71 0)
@@ -9974,7 +10023,7 @@
     (instances
       (project "FluOpti_V3.0"
         (path "/a7d210b0-29ee-4db1-96c4-600f3ef4cf17"
-          (reference "R32") (unit 1)
+          (reference "R35") (unit 1)
         )
       )
     )
@@ -10008,7 +10057,7 @@
       )
       (project "FluOpti_V3.0"
         (path "/a7d210b0-29ee-4db1-96c4-600f3ef4cf17"
-          (reference "R12") (unit 1)
+          (reference "R15") (unit 1)
         )
       )
       (project "ESP32 - iow Labs v1.3.0"
@@ -10048,7 +10097,7 @@
       )
       (project "FluOpti_V3.0"
         (path "/a7d210b0-29ee-4db1-96c4-600f3ef4cf17"
-          (reference "#PWR024") (unit 1)
+          (reference "#PWR025") (unit 1)
         )
       )
       (project "ESP32 - iow Labs v1.3.0"
@@ -10117,7 +10166,7 @@
       )
       (project "FluOpti_V3.0"
         (path "/a7d210b0-29ee-4db1-96c4-600f3ef4cf17"
-          (reference "R14") (unit 1)
+          (reference "R17") (unit 1)
         )
       )
       (project "ESP32 - iow Labs v1.3.0"
@@ -10136,7 +10185,7 @@
   (symbol (lib_id "Device:C") (at 387.35 54.61 0) (unit 1)
     (in_bom yes) (on_board yes) (dnp no) (fields_autoplaced)
     (uuid df841a26-0ae6-435e-997a-d1425a0f85be)
-    (property "Reference" "C23" (at 390.525 53.34 0)
+    (property "Reference" "C18" (at 390.525 53.34 0)
       (effects (font (size 1.27 1.27)) (justify left))
     )
     (property "Value" "100n" (at 390.525 55.88 0)
@@ -10153,7 +10202,7 @@
     (instances
       (project "FluOpti_V3.0"
         (path "/a7d210b0-29ee-4db1-96c4-600f3ef4cf17"
-          (reference "C23") (unit 1)
+          (reference "C18") (unit 1)
         )
       )
     )
@@ -10347,7 +10396,7 @@
   (symbol (lib_id "Device:R") (at 351.79 38.735 180) (unit 1)
     (in_bom yes) (on_board yes) (dnp no) (fields_autoplaced)
     (uuid eb951c99-df07-4729-8660-2306f9cc72ff)
-    (property "Reference" "R27" (at 353.695 37.465 0)
+    (property "Reference" "R30" (at 353.695 37.465 0)
       (effects (font (size 1.27 1.27)) (justify right))
     )
     (property "Value" "2k" (at 353.695 40.005 0)
@@ -10364,7 +10413,7 @@
     (instances
       (project "FluOpti_V3.0"
         (path "/a7d210b0-29ee-4db1-96c4-600f3ef4cf17"
-          (reference "R27") (unit 1)
+          (reference "R30") (unit 1)
         )
       )
     )
@@ -10424,7 +10473,7 @@
   (symbol (lib_id "power:GND") (at 368.935 119.38 0) (unit 1)
     (in_bom yes) (on_board yes) (dnp no) (fields_autoplaced)
     (uuid f0acb0d4-a873-4c7f-b9be-ad6d22c668a5)
-    (property "Reference" "#PWR041" (at 368.935 125.73 0)
+    (property "Reference" "#PWR054" (at 368.935 125.73 0)
       (effects (font (size 1.27 1.27)) hide)
     )
     (property "Value" "GND" (at 368.935 124.46 0)
@@ -10440,34 +10489,7 @@
     (instances
       (project "FluOpti_V3.0"
         (path "/a7d210b0-29ee-4db1-96c4-600f3ef4cf17"
-          (reference "#PWR041") (unit 1)
-        )
-      )
-    )
-  )
-
-  (symbol (lib_id "Jumper:SolderJumper_3_Open") (at 97.155 122.555 180) (unit 1)
-    (in_bom yes) (on_board yes) (dnp no) (fields_autoplaced)
-    (uuid f180937d-ba91-4b7b-9436-59bb9f2765a6)
-    (property "Reference" "JP1" (at 97.155 125.73 0)
-      (effects (font (size 1.27 1.27)))
-    )
-    (property "Value" "SolderJumper_3_Open" (at 97.155 128.27 0)
-      (effects (font (size 1.27 1.27)))
-    )
-    (property "Footprint" "Jumper:SolderJumper-3_P1.3mm_Open_RoundedPad1.0x1.5mm" (at 97.155 122.555 0)
-      (effects (font (size 1.27 1.27)) hide)
-    )
-    (property "Datasheet" "~" (at 97.155 122.555 0)
-      (effects (font (size 1.27 1.27)) hide)
-    )
-    (pin "1" (uuid 53c42c4c-584b-4bc0-8f61-f007cb416d83))
-    (pin "2" (uuid 2200811d-92cf-4ce0-8d8d-91cfa033c89a))
-    (pin "3" (uuid 85eca645-c145-4049-89fa-3164580a5ebf))
-    (instances
-      (project "FluOpti_V3.0"
-        (path "/a7d210b0-29ee-4db1-96c4-600f3ef4cf17"
-          (reference "JP1") (unit 1)
+          (reference "#PWR054") (unit 1)
         )
       )
     )
@@ -10476,7 +10498,7 @@
   (symbol (lib_id "Jumper:Jumper_2_Open") (at 304.165 154.305 0) (unit 1)
     (in_bom yes) (on_board yes) (dnp no) (fields_autoplaced)
     (uuid f1e1b7f6-7107-4e4f-b596-bc2c00944b95)
-    (property "Reference" "JP2" (at 304.165 147.32 0)
+    (property "Reference" "JP1" (at 304.165 147.32 0)
       (effects (font (size 1.27 1.27)))
     )
     (property "Value" "Jumper_2_Open" (at 304.165 149.86 0)
@@ -10493,7 +10515,7 @@
     (instances
       (project "FluOpti_V3.0"
         (path "/a7d210b0-29ee-4db1-96c4-600f3ef4cf17"
-          (reference "JP2") (unit 1)
+          (reference "JP1") (unit 1)
         )
       )
     )
@@ -10527,7 +10549,7 @@
       )
       (project "FluOpti_V3.0"
         (path "/a7d210b0-29ee-4db1-96c4-600f3ef4cf17"
-          (reference "R15") (unit 1)
+          (reference "R18") (unit 1)
         )
       )
       (project "ESP32 - iow Labs v1.3.0"
@@ -10602,7 +10624,7 @@
   (symbol (lib_id "Device:R") (at 384.81 298.45 180) (unit 1)
     (in_bom yes) (on_board yes) (dnp no) (fields_autoplaced)
     (uuid fa14cfe5-3d0b-4c7b-8292-81aa70f76a2e)
-    (property "Reference" "R33" (at 387.35 297.18 0)
+    (property "Reference" "R36" (at 387.35 297.18 0)
       (effects (font (size 1.27 1.27)) (justify right))
     )
     (property "Value" "5" (at 387.35 299.72 0)
@@ -10619,7 +10641,7 @@
     (instances
       (project "FluOpti_V3.0"
         (path "/a7d210b0-29ee-4db1-96c4-600f3ef4cf17"
-          (reference "R33") (unit 1)
+          (reference "R36") (unit 1)
         )
       )
     )
@@ -10716,7 +10738,7 @@
       )
       (project "FluOpti_V3.0"
         (path "/a7d210b0-29ee-4db1-96c4-600f3ef4cf17"
-          (reference "#PWR028") (unit 1)
+          (reference "#PWR030") (unit 1)
         )
       )
       (project "ESP32 - iow Labs v1.3.0"
