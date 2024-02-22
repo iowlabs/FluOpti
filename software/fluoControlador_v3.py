@@ -76,6 +76,10 @@ class MainWindow(QMainWindow):
         self.time_now       = ""
         self.file_name      = ""
 
+
+        self.pat = PatronConfig(self.Fluo)
+        self.pat.setWindowModality(2)
+
         #PID modules to control temperature
         self.pid_temp1 = PID(1,0.1,0.05,setpoint = 1)
         self.pid_temp2 = PID(1,0.1,0.05,setpoint = 1)
@@ -202,30 +206,28 @@ class MainWindow(QMainWindow):
         self.experimentos.start()
         self.experimentos.senal_final.connect(self.experimentos_terminados)
         self.experimentos.senal_inicio_bloque.connect(self.inicio_bloque)
+        self.experimentos.senal_inicio_total.connect(self.inicio_total_experimentos)
         self.experimentos.senal_fin_bloque.connect(self.fin_bloque)
         self.tabWidget.setEnabled(False)
 
-    def inicio_bloque(self, bloque, t_exp):
+    def inicio_total_experimentos(self, tiempo_total):
+
+        self.tiempo_total_exp = tiempo_total
         self.time_elapsed = 0
-        print(f'Iniciando bloque {bloque}')
 
-        # DESCOMENTAR ESTO AL PASAR EL T_EXP A MINUTOS        
-        # hours, remainder = divmod(t_exp * 60, 3600)
-        # minutes, seconds = divmod(remainder, 60)
-        # time_format = "{:02}:{:02}:{:02}".format(int(hours), int(minutes), int(seconds))
-        # self.status.showMessage(f'Corriendo {bloque} de duración {time_format}')
-
-        self.status.showMessage(f'Corriendo {bloque} de duración {t_exp} segundos')
-        # crear timer para actualizar el tiempo desde el inicio del bloque
         self.bloque_timer = QtCore.QTimer()
         self.bloque_timer.setInterval(1000)
         self.bloque_timer.timeout.connect(self.updateTime)
         self.bloque_timer.start()
 
+    def inicio_bloque(self, bloque, t_exp):
+        #self.time_elapsed = 0
+        print(f'Iniciando bloque {bloque}')
+        self.status.showMessage(f'Corriendo {bloque} de duración {t_exp:02} horas')
+
     def fin_bloque(self, bloque):
         print(f'Finalizando  {bloque}')
         self.status.showMessage(f'Finalizando {bloque}', 3000)
-        self.bloque_timer.stop()
 
     def updateTime(self):
         #print('Actualizando tiempo...')
@@ -234,12 +236,14 @@ class MainWindow(QMainWindow):
         hours, remainder = divmod(self.time_elapsed, 3600)
         minutes, seconds = divmod(remainder, 60)
         time_format = "{:02}:{:02}:{:02}".format(int(hours), int(minutes), int(seconds))
-        self.label_tiempo.setText(f'Tiempo transcurrido: {time_format}')
+        string_label = "Tiempo transcurrido: {} / {}:00:00".format(time_format, self.tiempo_total_exp)
+        self.label_tiempo.setText(string_label)
 
     def experimentos_terminados(self):
         print('Experimentos terminados')
         self.tabWidget.setEnabled(True)
         self.label_tiempo.setText('Experimentos terminados')
+        self.bloque_timer.stop()
 
 
     def updateFrame(self):
@@ -428,8 +432,11 @@ class MainWindow(QMainWindow):
         self.actualizar_estilo_led(label, False, color)
 
 
-    def LEDset(self,ch):
-        val = self.sliders[ch].value()
+    def LEDset(self,ch, intensidad=-1):
+        if intensidad < 0:
+            val = self.sliders[ch].value()
+        else:
+            val = intensidad
         self.sBox[ch].setValue(val)
         self.led_pwr[ch] = val
         #if self.Fluo._default_modules[self.channel[ch]]['status']:
@@ -437,8 +444,11 @@ class MainWindow(QMainWindow):
         
             self.LEDOn(ch)
 
-    def LEDset2(self,ch):
-        val = self.sBox[ch].value()
+    def LEDset2(self,ch, intensidad=-1):
+        if intensidad < 0:
+            val = self.sBox[ch].value()
+        else:
+            val = intensidad
         self.sliders[ch].setValue(val)
         self.led_pwr[ch] = val
 
@@ -476,6 +486,7 @@ class MainWindow(QMainWindow):
         print(self.dic_bloques)
         self.sec.close()
         self.mostrar_bloques()
+        self.graficar_bloques()
 
 
     # FUNCIONALIDADES CON SECUENCIADOR
@@ -489,12 +500,14 @@ class MainWindow(QMainWindow):
         for bloque, dic in self.dic_bloques.items():
             str_label = ""
             for key, value in dic.items():
-                # label = QLabel(f'{key}: {value}')
+                # label = QtWidgets.QLabel(f'{key}: {value}')
                 # self.groupBox_estado_bloques.layout().addWidget(label)
-                if key != "N_fotos":
-                    str_label += f'{key}: {value} min\n'
+                if key == "t_exp":
+                    str_label += f'{key}: {value} h\n'
+                elif key == "t_control":
+                    str_label += f'{key}: {value} °C\n'
                 else:
-                    str_label += f'{key}: {value}\n'
+                    str_label += f'{key}: {value} %\n'
             new_group = QGroupBox()
             new_group.setTitle(bloque)
             new_group.setStyleSheet("QGroupBox { font: bold; }")
@@ -509,6 +522,104 @@ class MainWindow(QMainWindow):
             new_group.layout().addWidget(label)
             self.groupBox_estado_bloques.layout().addWidget(new_group)
 
+    def graficar_bloques(self):
+        # Inicializar variables para la suma acumulativa
+        t_exp_acum = []
+        I_rojo_acum = []
+        I_verde_acum = []
+        T_control_acum = []
+        tiempos_cambio_bloque = []
+        ultimo_tiempo = 0
+
+        # Iterar sobre los bloques en dict_sec
+        for bloque, valores in self.dic_bloques.items():
+            # Obtener el valor de t_exp del bloque actual
+            if bloque == 'bloque 1':
+                t_exp = valores['t_exp'] + 1
+            else:
+                t_exp = valores['t_exp']
+            # Crear un array de tiempo acumulado
+            t_exp_acum += range(ultimo_tiempo, t_exp + ultimo_tiempo)
+            tiempos_cambio_bloque.append(t_exp_acum[-1])
+
+            # Crear un array de intensidad de LED Rojo acumulado
+            I_rojo_acum += [valores['I_rojo']] * t_exp
+            # Crear un array de intensidad de LED Verde acumulado
+            I_verde_acum += [valores['I_verde']] * t_exp
+            # Crear un array de temperatura de control acumulado
+            T_control_acum += [valores['t_control']] * t_exp
+            # Actualizar el último tiempo
+            ultimo_tiempo += t_exp
+
+        print(f't_exp_acum: {t_exp_acum}')
+        print(f'I_rojo_acum: {I_rojo_acum}')
+        print(f'I_verde_acum: {I_verde_acum}')
+        print(f'T_control_acum: {T_control_acum}')
+        # graficar
+        for i in range(3):
+            self.grafico_bloques.canvas.axes[i].clear()
+
+        # self.grafico_bloques.canvas.axes[0].plot(t_exp_acum, I_rojo_acum, label='Rojo', color='red')
+        # self.grafico_bloques.canvas.axes[1].plot(t_exp_acum, I_verde_acum, label='Verde', color='green')
+
+        self.grafico_bloques.canvas.axes[0].step(t_exp_acum, I_rojo_acum, where='pre', label='Rojo', color='red')
+        self.grafico_bloques.canvas.axes[1].step(t_exp_acum, I_verde_acum, where='pre', label='Verde', color='green')
+
+        # self.grafico_bloques.canvas.axes[2].step(t_exp_acum, T_control_acum, where='post', label='Control', color='blue')
+        self.grafico_bloques.canvas.axes[2].plot(t_exp_acum, T_control_acum, label='Control')
+        self.grafico_bloques.canvas.axes[2].set_xticks(t_exp_acum)
+
+        for tiempo_cambio in tiempos_cambio_bloque:
+            self.grafico_bloques.canvas.axes[0].axvline(x=tiempo_cambio, color='gray', linestyle='--', linewidth=0.8)
+            self.grafico_bloques.canvas.axes[1].axvline(x=tiempo_cambio, color='gray', linestyle='--', linewidth=0.8)
+            self.grafico_bloques.canvas.axes[2].axvline(x=tiempo_cambio, color='gray', linestyle='--', linewidth=0.8)
+
+        # Añadir títulos encima de la figura
+        for i, tiempo_cambio in enumerate(tiempos_cambio_bloque, start=1):
+            bloque_text = f'Bloque {i}'
+            # mitad del tiempo del bloque
+            if i == 1:
+                pos_x = tiempo_cambio / 2
+            else:
+                pos_x = (tiempo_cambio + tiempos_cambio_bloque[i - 2]) / 2
+
+                # Añadir área bajo la curva
+            #rint(t_exp_acum[:tiempo_cambio + 1])
+            #self.grafico_bloques.canvas.axes[0].fill_between(t_exp_acum[:tiempo_cambio + 1], 0, I_rojo_acum[:tiempo_cambio] + [I_rojo_acum[-1]], step='pre', alpha=0.3, color='red')
+            #self.grafico_bloques.canvas.axes[1].fill_between(t_exp_acum[:tiempo_cambio + 1], 0, I_verde_acum[:tiempo_cambio], step='pre', alpha=0.3, color='green')
+            #self.grafico_bloques.canvas.axes[2].fill_between(t_exp_acum[:tiempo_cambio + 1], 0, T_control_acum[:tiempo_cambio], step='pre', alpha=0.3, color='blue')
+
+            #self.grafico_bloques.canvas.axes[0].fill_between(t_exp_acum[:tiempo_cambio + 1], 0, I_rojo_acum[:tiempo_cambio], alpha=0.3, color='red')
+            #self.grafico_bloques.canvas.axes[1].fill_between(t_exp_acum[:tiempo_cambio + 1], 0, I_verde_acum[:tiempo_cambio], alpha=0.3, color='green')
+            
+            #self.grafico_bloques.canvas.axes[2].fill_between(t_exp_acum[:tiempo_cambio + 1], 0, T_control_acum[:tiempo_cambio], alpha=0.3, color='blue')
+
+            self.grafico_bloques.canvas.axes[0].text(pos_x, 100 + 2, bloque_text, rotation=0, ha='center', va='bottom')
+
+        self.grafico_bloques.canvas.axes[0].fill_between(t_exp_acum, 0, I_rojo_acum, step='pre', alpha=0.3, color='red')
+        self.grafico_bloques.canvas.axes[1].fill_between(t_exp_acum, 0, I_verde_acum, step='pre', alpha=0.3, color='green')
+        self.grafico_bloques.canvas.axes[0].set_yticks([0, 50, 100])
+        self.grafico_bloques.canvas.axes[0].set_yticklabels(['', '50%', '100%'])
+        self.grafico_bloques.canvas.axes[1].set_yticks([0, 50, 100])
+        self.grafico_bloques.canvas.axes[1].set_yticklabels(['', '50%', '100%'])
+
+
+        # Configurar leyendas y etiquetas
+        self.grafico_bloques.canvas.axes[0].legend()
+        self.grafico_bloques.canvas.axes[0].set_ylabel('Rojo')
+
+        self.grafico_bloques.canvas.axes[1].legend()
+        self.grafico_bloques.canvas.axes[1].set_ylabel('Verde')
+
+        self.grafico_bloques.canvas.axes[2].legend()
+        self.grafico_bloques.canvas.axes[2].set_xlabel('Tiempo acumulado (horas)')
+        self.grafico_bloques.canvas.axes[2].set_ylabel('T Control (°C)')
+
+        # Actualizar la visualización del lienzo
+        # dejar resolucion completa en eje x
+        self.grafico_bloques.canvas.axes[0].set_xlim([0, t_exp_acum[-1]])
+        self.grafico_bloques.canvas.draw()
+    
 
 # VENTANA SECUENCIADOR
             
@@ -516,45 +627,27 @@ class Secuenciador(QMainWindow):
     senal_dic_final = QtCore.pyqtSignal(dict)
     def __init__(self):
         super().__init__()
-        loadUi('GUI/secuenciador_v2.ui', self)
+        loadUi('GUI/secuenciador_v3.ui', self)
         #create status bar
         self.status = QStatusBar()
         self.setStatusBar(self.status)
         self.status.showMessage('Secuenciador de luces', 3000)
         self.tabs = [self.tab_1, self.tab_2, self.tab_3, self.tab_4, self.tab_5, self.tab_6]
+        self.actualizar_dics()
         
-        
-        self.bloques_activos = 0
-
-        self.spinBoxes_b1 = [self.b1_spinBox_t_exp, self.b1_spinBox_n_fotos, self.b1_spinBox_ti_roja, self.b1_spinBox_td_roja,
-                        self.b1_spinBox_ti_verde, self.b1_spinBox_td_verde, self.b1_spinBox_ti_azul, self.b1_spinBox_td_azul,
-                        self.b1_spinBox_ti_blanca, self.b1_spinBox_td_blanca]
-        self.spinBoxes_b2 = [self.b2_spinBox_t_exp, self.b2_spinBox_n_fotos, self.b2_spinBox_ti_roja, self.b2_spinBox_td_roja, 
-                        self.b2_spinBox_ti_verde, self.b2_spinBox_td_verde, self.b2_spinBox_ti_azul, self.b2_spinBox_td_azul,
-                        self.b2_spinBox_ti_blanca, self.b2_spinBox_td_blanca]
-        self.spinBoxes_b3 = [self.b3_spinBox_t_exp, self.b3_spinBox_n_fotos, self.b3_spinBox_ti_roja, self.b3_spinBox_td_roja,
-                        self.b3_spinBox_ti_verde, self.b3_spinBox_td_verde, self.b3_spinBox_ti_azul, self.b3_spinBox_td_azul,
-                        self.b3_spinBox_ti_blanca, self.b3_spinBox_td_blanca]
-        self.spinBoxes_b4 = [self.b4_spinBox_t_exp, self.b4_spinBox_n_fotos, self.b4_spinBox_ti_roja, self.b4_spinBox_td_roja,
-                        self.b4_spinBox_ti_verde, self.b4_spinBox_td_verde, self.b4_spinBox_ti_azul, self.b4_spinBox_td_azul,
-                        self.b4_spinBox_ti_blanca, self.b4_spinBox_td_blanca]
-        self.spinBoxes_b5 = [self.b5_spinBox_t_exp, self.b5_spinBox_n_fotos, self.b5_spinBox_ti_roja, self.b5_spinBox_td_roja,
-                        self.b5_spinBox_ti_verde, self.b5_spinBox_td_verde, self.b5_spinBox_ti_azul, self.b5_spinBox_td_azul,
-                        self.b5_spinBox_ti_blanca, self.b5_spinBox_td_blanca]
-        self.spinBoxes_b6 = [self.b6_spinBox_t_exp, self.b6_spinBox_n_fotos, self.b6_spinBox_ti_roja, self.b6_spinBox_td_roja,
-                        self.b6_spinBox_ti_verde, self.b6_spinBox_td_verde, self.b6_spinBox_ti_azul, self.b6_spinBox_td_azul,
-                        self.b6_spinBox_ti_blanca, self.b6_spinBox_td_blanca]
-
         self.button_guardar.clicked.connect(self.guardar_secuenciador)
-        self.button_b1_update.clicked.connect(lambda: self.update_bloque(self.spinBoxes_b1, self.Plot_b1))
-        self.button_b2_update.clicked.connect(lambda: self.update_bloque(self.spinBoxes_b2, self.Plot_b2))
-        self.button_b3_update.clicked.connect(lambda: self.update_bloque(self.spinBoxes_b3, self.Plot_b3))
-        self.button_b4_update.clicked.connect(lambda: self.update_bloque(self.spinBoxes_b4, self.Plot_b4))
-        self.button_b5_update.clicked.connect(lambda: self.update_bloque(self.spinBoxes_b5, self.Plot_b5))
-        self.button_b6_update.clicked.connect(lambda: self.update_bloque(self.spinBoxes_b6, self.Plot_b6))
-
-
+        
     # redefinir show() para inicializar los tabs
+        
+    def actualizar_dics(self):
+        self.dict_b1 = {'t_exp': self.b1_t_exp.value(), 't_control' : self.b1_T_control.value(), 'I_rojo': self.b1_slider_led_rojo.value(), 'I_verde': self.b1_slider_led_verde.value()}
+        self.dict_b2 = {'t_exp': self.b2_t_exp.value(), 't_control' : self.b2_T_control.value(), 'I_rojo': self.b2_slider_led_rojo.value(), 'I_verde': self.b2_slider_led_verde.value()}
+        self.dict_b3 = {'t_exp': self.b3_t_exp.value(), 't_control' : self.b3_T_control.value(), 'I_rojo': self.b3_slider_led_rojo.value(), 'I_verde': self.b3_slider_led_verde.value()}
+        self.dict_b4 = {'t_exp': self.b4_t_exp.value(), 't_control' : self.b4_T_control.value(), 'I_rojo': self.b4_slider_led_rojo.value(), 'I_verde': self.b4_slider_led_verde.value()}
+        self.dict_b5 = {'t_exp': self.b5_t_exp.value(), 't_control' : self.b5_T_control.value(), 'I_rojo': self.b5_slider_led_rojo.value(), 'I_verde': self.b5_slider_led_verde.value()}
+        self.dict_b6 = {'t_exp': self.b6_t_exp.value(), 't_control' : self.b6_T_control.value(), 'I_rojo': self.b6_slider_led_rojo.value(), 'I_verde': self.b6_slider_led_verde.value()}
+        self.dict_sec = {'bloque 1': self.dict_b1, 'bloque 2': self.dict_b2, 'bloque 3': self.dict_b3, 'bloque 4': self.dict_b4, 'bloque 5': self.dict_b5, 'bloque 6': self.dict_b6}
+
     def show(self):
         #herencia de show original
         super().show()
@@ -565,169 +658,90 @@ class Secuenciador(QMainWindow):
             else:
                 self.tabs[i].setEnabled(False)
 
-
-    def update_bloque(self, spinBoxes, plot):
-        # spinBoxes_b6 = [self.b6_spinBox_t_exp, self.b6_spinBox_n_fotos, self.b6_spinBox_ti_roja, self.b6_spinBox_td_roja,
-        #                 self.b6_spinBox_ti_verde, self.b6_spinBox_td_verde, self.b6_spinBox_ti_azul, self.b6_spinBox_td_azul,
-        #                 self.b6_spinBox_ti_blanca, self.b6_spinBox_td_blanca]
-
-        dict = {'t_exp': int(spinBoxes[0].value()), 'N_fotos': int(spinBoxes[1].value()), 'ti_roja': int(spinBoxes[2].value()), 'td_roja': int(spinBoxes[3].value()),
-                'ti_verde': int(spinBoxes[4].value()), 'td_verde': int(spinBoxes[5].value()), 'ti_azul': int(spinBoxes[6].value()), 'td_azul': int(spinBoxes[7].value()),
-                'ti_blanca': int(spinBoxes[8].value()), 'td_blanca': int(spinBoxes[9].value())}
-        
-        try:
-
-            self.validar_diccionario("bloque actual", dict)
-
-            t_exp = int(spinBoxes[0].value())
-            N_fotos = int(spinBoxes[1].value())
-            lights_on_times = [[(int(spinBoxes[i].value()), int(spinBoxes[i].value()) + int(spinBoxes[i+1].value()))] for i in range(2, len(spinBoxes), 2)]
-            print(t_exp, N_fotos, lights_on_times)
-
-            # Caso 1: Pulso equiespaciado
-            #N_fotos = 10
-            pulse_times = [int(t_exp / N_fotos) * i for i in range(N_fotos)]
-
-            bins = list(range(0, t_exp + 1))
-            lights_data = [np.zeros(len(bins) - 1) for _ in range(len(lights_on_times))]
-
-            for i, on_times in enumerate(lights_on_times):
-                for start, end in on_times:
-                    start_bin = bins.index(start)
-                    end_bin = bins.index(end)
-                    lights_data[i][start_bin:end_bin] = 1
-
-            print(lights_data)
-
-            pulse_data = np.zeros(len(bins) - 1)
-            for pulse_time in pulse_times:
-                pulse_bin = bins.index(pulse_time)
-                pulse_data[pulse_bin] = 1
-
-            colors = ['red', 'green', 'blue', 'gray', 'black']  # Rojo, Verde, Azul, Blanco, Gris
-            labels = ['red', 'green', 'blue', 'white', 'black']
-
-            axes = plot.canvas.figure.get_axes()
-            for ax in axes:
-                ax.clear()
-
-            for i, ax in enumerate(plot.canvas.axes):
-                if i < len(lights_data):
-                    ax.fill_between(bins[:-1], 0, lights_data[i], color=colors[i], alpha=0.5, label=f'Light {labels[i]}', step='post')
-                    ax.set_yticks([0, 1])
-                    ax.set_yticklabels(['', ''])
-                    ax.legend()
-                else:
-                    ax.fill_between(bins[:-1], 0, pulse_data, color=colors[i], alpha=0.5, label='Cámara', step='post')
-                    ax.set_yticks([0, 1])
-                    ax.set_yticklabels(['', ''])
-                    ax.legend()
-            #set x axis tittle for plot
-            axes[-1].set_xlabel('Tiempo [min]')
-            plot.canvas.draw()
-        
-        except ValueError as e:
-            print(e)
-            self.status.showMessage(str(e), 3000)
-
-
-        
     def guardar_secuenciador(self):
         print('Guardardando secuenciador...')
-        dict_b1 = {'t_exp': int(self.spinBoxes_b1[0].value()), 'N_fotos': int(self.spinBoxes_b1[1].value()), 'ti_roja': int(self.spinBoxes_b1[2].value()), 'td_roja': int(self.spinBoxes_b1[3].value()),
-                'ti_verde': int(self.spinBoxes_b1[4].value()), 'td_verde': int(self.spinBoxes_b1[5].value()), 'ti_azul': int(self.spinBoxes_b1[6].value()), 'td_azul': int(self.spinBoxes_b1[7].value()),
-                'ti_blanca': int(self.spinBoxes_b1[8].value()), 'td_blanca': int(self.spinBoxes_b1[9].value())}
-        dict_b2 = {'t_exp': int(self.spinBoxes_b2[0].value()), 'N_fotos': int(self.spinBoxes_b2[1].value()), 'ti_roja': int(self.spinBoxes_b2[2].value()), 'td_roja': int(self.spinBoxes_b2[3].value()),
-                'ti_verde': int(self.spinBoxes_b2[4].value()), 'td_verde': int(self.spinBoxes_b2[5].value()), 'ti_azul': int(self.spinBoxes_b2[6].value()), 'td_azul': int(self.spinBoxes_b2[7].value()),
-                'ti_blanca': int(self.spinBoxes_b2[8].value()), 'td_blanca': int(self.spinBoxes_b2[9].value())}
-        dict_b3 = {'t_exp': int(self.spinBoxes_b3[0].value()), 'N_fotos': int(self.spinBoxes_b3[1].value()), 'ti_roja': int(self.spinBoxes_b3[2].value()), 'td_roja': int(self.spinBoxes_b3[3].value()),
-                'ti_verde': int(self.spinBoxes_b3[4].value()), 'td_verde': int(self.spinBoxes_b3[5].value()), 'ti_azul': int(self.spinBoxes_b3[6].value()), 'td_azul': int(self.spinBoxes_b3[7].value()),
-                'ti_blanca': int(self.spinBoxes_b3[8].value()), 'td_blanca': int(self.spinBoxes_b3[9].value())}
-        dict_b4 = {'t_exp': int(self.spinBoxes_b4[0].value()), 'N_fotos': int(self.spinBoxes_b4[1].value()), 'ti_roja': int(self.spinBoxes_b4[2].value()), 'td_roja': int(self.spinBoxes_b4[3].value()),
-                'ti_verde': int(self.spinBoxes_b4[4].value()), 'td_verde': int(self.spinBoxes_b4[5].value()), 'ti_azul': int(self.spinBoxes_b4[6].value()), 'td_azul': int(self.spinBoxes_b4[7].value()),
-                'ti_blanca': int(self.spinBoxes_b4[8].value()), 'td_blanca': int(self.spinBoxes_b4[9].value())}
-        dict_b5 = {'t_exp': int(self.spinBoxes_b5[0].value()), 'N_fotos': int(self.spinBoxes_b5[1].value()), 'ti_roja': int(self.spinBoxes_b5[2].value()), 'td_roja': int(self.spinBoxes_b5[3].value()),
-                'ti_verde': int(self.spinBoxes_b5[4].value()), 'td_verde': int(self.spinBoxes_b5[5].value()), 'ti_azul': int(self.spinBoxes_b5[6].value()), 'td_azul': int(self.spinBoxes_b5[7].value()),
-                'ti_blanca': int(self.spinBoxes_b5[8].value()), 'td_blanca': int(self.spinBoxes_b5[9].value())}
-        dict_b6 = {'t_exp': int(self.spinBoxes_b6[0].value()), 'N_fotos': int(self.spinBoxes_b6[1].value()), 'ti_roja': int(self.spinBoxes_b6[2].value()), 'td_roja': int(self.spinBoxes_b6[3].value()),
-                'ti_verde': int(self.spinBoxes_b6[4].value()), 'td_verde': int(self.spinBoxes_b6[5].value()), 'ti_azul': int(self.spinBoxes_b6[6].value()), 'td_azul': int(self.spinBoxes_b6[7].value()),
-                'ti_blanca': int(self.spinBoxes_b6[8].value()), 'td_blanca': int(self.spinBoxes_b6[9].value())}
-        
-        dict_sec = {'bloque1': dict_b1, 'bloque2': dict_b2, 'bloque3': dict_b3, 'bloque4': dict_b4, 'bloque5': dict_b5, 'bloque6': dict_b6}
-        bloques = ["bloque1", "bloque2", "bloque3", "bloque4", "bloque5", "bloque6"]
+        self.actualizar_dics()
+        bloques = ["bloque 1", "bloque 2", "bloque 3", "bloque 4", "bloque 5", "bloque 6"]
         dic_final = {}
         for i in range(self.bloques_activos):
-            dic_final[bloques[i]] = dict_sec[bloques[i]]
+            dic_final[bloques[i]] = self.dict_sec[bloques[i]]
 
-        validacion = self.validar_dict_sec(dic_final)
-        if validacion:
-            print('Diccionario válido')
-            # cerrar ventana
-            #self.close()
-            self.senal_dic_final.emit(dic_final)
-            return dic_final
+        self.senal_dic_final.emit(dic_final)
+        return dic_final
+    
+
+
+class PatronConfig(QMainWindow):
+    senal_config_ready = pyqtSignal(dict)
+    def __init__(self, fluo):
+        super().__init__()
+        loadUi('GUI/patron_config.ui', self)
+        self.fluo = fluo
+        self.guardar_patron()
+        self.button_f1_preview.clicked.connect(lambda: self.ver_preview("f1"))
+        self.button_guardar.clicked.connect(lambda: self.guardar_patron(True))
+
+    def ver_preview(self, f):
+        print('Viendo preview...')
+        self.guardar_patron()
+        capture_controls = self.dic_final[f]
+        self.fluo.startCamera()
+        # define the camera configuration
+        self.fluo.setCamera(configuration_values = capture_controls)
+        request = self.fluo.camera.capture_request()
+        im_array = request.make_array("main")  # array from the "main" stream
+        request.release()
+        # convert the array to a QImage
+        height, width, channel = im_array.shape
+        bytesPerLine = 3 * width
+        qImg = QImage(im_array.data, width, height, bytesPerLine, QImage.Format_RGB888)
+        # convert the QImage to a QPixmap
+        pixmap = QPixmap.fromImage(qImg)
+        # display the QPixmap
+        self.label_f1_preview.setPixmap(pixmap)
+
+            
+        
+
+    def guardar_patron(self, ready=False):
+        print('Guardando patrón...')
+        self.dic_f1 = {
+                                                                                    #(min, max, default_value)
+            'AeConstraintMode': self.f1_AeConstraintMode.value(),                   #(0, 3, 0) - AEC/AGC constrain mode - 0 = Normal
+            'AeEnable': self.f1_AeEnable.value(),                                   #(False, True, None) - When if is False ( = AEC/AGC off), there will be no automatic updates to the camera’s gain or exposure settings
+            'AeExposureMode': self.f1_AeExposureMode.value(),                       #(0, 3, 0) - 0 = normal exposures, 1 = shorter exposures, 2 = longer exposures, 3= custom exposures
+            'AeMeteringMode': self.f1_AeMeteringMode.value(),                       #(0, 3, 0) - Metering mode for AEC/AGC
+            'AnalogueGain': self.f1_AnalogueGain.value(),                           #(1.0, 10.666666984558105, Undefined) - Analogue gain applied by the sensor
+            'AwbEnable': self.f1_AwbEnable.value(),                                 #(False, True, None) When it is False (AutoWhiteBalance off), there will be no automatic updates to the colour gains
+            'AwbMode': self.f1_AwbMode.value(),                                     #(0, 7, 0)
+            'Brightness': self.f1_Brightness.value(),                               #(-1.0, 1.0, 0.0) - (-1.0) is very dark, 1.0 is very brigh
+            'ColourGains': (self.f1_ColourGains_0.value(), self.f1_ColourGains_1.value()),  #tuple (red_gain, blue_gain), each value: (0.0, 32.0, Undefined) - Setting these numbers disables AWB.
+            'Contrast': self.f1_Contrast.value(),                                   #(0.0, 32.0, 1.0) -  zero means "no contrast", 1.0 is the default "normal" contrast
+            'ExposureTime': self.f1_ExposureTime.value(),                           #(75, 11766829, Undefined). unit microseconds.
+            'ExposureValue': self.f1_ExposureValue.value(),                         #(-8.0, 8.0, 0.0) - Zero is the base exposure level. Positive values increase the target brightness, and negative values decrease it 
+            'FrameDurationLimits': (self.f1_FrameDurationLimits_0.value(), self.f1_FrameDurationLimits_1.value()),   # tuple, each value: (47183, 11767556, Undefined). The maximum and minimum time that the sensor can take to deliver a frame (microseconds). Reciprocal of frame rate
+            'NoiseReductionMode': self.f1_NoiseReductionMode.value(),               #(0, 4, 0) - 0 is off.
+            'Saturation': self.f1_Saturation.value(),                               #(0.0, 32.0, 1.0) - zero greyscale images, 1.0 "normal" saturation, higher values for more saturated colours.
+            'ScalerCrop': eval(self.f1_ScalerCrop.value()),                         #((0, 0, 64, 64), (0, 0, 3280, 2464), (0, 2, 3280, 2460)) - to use just a sub part of the sensor area: (x_offset, y_offset, width, height)
+            'Sharpness': self.f1_Sharpness.value()                                  #(0.0, 16.0, 1.0)} - zero no additional sharpening, 1.0 is "normal" level of sharpening, larger values apply proportionately stronger sharpening
+            }
+        
+       
+        # self.dic_f = {'f1': self.dic_f1, 'f2': self.dic_f2, 'f3': self.dic_f3, 'f4': self.dic_f4, 'f5': self.dic_f5, 'f6': self.dic_f6}
+        fs = ['f1', 'f2', 'f3', 'f4', 'f5', 'f6']
+        dic_final = {}
+        if ready:
+            for i in range(self.bloques_activos):
+                dic_final[fs[i]] = self.dict_sec[fs[i]]
+            self.senal_config_ready.emit(self.dic_final)
+            return self.dic_final
         else:
-            print('Diccionario inválido')
-            return None
-       
+            return
 
-       
-    def validar_diccionario(self, bloque, diccionario):
-        t_exp = diccionario['t_exp']
-        ti_roja = diccionario['ti_roja']
-        td_roja = diccionario['td_roja']
-        ti_verde = diccionario['ti_verde']
-        td_verde = diccionario['td_verde']
-        ti_azul = diccionario['ti_azul']
-        td_azul = diccionario['td_azul']
-        ti_blanca = diccionario['ti_blanca']
-        td_blanca = diccionario['td_blanca']
-
-        # Verificar condiciones de error
-        if ti_roja > t_exp or (ti_roja + td_roja) > t_exp:
-            raise ValueError(f"Error en {bloque}: El tiempo total excede t_exp.")
-        elif ti_verde > t_exp or (ti_verde + td_verde) > t_exp:
-            raise ValueError(f"Error en {bloque}: El tiempo total excede t_exp.")
-        elif ti_azul > t_exp or (ti_azul + td_azul) > t_exp:
-            raise ValueError(f"Error en {bloque}: El tiempo total excede t_exp.")
-        elif ti_blanca > t_exp or (ti_blanca + td_blanca) > t_exp:
-            raise ValueError(f"Error en {bloque}: El tiempo total excede t_exp.")
-
-    def validar_dict_sec(self, dict_sec):
-        for bloque, diccionario in dict_sec.items():
-            try:
-                self.validar_diccionario(bloque, diccionario)
-            except ValueError as e:
-                print(e)  # Maneja el error como desees, por ejemplo, loguearlo o lanzar una excepción más específica.
-                #self.status.showMessage('Secuenciador de luces', 3000)
-                self.status.showMessage(str(e), 3000)
-                return False
-        return True
-
-class LedThread(QThread):
-    update_signal = pyqtSignal(str)
-
-    def __init__(self, color, duracion, tiempo_inicial, channel, app):
-        super(LedThread, self).__init__()
-        self.color = color
-        self.duracion = duracion
-        self.tiempo_inicial = tiempo_inicial
-        self.channel = channel
-        self.app = app
-
-    def run(self):
-        time.sleep(self.tiempo_inicial)
-        mensaje_encendido = f"{self.tiempo_inicial:.2f}s - Encendiendo LED {self.color}"
-        self.update_signal.emit(mensaje_encendido)
-        self.app.LEDOn(self.channel)
-        print(mensaje_encendido)
-
-        time.sleep(self.duracion)
-        tiempo_actual = self.tiempo_inicial + self.duracion
-        mensaje_apagado = f"{tiempo_actual:.2f}s - Apagando LED {self.color}"
-        self.update_signal.emit(mensaje_apagado)
-        self.app.LEDOff(self.channel)
-        print(mensaje_apagado)
+    def cargar_patron(self):
+        print('Cargando patrón...')
+        dic_patron = {'t_exp': 10, 't_control' : 37, 'I_rojo': 50, 'I_verde': 50}
+        return dic_patron
 
 class ExperimentoThread(QThread):
     def __init__(self, bloque, app):
@@ -737,24 +751,25 @@ class ExperimentoThread(QThread):
 
     def run(self):
         t_exp = self.bloque['t_exp']
-        threads = []
         #map chanel to color
-        channel_dic = {'roja': 2, 'verde': 1, 'azul': 0, 'blanca': 3}
-        for color in ['roja', 'verde', 'azul', 'blanca']:
-            ti_color = self.bloque[f'ti_{color}']
-            td_color = self.bloque[f'td_{color}']
-
-            if ti_color >= 0 and td_color > 0:
-                led_thread = LedThread(color, td_color, ti_color, channel_dic[color], self.app)
-                led_thread.update_signal.connect(self.actualizar_interfaz)
-                threads.append(led_thread)
-                led_thread.start()
+        channel_dic = {'rojo': 2, 'verde': 1, 'azul': 0, 'blanca': 3}
+        intensidad_rojo = self.bloque['I_rojo']
+        intensidad_verde = self.bloque['I_verde']
+        
+        print(f"Bloque de {t_exp} minutos")
+        print(f"LED Rojo: {intensidad_rojo}")
+        print(f"LED Verde: {intensidad_verde}")
+        print("Encendiendo LEDs...")
+        self.app.LEDset(channel_dic['rojo'], intensidad_rojo)
+        self.app.LEDset(channel_dic['verde'], intensidad_verde)
 
         time.sleep(t_exp) # Esperar el tiempo total del experimento
+        #time.sleep(t_exp * 60 * 60) # Esperar el tiempo total del experimento
 
-        # Esperar a que todos los hilos terminen
-        for thread in threads:
-            thread.wait()
+        print("Apagando LEDs...")
+        self.app.LEDOff(channel_dic['rojo'])
+        self.app.LEDOff(channel_dic['verde'])
+
 
     def actualizar_interfaz(self, mensaje):
         pass
@@ -763,6 +778,7 @@ class ExperimentoThread(QThread):
 
 class ExperimentosManagerThread(QThread):
     senal_final = pyqtSignal()
+    senal_inicio_total = pyqtSignal(int)
     senal_inicio_bloque = pyqtSignal(str, int)
     senal_fin_bloque = pyqtSignal(str)
     def __init__(self, bloques, app):
@@ -771,10 +787,17 @@ class ExperimentosManagerThread(QThread):
         self.app = app
 
     def run(self):
+        tiempo_total = 0
+        for nombre_bloque, bloque in self.bloques.items():
+            tiempo_total += int(bloque["t_exp"])
+        print(f"Tiempo total de experimentos: {tiempo_total} minutos")
+        self.senal_inicio_total.emit(tiempo_total)
         for nombre_bloque, bloque in self.bloques.items():
             print(f"Ejecutando experimento en {nombre_bloque}")
             experimento_thread = ExperimentoThread(bloque, self.app)
             experimento_thread.start()
+
+
             self.senal_inicio_bloque.emit(nombre_bloque, int(bloque["t_exp"]))
             experimento_thread.wait()
             self.senal_fin_bloque.emit(nombre_bloque)

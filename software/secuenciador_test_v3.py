@@ -301,6 +301,81 @@ class Secuenciador(QMainWindow):
         self.senal_dic_final.emit(dic_final)
         return dic_final
 
+class PatronConfig(QMainWindow):
+    senal_config_ready = pyqtSignal(dict)
+    def __init__(self, fluo):
+        super().__init__()
+        loadUi('GUI/patron_config.ui', self)
+        self.fluo = fluo
+        self.guardar_patron()
+        self.button_f1_preview.clicked.connect(lambda: self.ver_preview("f1"))
+        self.button_guardar.clicked.connect(lambda: self.guardar_patron(True))
+
+    def ver_preview(self, f):
+        print('Viendo preview...')
+        self.guardar_patron()
+        capture_controls = self.dic_final[f]
+        self.fluo.startCamera()
+        # define the camera configuration
+        self.fluo.setCamera(configuration_values = capture_controls)
+        request = self.fluo.camera.capture_request()
+        im_array = request.make_array("main")  # array from the "main" stream
+        request.release()
+        # convert the array to a QImage
+        height, width, channel = im_array.shape
+        bytesPerLine = 3 * width
+        qImg = QImage(im_array.data, width, height, bytesPerLine, QImage.Format_RGB888)
+        # convert the QImage to a QPixmap
+        pixmap = QPixmap.fromImage(qImg)
+        # display the QPixmap
+        self.label_f1_preview.setPixmap(pixmap)
+
+            
+        
+
+    def guardar_patron(self, ready=False):
+        print('Guardando patrón...')
+        self.dic_f1 = {
+                                                                                    #(min, max, default_value)
+            'AeConstraintMode': self.f1_AeConstraintMode.value(),                   #(0, 3, 0) - AEC/AGC constrain mode - 0 = Normal
+            'AeEnable': self.f1_AeEnable.value(),                                   #(False, True, None) - When if is False ( = AEC/AGC off), there will be no automatic updates to the camera’s gain or exposure settings
+            'AeExposureMode': self.f1_AeExposureMode.value(),                       #(0, 3, 0) - 0 = normal exposures, 1 = shorter exposures, 2 = longer exposures, 3= custom exposures
+            'AeMeteringMode': self.f1_AeMeteringMode.value(),                       #(0, 3, 0) - Metering mode for AEC/AGC
+            'AnalogueGain': self.f1_AnalogueGain.value(),                           #(1.0, 10.666666984558105, Undefined) - Analogue gain applied by the sensor
+            'AwbEnable': self.f1_AwbEnable.value(),                                 #(False, True, None) When it is False (AutoWhiteBalance off), there will be no automatic updates to the colour gains
+            'AwbMode': self.f1_AwbMode.value(),                                     #(0, 7, 0)
+            'Brightness': self.f1_Brightness.value(),                               #(-1.0, 1.0, 0.0) - (-1.0) is very dark, 1.0 is very brigh
+            'ColourGains': (self.f1_ColourGains_0.value(), self.f1_ColourGains_1.value()),  #tuple (red_gain, blue_gain), each value: (0.0, 32.0, Undefined) - Setting these numbers disables AWB.
+            'Contrast': self.f1_Contrast.value(),                                   #(0.0, 32.0, 1.0) -  zero means "no contrast", 1.0 is the default "normal" contrast
+            'ExposureTime': self.f1_ExposureTime.value(),                           #(75, 11766829, Undefined). unit microseconds.
+            'ExposureValue': self.f1_ExposureValue.value(),                         #(-8.0, 8.0, 0.0) - Zero is the base exposure level. Positive values increase the target brightness, and negative values decrease it 
+            'FrameDurationLimits': (self.f1_FrameDurationLimits_0.value(), self.f1_FrameDurationLimits_1.value()),   # tuple, each value: (47183, 11767556, Undefined). The maximum and minimum time that the sensor can take to deliver a frame (microseconds). Reciprocal of frame rate
+            'NoiseReductionMode': self.f1_NoiseReductionMode.value(),               #(0, 4, 0) - 0 is off.
+            'Saturation': self.f1_Saturation.value(),                               #(0.0, 32.0, 1.0) - zero greyscale images, 1.0 "normal" saturation, higher values for more saturated colours.
+            'ScalerCrop': eval(self.f1_ScalerCrop.value()),                         #((0, 0, 64, 64), (0, 0, 3280, 2464), (0, 2, 3280, 2460)) - to use just a sub part of the sensor area: (x_offset, y_offset, width, height)
+            'Sharpness': self.f1_Sharpness.value()                                  #(0.0, 16.0, 1.0)} - zero no additional sharpening, 1.0 is "normal" level of sharpening, larger values apply proportionately stronger sharpening
+            }
+        
+       
+        # self.dic_f = {'f1': self.dic_f1, 'f2': self.dic_f2, 'f3': self.dic_f3, 'f4': self.dic_f4, 'f5': self.dic_f5, 'f6': self.dic_f6}
+        fs = ['f1', 'f2', 'f3', 'f4', 'f5', 'f6']
+        dic_final = {}
+        if ready:
+            for i in range(self.bloques_activos):
+                dic_final[fs[i]] = self.dict_sec[fs[i]]
+            self.senal_config_ready.emit(self.dic_final)
+            return self.dic_final
+        else:
+            return
+
+    def cargar_patron(self):
+        print('Cargando patrón...')
+        dic_patron = {'t_exp': 10, 't_control' : 37, 'I_rojo': 50, 'I_verde': 50}
+        return dic_patron
+
+
+
+
 class ExperimentoThread(QThread):
     def __init__(self, bloque, app):
         super(ExperimentoThread, self).__init__()
@@ -319,8 +394,8 @@ class ExperimentoThread(QThread):
         print(f"LED Rojo: {intensidad_rojo}")
         print(f"LED Verde: {intensidad_verde}")
         print("Encendiendo LEDs...")
-        self.app.LEDOn(channel_dic['rojo'], intensidad_rojo)
-        self.app.LEDOn(channel_dic['verde'], intensidad_verde)
+        self.app.LEDset(channel_dic['rojo'], intensidad_rojo)
+        self.app.LEDset(channel_dic['verde'], intensidad_verde)
 
         time.sleep(t_exp) # Esperar el tiempo total del experimento
         #time.sleep(t_exp * 60 * 60) # Esperar el tiempo total del experimento

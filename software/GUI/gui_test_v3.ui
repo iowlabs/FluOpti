@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1005</width>
+    <width>1128</width>
     <height>901</height>
    </rect>
   </property>
@@ -892,9 +892,12 @@
             <attribute name="title">
              <string>RUN</string>
             </attribute>
-            <layout class="QVBoxLayout" name="verticalLayout_3">
+            <layout class="QVBoxLayout" name="verticalLayout_3" stretch="0,0,0,0,0,0">
              <item>
               <layout class="QHBoxLayout" name="horizontalLayout_9">
+               <property name="spacing">
+                <number>30</number>
+               </property>
                <item alignment="Qt::AlignHCenter|Qt::AlignVCenter">
                 <widget class="QLabel" name="label">
                  <property name="maximumSize">
@@ -909,7 +912,7 @@
                   </font>
                  </property>
                  <property name="text">
-                  <string>Numero de bloques:</string>
+                  <string>N° de bloques:</string>
                  </property>
                 </widget>
                </item>
@@ -943,19 +946,80 @@
                  </property>
                 </widget>
                </item>
+               <item alignment="Qt::AlignHCenter|Qt::AlignVCenter">
+                <widget class="QLabel" name="label_2">
+                 <property name="font">
+                  <font>
+                   <pointsize>13</pointsize>
+                  </font>
+                 </property>
+                 <property name="text">
+                  <string>N° de Fotos:</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QSpinBox" name="nfotos_spin_box">
+                 <property name="minimumSize">
+                  <size>
+                   <width>300</width>
+                   <height>40</height>
+                  </size>
+                 </property>
+                 <property name="font">
+                  <font>
+                   <pointsize>12</pointsize>
+                  </font>
+                 </property>
+                 <property name="alignment">
+                  <set>Qt::AlignCenter</set>
+                 </property>
+                 <property name="minimum">
+                  <number>1</number>
+                 </property>
+                 <property name="maximum">
+                  <number>6</number>
+                 </property>
+                 <property name="value">
+                  <number>1</number>
+                 </property>
+                </widget>
+               </item>
               </layout>
              </item>
-             <item alignment="Qt::AlignHCenter">
-              <widget class="QPushButton" name="button_aceptar">
-               <property name="font">
-                <font>
-                 <pointsize>10</pointsize>
-                </font>
+             <item>
+              <layout class="QHBoxLayout" name="horizontalLayout_13">
+               <property name="leftMargin">
+                <number>60</number>
                </property>
-               <property name="text">
-                <string>Configurar Bloques</string>
+               <property name="rightMargin">
+                <number>60</number>
                </property>
-              </widget>
+               <item alignment="Qt::AlignHCenter|Qt::AlignVCenter">
+                <widget class="QPushButton" name="button_aceptar">
+                 <property name="font">
+                  <font>
+                   <pointsize>10</pointsize>
+                  </font>
+                 </property>
+                 <property name="text">
+                  <string>Configurar Bloques</string>
+                 </property>
+                </widget>
+               </item>
+               <item alignment="Qt::AlignHCenter|Qt::AlignVCenter">
+                <widget class="QPushButton" name="button_fotos">
+                 <property name="font">
+                  <font>
+                   <pointsize>10</pointsize>
+                  </font>
+                 </property>
+                 <property name="text">
+                  <string>Configurar Fotos</string>
+                 </property>
+                </widget>
+               </item>
+              </layout>
              </item>
              <item>
               <widget class="QGroupBox" name="groupBox_estado_bloques">
@@ -1075,17 +1139,9 @@
                <item>
                 <widget class="QGroupBox" name="groupBox">
                  <property name="title">
-                  <string>Estado Fotos</string>
+                  <string>Patron de Fotos Seteado</string>
                  </property>
-                 <layout class="QHBoxLayout" name="horizontalLayout_11">
-                  <item>
-                   <widget class="QLabel" name="label_foto">
-                    <property name="text">
-                     <string>TextLabel</string>
-                    </property>
-                   </widget>
-                  </item>
-                 </layout>
+                 <layout class="QHBoxLayout" name="horizontalLayout_11"/>
                 </widget>
                </item>
               </layout>

@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>825</width>
-    <height>844</height>
+    <width>588</width>
+    <height>685</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -231,12 +231,24 @@
                   <property name="orientation">
                    <enum>Qt::Horizontal</enum>
                   </property>
+                  <property name="tickPosition">
+                   <enum>QSlider::TicksBelow</enum>
+                  </property>
                  </widget>
                 </item>
                 <item row="1" column="3">
                  <widget class="QSlider" name="b3_slider_led_verde">
+                  <property name="autoFillBackground">
+                   <bool>false</bool>
+                  </property>
                   <property name="orientation">
                    <enum>Qt::Horizontal</enum>
+                  </property>
+                  <property name="tickPosition">
+                   <enum>QSlider::TicksBelow</enum>
+                  </property>
+                  <property name="tickInterval">
+                   <number>0</number>
                   </property>
                  </widget>
                 </item>
