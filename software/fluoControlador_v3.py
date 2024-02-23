@@ -306,10 +306,6 @@ class MainWindow(QMainWindow):
                 print(e)
         print(f"CH1 - t:\t{self.temp[0]} tsp:\t{self.temp_sp[0]} pwr :\t{self.temp_pwr[0]}\nCH2 - t:\t{self.temp[1]} tsp:\t{self.temp_sp[1]} pwr :\t{self.temp_pwr[1]}")
 
-
-    def updateTime(self):
-        pass
-
     def startTempCtrl (self):
         self.run_state =  True
         self.pushButton_10.setDisabled(False)
