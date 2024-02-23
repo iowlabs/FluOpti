@@ -754,6 +754,7 @@ class PatronConfig(QMainWindow):
             }
        
         if ready:
+            self.senal_config_ready.emit(self.dic_final)
             return self.dic_final
         else:
             return
