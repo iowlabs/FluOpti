@@ -37,7 +37,7 @@ DATA_PATH = "data/"
 class MainWindow(QMainWindow):
     def __init__(self):
         super(MainWindow,self).__init__()
-        loadUi('GUI/gui_test.ui', self)
+        loadUi('GUI/gui_test_v3.ui', self)
 
         # Nueva interfaz###########
         self.sec = Secuenciador()
