@@ -695,20 +695,26 @@ class PatronConfig(QMainWindow):
         print('Viendo preview...')
         self.guardar_patron()
         capture_controls = self.dic_final[f]
+        print("capture_controls: ", capture_controls)
         self.fluo.startCamera()
+        print("camera started")
         # define the camera configuration
         self.fluo.setCamera(configuration_values = capture_controls)
+        print("camera seted")
         request = self.fluo.camera.capture_request()
+        print("request created")
         im_array = request.make_array("main")  # array from the "main" stream
+        print("array created")
         request.release()
-        # convert the array to a QImage
-        height, width, channel = im_array.shape
-        bytesPerLine = 3 * width
-        qImg = QImage(im_array.data, width, height, bytesPerLine, QImage.Format_RGB888)
-        # convert the QImage to a QPixmap
-        pixmap = QPixmap.fromImage(qImg)
-        # display the QPixmap
-        self.label_f1_preview.setPixmap(pixmap)
+        print("request released")
+        # # convert the array to a QImage
+        # height, width, channel = im_array.shape
+        # bytesPerLine = 3 * width
+        # qImg = QImage(im_array.data, width, height, bytesPerLine, QImage.Format_RGB888)
+        # # convert the QImage to a QPixmap
+        # pixmap = QPixmap.fromImage(qImg)
+        # # display the QPixmap
+        # self.label_f1_preview.setPixmap(pixmap)
 
             
         
