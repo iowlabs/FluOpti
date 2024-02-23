@@ -691,14 +691,14 @@ class PatronConfig(QMainWindow):
         loadUi('GUI/patron_config.ui', self)
         self.fluo = fluo
         self.guardar_patron()
-        self.button_f1_preview.clicked.connect(lambda: self.ver_preview("f1"))
+        self.button_f1_preview.clicked.connect(self.ver_preview)
         self.button_guardar.clicked.connect(lambda: self.guardar_patron(True))
 
-    def ver_preview(self, f):
+    def ver_preview(self):
         print('Viendo preview...')
         self.guardar_patron()
-        capture_controls = self.dic_final[f]['config']
-        mode = self.dic_final[f]['mode']
+        capture_controls = self.dic_final['config']
+        mode = self.dic_final['mode']
         print("capture_controls: ", capture_controls)
         print("Controles imprimidos")
         self.fluo.startCamera()
@@ -727,7 +727,7 @@ class PatronConfig(QMainWindow):
 
     def guardar_patron(self, ready=False):
         print('Guardando patrón...')
-        self.dic_f1 = {
+        self.dic_final = {
                 'config' :{                                                                                    #(min, max, default_value)
                     'AeConstraintMode': self.f1_AeConstraintMode.value(),                   #(0, 3, 0) - AEC/AGC constrain mode - 0 = Normal
                     'AeEnable': bool(self.f1_AeEnable.currentText()),                                   #(False, True, None) - When if is False ( = AEC/AGC off), there will be no automatic updates to the camera’s gain or exposure settings
@@ -753,14 +753,7 @@ class PatronConfig(QMainWindow):
                 'I_led': self.f1_IntensidadLed.value()
             }
        
-        # self.dic_f = {'f1': self.dic_f1, 'f2': self.dic_f2, 'f3': self.dic_f3, 'f4': self.dic_f4, 'f5': self.dic_f5, 'f6': self.dic_f6}
-        fs = ['f1', 'f2', 'f3', 'f4', 'f5', 'f6']
-        dic_final = {}
-        self.dic_final = {"f1": self.dic_f1}
         if ready:
-            for i in range(self.bloques_activos):
-                dic_final[fs[i]] = self.dict_sec[fs[i]]
-            self.senal_config_ready.emit(self.dic_final)
             return self.dic_final
         else:
             return
