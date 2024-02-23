@@ -36,8 +36,8 @@ class MainWindow(QMainWindow):
         self.pat.setWindowModality(2)
         self.dic_bloques = {}
         self.sec.senal_dic_final.connect(self.recibir_diccionario)
-        self.pat.senal_config_ready.connect(self.recibir_patrones)
         self.button_aceptar.clicked.connect(self.configurar_secuenciador)
+        self.pat.senal_config_ready.connect(self.recibir_patrones)
         self.button_fotos.clicked.connect(self.configurar_patrones)
         self.pushButton_run.clicked.connect(self.comenzar_experimentos)
         self.status = QtWidgets.QStatusBar()
@@ -329,7 +329,7 @@ class PatronConfig(QMainWindow):
     def ver_preview(self, f):
         print('Viendo preview...')
         self.guardar_patron()
-        capture_controls = self.dic_final[f]
+        capture_controls = self.dic_final[f]['config']
         self.fluo.startCamera()
         # define the camera configuration
         self.fluo.setCamera(configuration_values = capture_controls)
@@ -349,24 +349,29 @@ class PatronConfig(QMainWindow):
     def guardar_patron(self, ready=False):
         print('Guardando patrón...')
         self.dic_f1 = {
-                                                                                    #(min, max, default_value)
-            'AeConstraintMode': self.f1_AeConstraintMode.value(),                   #(0, 3, 0) - AEC/AGC constrain mode - 0 = Normal
-            'AeEnable': self.f1_AeEnable.currentText(),                                   #(False, True, None) - When if is False ( = AEC/AGC off), there will be no automatic updates to the camera’s gain or exposure settings
-            'AeExposureMode': self.f1_AeExposureMode.value(),                       #(0, 3, 0) - 0 = normal exposures, 1 = shorter exposures, 2 = longer exposures, 3= custom exposures
-            'AeMeteringMode': self.f1_AeMeteringMode.value(),                       #(0, 3, 0) - Metering mode for AEC/AGC
-            'AnalogueGain': self.f1_AnalogueGain.value(),                           #(1.0, 10.666666984558105, Undefined) - Analogue gain applied by the sensor
-            'AwbEnable': self.f1_AwbEnable.currentText(),                                 #(False, True, None) When it is False (AutoWhiteBalance off), there will be no automatic updates to the colour gains
-            'AwbMode': self.f1_AwbMode.value(),                                     #(0, 7, 0)
-            'Brightness': self.f1_Brightness.value(),                               #(-1.0, 1.0, 0.0) - (-1.0) is very dark, 1.0 is very brigh
-            'ColourGains': (self.f1_ColourGains_0.value(), self.f1_ColourGains_1.value()),  #tuple (red_gain, blue_gain), each value: (0.0, 32.0, Undefined) - Setting these numbers disables AWB.
-            'Contrast': self.f1_Contrast.value(),                                   #(0.0, 32.0, 1.0) -  zero means "no contrast", 1.0 is the default "normal" contrast
-            'ExposureTime': self.f1_ExposureTime.value(),                           #(75, 11766829, Undefined). unit microseconds.
-            'ExposureValue': self.f1_ExposureValue.value(),                         #(-8.0, 8.0, 0.0) - Zero is the base exposure level. Positive values increase the target brightness, and negative values decrease it 
-            'FrameDurationLimits': (self.f1_FrameDurationLimits_0.value(), self.f1_FrameDurationLimits_1.value()),   # tuple, each value: (47183, 11767556, Undefined). The maximum and minimum time that the sensor can take to deliver a frame (microseconds). Reciprocal of frame rate
-            'NoiseReductionMode': self.f1_NoiseReductionMode.value(),               #(0, 4, 0) - 0 is off.
-            'Saturation': self.f1_Saturation.value(),                               #(0.0, 32.0, 1.0) - zero greyscale images, 1.0 "normal" saturation, higher values for more saturated colours.
-            'ScalerCrop': eval(self.f1_ScalerCrop.currentText()),                         #((0, 0, 64, 64), (0, 0, 3280, 2464), (0, 2, 3280, 2460)) - to use just a sub part of the sensor area: (x_offset, y_offset, width, height)
-            'Sharpness': self.f1_Sharpness.value()                                  #(0.0, 16.0, 1.0)} - zero no additional sharpening, 1.0 is "normal" level of sharpening, larger values apply proportionately stronger sharpening
+                'config' :{                                                                                    #(min, max, default_value)
+                    'AeConstraintMode': self.f1_AeConstraintMode.value(),                   #(0, 3, 0) - AEC/AGC constrain mode - 0 = Normal
+                    'AeEnable': self.f1_AeEnable.currentText(),                                   #(False, True, None) - When if is False ( = AEC/AGC off), there will be no automatic updates to the camera’s gain or exposure settings
+                    'AeExposureMode': self.f1_AeExposureMode.value(),                       #(0, 3, 0) - 0 = normal exposures, 1 = shorter exposures, 2 = longer exposures, 3= custom exposures
+                    'AeMeteringMode': self.f1_AeMeteringMode.value(),                       #(0, 3, 0) - Metering mode for AEC/AGC
+                    'AnalogueGain': self.f1_AnalogueGain.value(),                           #(1.0, 10.666666984558105, Undefined) - Analogue gain applied by the sensor
+                    'AwbEnable': self.f1_AwbEnable.currentText(),                                 #(False, True, None) When it is False (AutoWhiteBalance off), there will be no automatic updates to the colour gains
+                    'AwbMode': self.f1_AwbMode.value(),                                     #(0, 7, 0)
+                    'Brightness': self.f1_Brightness.value(),                               #(-1.0, 1.0, 0.0) - (-1.0) is very dark, 1.0 is very brigh
+                    'ColourGains': (self.f1_ColourGains_0.value(), self.f1_ColourGains_1.value()),  #tuple (red_gain, blue_gain), each value: (0.0, 32.0, Undefined) - Setting these numbers disables AWB.
+                    'Contrast': self.f1_Contrast.value(),                                   #(0.0, 32.0, 1.0) -  zero means "no contrast", 1.0 is the default "normal" contrast
+                    'ExposureTime': self.f1_ExposureTime.value(),                           #(75, 11766829, Undefined). unit microseconds.
+                    'ExposureValue': self.f1_ExposureValue.value(),                         #(-8.0, 8.0, 0.0) - Zero is the base exposure level. Positive values increase the target brightness, and negative values decrease it 
+                    'FrameDurationLimits': (self.f1_FrameDurationLimits_0.value(), self.f1_FrameDurationLimits_1.value()),   # tuple, each value: (47183, 11767556, Undefined). The maximum and minimum time that the sensor can take to deliver a frame (microseconds). Reciprocal of frame rate
+                    'NoiseReductionMode': self.f1_NoiseReductionMode.value(),               #(0, 4, 0) - 0 is off.
+                    'Saturation': self.f1_Saturation.value(),                               #(0.0, 32.0, 1.0) - zero greyscale images, 1.0 "normal" saturation, higher values for more saturated colours.
+                    'ScalerCrop': eval(self.f1_ScalerCrop.currentText()),                         #((0, 0, 64, 64), (0, 0, 3280, 2464), (0, 2, 3280, 2460)) - to use just a sub part of the sensor area: (x_offset, y_offset, width, height)
+                    'Sharpness': self.f1_Sharpness.value()                                  #(0.0, 16.0, 1.0)} - zero no additional sharpening, 1.0 is "normal" level of sharpening, larger values apply proportionately stronger sharpening
+                    },
+                'mode': self.f1_CamMode.value(),
+                'n_fotos': self.f1_nfotos.value(),
+                'color_led': self.f1_ColorLed.currentText(),
+                'I_led': self.f1_IntensidadLed.value()
             }
         
        

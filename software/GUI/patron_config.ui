@@ -42,6 +42,49 @@
              </item>
              <item row="0" column="1">
               <widget class="QSpinBox" name="f1_AeConstraintMode">
+               <property name="toolTip">
+                <string>&lt;html&gt;
+&lt;head&gt;
+&lt;style&gt;
+    body {
+        font-family: 'Arial', sans-serif;
+        font-size: 12px;
+        color: #333;
+        margin: 0;
+        padding: 0;
+    }
+
+    .tooltip {
+        background-color: #f2f2f2;
+        border: 1px solid #ccc;
+        padding: 10px;
+        border-radius: 5px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        max-width: 300px;
+    }
+
+    .tooltip-heading {
+        font-weight: bold;
+        color: #555;
+        margin-bottom: 5px;
+    }
+
+    .tooltip-text {
+        margin: 0;
+    }
+&lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;div class=&quot;tooltip&quot;&gt;
+        &lt;p class=&quot;tooltip-heading&quot;&gt;AeConstraintMode&lt;/p&gt;
+        &lt;p class=&quot;tooltip-text&quot;&gt;#(min, max, default_value)&lt;br&gt;
+(0, 3, 0) - AEC/AGC constrain mode - 0 = Normal
+&lt;/p&gt;
+    &lt;/div&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</string>
+               </property>
                <property name="maximum">
                 <number>3</number>
                </property>
@@ -182,6 +225,49 @@
              </item>
              <item row="1" column="1">
               <widget class="QSpinBox" name="f1_AeMeteringMode">
+               <property name="toolTip">
+                <string>&lt;html&gt;
+&lt;head&gt;
+&lt;style&gt;
+    body {
+        font-family: 'Arial', sans-serif;
+        font-size: 12px;
+        color: #333;
+        margin: 0;
+        padding: 0;
+    }
+
+    .tooltip {
+        background-color: #f2f2f2;
+        border: 1px solid #ccc;
+        padding: 10px;
+        border-radius: 5px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        max-width: 300px;
+    }
+
+    .tooltip-heading {
+        font-weight: bold;
+        color: #555;
+        margin-bottom: 5px;
+    }
+
+    .tooltip-text {
+        margin: 0;
+    }
+&lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;div class=&quot;tooltip&quot;&gt;
+        &lt;p class=&quot;tooltip-heading&quot;&gt;AeMeteringMode&lt;/p&gt;
+        &lt;p class=&quot;tooltip-text&quot;&gt;#(min, max, default_value)&lt;br&gt;
+(0, 3, 0) - Metering mode for AEC/AGC
+&lt;/p&gt;
+    &lt;/div&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</string>
+               </property>
                <property name="maximum">
                 <number>3</number>
                </property>
@@ -189,6 +275,49 @@
              </item>
              <item row="0" column="3">
               <widget class="QComboBox" name="f1_AeEnable">
+               <property name="toolTip">
+                <string>&lt;html&gt;
+&lt;head&gt;
+&lt;style&gt;
+    body {
+        font-family: 'Arial', sans-serif;
+        font-size: 12px;
+        color: #333;
+        margin: 0;
+        padding: 0;
+    }
+
+    .tooltip {
+        background-color: #f2f2f2;
+        border: 1px solid #ccc;
+        padding: 10px;
+        border-radius: 5px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        max-width: 300px;
+    }
+
+    .tooltip-heading {
+        font-weight: bold;
+        color: #555;
+        margin-bottom: 5px;
+    }
+
+    .tooltip-text {
+        margin: 0;
+    }
+&lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;div class=&quot;tooltip&quot;&gt;
+        &lt;p class=&quot;tooltip-heading&quot;&gt;AeEnable&lt;/p&gt;
+        &lt;p class=&quot;tooltip-text&quot;&gt;#(min, max, default_value)&lt;br&gt;
+(False, True, None) - When if is False ( = AEC/AGC off), there will be no automatic updates to the camera’s gain or exposure settings
+&lt;/p&gt;
+    &lt;/div&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</string>
+               </property>
                <property name="currentText">
                 <string>False</string>
                </property>
@@ -211,6 +340,49 @@
              </item>
              <item row="3" column="3">
               <widget class="QSpinBox" name="f1_ExposureTime">
+               <property name="toolTip">
+                <string>&lt;html&gt;
+&lt;head&gt;
+&lt;style&gt;
+    body {
+        font-family: 'Arial', sans-serif;
+        font-size: 12px;
+        color: #333;
+        margin: 0;
+        padding: 0;
+    }
+
+    .tooltip {
+        background-color: #f2f2f2;
+        border: 1px solid #ccc;
+        padding: 10px;
+        border-radius: 5px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        max-width: 300px;
+    }
+
+    .tooltip-heading {
+        font-weight: bold;
+        color: #555;
+        margin-bottom: 5px;
+    }
+
+    .tooltip-text {
+        margin: 0;
+    }
+&lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;div class=&quot;tooltip&quot;&gt;
+        &lt;p class=&quot;tooltip-heading&quot;&gt;ExposureTime&lt;/p&gt;
+        &lt;p class=&quot;tooltip-text&quot;&gt;#(min, max, default_value)&lt;br&gt;
+(75, 11766829, Undefined). unit microseconds.
+&lt;/p&gt;
+    &lt;/div&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</string>
+               </property>
                <property name="minimum">
                 <number>75</number>
                </property>
@@ -227,6 +399,49 @@
              </item>
              <item row="1" column="3">
               <widget class="QDoubleSpinBox" name="f1_AnalogueGain">
+               <property name="toolTip">
+                <string>&lt;html&gt;
+&lt;head&gt;
+&lt;style&gt;
+    body {
+        font-family: 'Arial', sans-serif;
+        font-size: 12px;
+        color: #333;
+        margin: 0;
+        padding: 0;
+    }
+
+    .tooltip {
+        background-color: #f2f2f2;
+        border: 1px solid #ccc;
+        padding: 10px;
+        border-radius: 5px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        max-width: 300px;
+    }
+
+    .tooltip-heading {
+        font-weight: bold;
+        color: #555;
+        margin-bottom: 5px;
+    }
+
+    .tooltip-text {
+        margin: 0;
+    }
+&lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;div class=&quot;tooltip&quot;&gt;
+        &lt;p class=&quot;tooltip-heading&quot;&gt;AnalogueGain&lt;/p&gt;
+        &lt;p class=&quot;tooltip-text&quot;&gt;#(min, max, default_value)&lt;br&gt;
+(1.0, 10.666666984558105, Undefined) - Analogue gain applied by the sensor.
+&lt;/p&gt;
+    &lt;/div&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</string>
+               </property>
                <property name="minimum">
                 <double>1.000000000000000</double>
                </property>
@@ -237,6 +452,49 @@
              </item>
              <item row="0" column="6">
               <widget class="QSpinBox" name="f1_AeExposureMode">
+               <property name="toolTip">
+                <string>&lt;html&gt;
+&lt;head&gt;
+&lt;style&gt;
+    body {
+        font-family: 'Arial', sans-serif;
+        font-size: 12px;
+        color: #333;
+        margin: 0;
+        padding: 0;
+    }
+
+    .tooltip {
+        background-color: #f2f2f2;
+        border: 1px solid #ccc;
+        padding: 10px;
+        border-radius: 5px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        max-width: 300px;
+    }
+
+    .tooltip-heading {
+        font-weight: bold;
+        color: #555;
+        margin-bottom: 5px;
+    }
+
+    .tooltip-text {
+        margin: 0;
+    }
+&lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;div class=&quot;tooltip&quot;&gt;
+        &lt;p class=&quot;tooltip-heading&quot;&gt;AeExposureMode&lt;/p&gt;
+        &lt;p class=&quot;tooltip-text&quot;&gt;#(min, max, default_value)&lt;br&gt;
+(0, 3, 0) - 0 = normal exposures, 1 = shorter exposures, 2 = longer exposures, 3= custom exposures
+&lt;/p&gt;
+    &lt;/div&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</string>
+               </property>
                <property name="maximum">
                 <number>3</number>
                </property>
@@ -244,6 +502,49 @@
              </item>
              <item row="1" column="6">
               <widget class="QComboBox" name="f1_AwbEnable">
+               <property name="toolTip">
+                <string>&lt;html&gt;
+&lt;head&gt;
+&lt;style&gt;
+    body {
+        font-family: 'Arial', sans-serif;
+        font-size: 12px;
+        color: #333;
+        margin: 0;
+        padding: 0;
+    }
+
+    .tooltip {
+        background-color: #f2f2f2;
+        border: 1px solid #ccc;
+        padding: 10px;
+        border-radius: 5px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        max-width: 300px;
+    }
+
+    .tooltip-heading {
+        font-weight: bold;
+        color: #555;
+        margin-bottom: 5px;
+    }
+
+    .tooltip-text {
+        margin: 0;
+    }
+&lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;div class=&quot;tooltip&quot;&gt;
+        &lt;p class=&quot;tooltip-heading&quot;&gt;AwEnable&lt;/p&gt;
+        &lt;p class=&quot;tooltip-text&quot;&gt;#(min, max, default_value)&lt;br&gt;
+(False, True, None) When it is False (AutoWhiteBalance off), there will be no automatic updates to the colour gains.
+&lt;/p&gt;
+    &lt;/div&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</string>
+               </property>
                <property name="currentText">
                 <string>False</string>
                </property>
@@ -266,6 +567,49 @@
              </item>
              <item row="2" column="1">
               <widget class="QSpinBox" name="f1_AwbMode">
+               <property name="toolTip">
+                <string>&lt;html&gt;
+&lt;head&gt;
+&lt;style&gt;
+    body {
+        font-family: 'Arial', sans-serif;
+        font-size: 12px;
+        color: #333;
+        margin: 0;
+        padding: 0;
+    }
+
+    .tooltip {
+        background-color: #f2f2f2;
+        border: 1px solid #ccc;
+        padding: 10px;
+        border-radius: 5px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        max-width: 300px;
+    }
+
+    .tooltip-heading {
+        font-weight: bold;
+        color: #555;
+        margin-bottom: 5px;
+    }
+
+    .tooltip-text {
+        margin: 0;
+    }
+&lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;div class=&quot;tooltip&quot;&gt;
+        &lt;p class=&quot;tooltip-heading&quot;&gt;AwbMode&lt;/p&gt;
+        &lt;p class=&quot;tooltip-text&quot;&gt;#(min, max, default_value)&lt;br&gt;
+(0, 7, 0)
+&lt;/p&gt;
+    &lt;/div&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</string>
+               </property>
                <property name="maximum">
                 <number>7</number>
                </property>
@@ -273,11 +617,57 @@
              </item>
              <item row="2" column="3">
               <widget class="QDoubleSpinBox" name="f1_Brightness">
+               <property name="toolTip">
+                <string>&lt;html&gt;
+&lt;head&gt;
+&lt;style&gt;
+    body {
+        font-family: 'Arial', sans-serif;
+        font-size: 12px;
+        color: #333;
+        margin: 0;
+        padding: 0;
+    }
+
+    .tooltip {
+        background-color: #f2f2f2;
+        border: 1px solid #ccc;
+        padding: 10px;
+        border-radius: 5px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        max-width: 300px;
+    }
+
+    .tooltip-heading {
+        font-weight: bold;
+        color: #555;
+        margin-bottom: 5px;
+    }
+
+    .tooltip-text {
+        margin: 0;
+    }
+&lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;div class=&quot;tooltip&quot;&gt;
+        &lt;p class=&quot;tooltip-heading&quot;&gt;Brightness&lt;/p&gt;
+        &lt;p class=&quot;tooltip-text&quot;&gt;#(min, max, default_value)&lt;br&gt;
+(-1.0, 1.0, 0.0) - (-1.0) is very dark, 1.0 is very brigh
+&lt;/p&gt;
+    &lt;/div&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</string>
+               </property>
                <property name="minimum">
                 <double>-1.000000000000000</double>
                </property>
                <property name="maximum">
                 <double>1.000000000000000</double>
+               </property>
+               <property name="singleStep">
+                <double>0.050000000000000</double>
                </property>
                <property name="value">
                 <double>0.000000000000000</double>
@@ -286,6 +676,49 @@
              </item>
              <item row="3" column="1">
               <widget class="QDoubleSpinBox" name="f1_Contrast">
+               <property name="toolTip">
+                <string>&lt;html&gt;
+&lt;head&gt;
+&lt;style&gt;
+    body {
+        font-family: 'Arial', sans-serif;
+        font-size: 12px;
+        color: #333;
+        margin: 0;
+        padding: 0;
+    }
+
+    .tooltip {
+        background-color: #f2f2f2;
+        border: 1px solid #ccc;
+        padding: 10px;
+        border-radius: 5px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        max-width: 300px;
+    }
+
+    .tooltip-heading {
+        font-weight: bold;
+        color: #555;
+        margin-bottom: 5px;
+    }
+
+    .tooltip-text {
+        margin: 0;
+    }
+&lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;div class=&quot;tooltip&quot;&gt;
+        &lt;p class=&quot;tooltip-heading&quot;&gt;Contrast&lt;/p&gt;
+        &lt;p class=&quot;tooltip-text&quot;&gt;#(min, max, default_value)&lt;br&gt;
+(0.0, 32.0, 1.0) -  zero means &amp;quot;no contrast&amp;quot;, 1.0 is the default &amp;quot;normal&amp;quot; contrast
+&lt;/p&gt;
+    &lt;/div&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</string>
+               </property>
                <property name="minimum">
                 <double>0.000000000000000</double>
                </property>
@@ -299,6 +732,49 @@
              </item>
              <item row="3" column="6">
               <widget class="QDoubleSpinBox" name="f1_ExposureValue">
+               <property name="toolTip">
+                <string>&lt;html&gt;
+&lt;head&gt;
+&lt;style&gt;
+    body {
+        font-family: 'Arial', sans-serif;
+        font-size: 12px;
+        color: #333;
+        margin: 0;
+        padding: 0;
+    }
+
+    .tooltip {
+        background-color: #f2f2f2;
+        border: 1px solid #ccc;
+        padding: 10px;
+        border-radius: 5px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        max-width: 300px;
+    }
+
+    .tooltip-heading {
+        font-weight: bold;
+        color: #555;
+        margin-bottom: 5px;
+    }
+
+    .tooltip-text {
+        margin: 0;
+    }
+&lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;div class=&quot;tooltip&quot;&gt;
+        &lt;p class=&quot;tooltip-heading&quot;&gt;ExposureValue&lt;/p&gt;
+        &lt;p class=&quot;tooltip-text&quot;&gt;#(min, max, default_value)&lt;br&gt;
+(-8.0, 8.0, 0.0) - Zero is the base exposure level. Positive values increase the target brightness, and negative values decrease it .
+&lt;/p&gt;
+    &lt;/div&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</string>
+               </property>
                <property name="minimum">
                 <double>-8.000000000000000</double>
                </property>
@@ -312,6 +788,49 @@
              </item>
              <item row="4" column="3">
               <widget class="QSpinBox" name="f1_NoiseReductionMode">
+               <property name="toolTip">
+                <string>&lt;html&gt;
+&lt;head&gt;
+&lt;style&gt;
+    body {
+        font-family: 'Arial', sans-serif;
+        font-size: 12px;
+        color: #333;
+        margin: 0;
+        padding: 0;
+    }
+
+    .tooltip {
+        background-color: #f2f2f2;
+        border: 1px solid #ccc;
+        padding: 10px;
+        border-radius: 5px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        max-width: 300px;
+    }
+
+    .tooltip-heading {
+        font-weight: bold;
+        color: #555;
+        margin-bottom: 5px;
+    }
+
+    .tooltip-text {
+        margin: 0;
+    }
+&lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;div class=&quot;tooltip&quot;&gt;
+        &lt;p class=&quot;tooltip-heading&quot;&gt;NoiseReductionMode&lt;/p&gt;
+        &lt;p class=&quot;tooltip-text&quot;&gt;#(min, max, default_value)&lt;br&gt;
+(0, 4, 0) - 0 is off.
+&lt;/p&gt;
+    &lt;/div&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</string>
+               </property>
                <property name="maximum">
                 <number>4</number>
                </property>
@@ -319,6 +838,49 @@
              </item>
              <item row="4" column="6">
               <widget class="QDoubleSpinBox" name="f1_Saturation">
+               <property name="toolTip">
+                <string>&lt;html&gt;
+&lt;head&gt;
+&lt;style&gt;
+    body {
+        font-family: 'Arial', sans-serif;
+        font-size: 12px;
+        color: #333;
+        margin: 0;
+        padding: 0;
+    }
+
+    .tooltip {
+        background-color: #f2f2f2;
+        border: 1px solid #ccc;
+        padding: 10px;
+        border-radius: 5px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        max-width: 300px;
+    }
+
+    .tooltip-heading {
+        font-weight: bold;
+        color: #555;
+        margin-bottom: 5px;
+    }
+
+    .tooltip-text {
+        margin: 0;
+    }
+&lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;div class=&quot;tooltip&quot;&gt;
+        &lt;p class=&quot;tooltip-heading&quot;&gt;Saturation&lt;/p&gt;
+        &lt;p class=&quot;tooltip-text&quot;&gt;#(min, max, default_value)&lt;br&gt;
+#(0.0, 32.0, 1.0) - zero greyscale images, 1.0 &amp;quot;normal&amp;quot; saturation, higher values for more saturated colours.
+&lt;/p&gt;
+    &lt;/div&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</string>
+               </property>
                <property name="minimum">
                 <double>0.000000000000000</double>
                </property>
@@ -332,6 +894,49 @@
              </item>
              <item row="5" column="3">
               <widget class="QDoubleSpinBox" name="f1_Sharpness">
+               <property name="toolTip">
+                <string>&lt;html&gt;
+&lt;head&gt;
+&lt;style&gt;
+    body {
+        font-family: 'Arial', sans-serif;
+        font-size: 12px;
+        color: #333;
+        margin: 0;
+        padding: 0;
+    }
+
+    .tooltip {
+        background-color: #f2f2f2;
+        border: 1px solid #ccc;
+        padding: 10px;
+        border-radius: 5px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        max-width: 300px;
+    }
+
+    .tooltip-heading {
+        font-weight: bold;
+        color: #555;
+        margin-bottom: 5px;
+    }
+
+    .tooltip-text {
+        margin: 0;
+    }
+&lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;div class=&quot;tooltip&quot;&gt;
+        &lt;p class=&quot;tooltip-heading&quot;&gt;Sharpness&lt;/p&gt;
+        &lt;p class=&quot;tooltip-text&quot;&gt;#(min, max, default_value)&lt;br&gt;
+(0.0, 16.0, 1.0)} - zero no additional sharpening, 1.0 is &amp;quot;normal&amp;quot; level of sharpening, larger values apply proportionately stronger sharpening
+&lt;/p&gt;
+    &lt;/div&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</string>
+               </property>
                <property name="minimum">
                 <double>0.000000000000000</double>
                </property>
@@ -342,6 +947,47 @@
              </item>
              <item row="5" column="1">
               <widget class="QComboBox" name="f1_ScalerCrop">
+               <property name="toolTip">
+                <string>&lt;html&gt;
+&lt;head&gt;
+&lt;style&gt;
+    body {
+        font-family: 'Arial', sans-serif;
+        font-size: 12px;
+        color: #333;
+        margin: 0;
+        padding: 0;
+    }
+
+    .tooltip {
+        background-color: #f2f2f2;
+        border: 1px solid #ccc;
+        padding: 10px;
+        border-radius: 5px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        max-width: 300px;
+    }
+
+    .tooltip-heading {
+        font-weight: bold;
+        color: #555;
+        margin-bottom: 5px;
+    }
+
+    .tooltip-text {
+        margin: 0;
+    }
+&lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;div class=&quot;tooltip&quot;&gt;
+        &lt;p class=&quot;tooltip-heading&quot;&gt;ScalerCrop&lt;/p&gt;
+        &lt;p class=&quot;tooltip-text&quot;&gt;#(min, max, default_value)&lt;br&gt; ((0, 0, 64, 64), (0, 0, 3280, 2464), (0, 2, 3280, 2460)) - to use just a sub part of the sensor area: (x_offset, y_offset, width, height).&lt;/p&gt;
+    &lt;/div&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</string>
+               </property>
                <property name="currentIndex">
                 <number>2</number>
                </property>
@@ -364,6 +1010,47 @@
              </item>
              <item row="6" column="1">
               <widget class="QComboBox" name="f1_ColorLed">
+               <property name="toolTip">
+                <string>&lt;html&gt;
+&lt;head&gt;
+&lt;style&gt;
+    body {
+        font-family: 'Arial', sans-serif;
+        font-size: 12px;
+        color: #333;
+        margin: 0;
+        padding: 0;
+    }
+
+    .tooltip {
+        background-color: #f2f2f2;
+        border: 1px solid #ccc;
+        padding: 10px;
+        border-radius: 5px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        max-width: 300px;
+    }
+
+    .tooltip-heading {
+        font-weight: bold;
+        color: #555;
+        margin-bottom: 5px;
+    }
+
+    .tooltip-text {
+        margin: 0;
+    }
+&lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;div class=&quot;tooltip&quot;&gt;
+        &lt;p class=&quot;tooltip-heading&quot;&gt;LED Color&lt;/p&gt;
+        &lt;p class=&quot;tooltip-text&quot;&gt;This setting determines the color of the LED that will be turned on when the photo is taken.&lt;/p&gt;
+    &lt;/div&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</string>
+               </property>
                <item>
                 <property name="text">
                  <string>Azul</string>
@@ -393,6 +1080,47 @@
              </item>
              <item row="6" column="3">
               <widget class="QSpinBox" name="f1_IntensidadLed">
+               <property name="toolTip">
+                <string>&lt;html&gt;
+&lt;head&gt;
+&lt;style&gt;
+    body {
+        font-family: 'Arial', sans-serif;
+        font-size: 12px;
+        color: #333;
+        margin: 0;
+        padding: 0;
+    }
+
+    .tooltip {
+        background-color: #f2f2f2;
+        border: 1px solid #ccc;
+        padding: 10px;
+        border-radius: 5px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        max-width: 300px;
+    }
+
+    .tooltip-heading {
+        font-weight: bold;
+        color: #555;
+        margin-bottom: 5px;
+    }
+
+    .tooltip-text {
+        margin: 0;
+    }
+&lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;div class=&quot;tooltip&quot;&gt;
+        &lt;p class=&quot;tooltip-heading&quot;&gt;Intensity of LED&lt;/p&gt;
+        &lt;p class=&quot;tooltip-text&quot;&gt;This setting determines the intensity of the LED that will be turned on when the photo is taken.&lt;/p&gt;
+    &lt;/div&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</string>
+               </property>
                <property name="minimum">
                 <number>1</number>
                </property>
@@ -403,6 +1131,47 @@
              </item>
              <item row="6" column="6">
               <widget class="QSpinBox" name="f1_nfotos">
+               <property name="toolTip">
+                <string>&lt;html&gt;
+&lt;head&gt;
+&lt;style&gt;
+    body {
+        font-family: 'Arial', sans-serif;
+        font-size: 12px;
+        color: #333;
+        margin: 0;
+        padding: 0;
+    }
+
+    .tooltip {
+        background-color: #f2f2f2;
+        border: 1px solid #ccc;
+        padding: 10px;
+        border-radius: 5px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        max-width: 300px;
+    }
+
+    .tooltip-heading {
+        font-weight: bold;
+        color: #555;
+        margin-bottom: 5px;
+    }
+
+    .tooltip-text {
+        margin: 0;
+    }
+&lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;div class=&quot;tooltip&quot;&gt;
+        &lt;p class=&quot;tooltip-heading&quot;&gt;N° photos&lt;/p&gt;
+        &lt;p class=&quot;tooltip-text&quot;&gt;N° photos to average in the take.&lt;/p&gt;
+    &lt;/div&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</string>
+               </property>
                <property name="minimum">
                 <number>1</number>
                </property>
@@ -415,6 +1184,49 @@
               <layout class="QHBoxLayout" name="horizontalLayout">
                <item>
                 <widget class="QDoubleSpinBox" name="f1_ColourGains_0">
+                 <property name="toolTip">
+                  <string>&lt;html&gt;
+&lt;head&gt;
+&lt;style&gt;
+    body {
+        font-family: 'Arial', sans-serif;
+        font-size: 12px;
+        color: #333;
+        margin: 0;
+        padding: 0;
+    }
+
+    .tooltip {
+        background-color: #f2f2f2;
+        border: 1px solid #ccc;
+        padding: 10px;
+        border-radius: 5px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        max-width: 300px;
+    }
+
+    .tooltip-heading {
+        font-weight: bold;
+        color: #555;
+        margin-bottom: 5px;
+    }
+
+    .tooltip-text {
+        margin: 0;
+    }
+&lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;div class=&quot;tooltip&quot;&gt;
+        &lt;p class=&quot;tooltip-heading&quot;&gt;RedColourGain&lt;/p&gt;
+        &lt;p class=&quot;tooltip-text&quot;&gt;#(min, max, default_value)&lt;br&gt;
+red_gain (0.0, 32.0, Undefined) - Setting these numbers disables AWB.
+&lt;/p&gt;
+    &lt;/div&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</string>
+                 </property>
                  <property name="maximum">
                   <double>32.000000000000000</double>
                  </property>
@@ -425,6 +1237,49 @@
                </item>
                <item>
                 <widget class="QDoubleSpinBox" name="f1_ColourGains_1">
+                 <property name="toolTip">
+                  <string>&lt;html&gt;
+&lt;head&gt;
+&lt;style&gt;
+    body {
+        font-family: 'Arial', sans-serif;
+        font-size: 12px;
+        color: #333;
+        margin: 0;
+        padding: 0;
+    }
+
+    .tooltip {
+        background-color: #f2f2f2;
+        border: 1px solid #ccc;
+        padding: 10px;
+        border-radius: 5px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        max-width: 300px;
+    }
+
+    .tooltip-heading {
+        font-weight: bold;
+        color: #555;
+        margin-bottom: 5px;
+    }
+
+    .tooltip-text {
+        margin: 0;
+    }
+&lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;div class=&quot;tooltip&quot;&gt;
+        &lt;p class=&quot;tooltip-heading&quot;&gt;BlueColourGain&lt;/p&gt;
+        &lt;p class=&quot;tooltip-text&quot;&gt;#(min, max, default_value)&lt;br&gt;
+blue_gain (0.0, 32.0, Undefined) - Setting these numbers disables AWB.
+&lt;/p&gt;
+    &lt;/div&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</string>
+                 </property>
                  <property name="maximum">
                   <double>32.000000000000000</double>
                  </property>
@@ -439,6 +1294,49 @@
               <layout class="QHBoxLayout" name="horizontalLayout_2">
                <item>
                 <widget class="QSpinBox" name="f1_FrameDurationLimits_0">
+                 <property name="toolTip">
+                  <string>&lt;html&gt;
+&lt;head&gt;
+&lt;style&gt;
+    body {
+        font-family: 'Arial', sans-serif;
+        font-size: 12px;
+        color: #333;
+        margin: 0;
+        padding: 0;
+    }
+
+    .tooltip {
+        background-color: #f2f2f2;
+        border: 1px solid #ccc;
+        padding: 10px;
+        border-radius: 5px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        max-width: 300px;
+    }
+
+    .tooltip-heading {
+        font-weight: bold;
+        color: #555;
+        margin-bottom: 5px;
+    }
+
+    .tooltip-text {
+        margin: 0;
+    }
+&lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;div class=&quot;tooltip&quot;&gt;
+        &lt;p class=&quot;tooltip-heading&quot;&gt;FrameDurationLimits (Minimum)&lt;/p&gt;
+        &lt;p class=&quot;tooltip-text&quot;&gt;#(min, max, default_value)&lt;br&gt;
+(47183, 11767556, Undefined). The minimum time that the sensor can take to deliver a frame (microseconds). Reciprocal of frame rate
+&lt;/p&gt;
+    &lt;/div&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</string>
+                 </property>
                  <property name="minimum">
                   <number>47183</number>
                  </property>
@@ -449,6 +1347,49 @@
                </item>
                <item>
                 <widget class="QSpinBox" name="f1_FrameDurationLimits_1">
+                 <property name="toolTip">
+                  <string>&lt;html&gt;
+&lt;head&gt;
+&lt;style&gt;
+    body {
+        font-family: 'Arial', sans-serif;
+        font-size: 12px;
+        color: #333;
+        margin: 0;
+        padding: 0;
+    }
+
+    .tooltip {
+        background-color: #f2f2f2;
+        border: 1px solid #ccc;
+        padding: 10px;
+        border-radius: 5px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        max-width: 300px;
+    }
+
+    .tooltip-heading {
+        font-weight: bold;
+        color: #555;
+        margin-bottom: 5px;
+    }
+
+    .tooltip-text {
+        margin: 0;
+    }
+&lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;div class=&quot;tooltip&quot;&gt;
+        &lt;p class=&quot;tooltip-heading&quot;&gt;FrameDurationLimits (Maximum)&lt;/p&gt;
+        &lt;p class=&quot;tooltip-text&quot;&gt;#(min, max, default_value)&lt;br&gt;
+(47183, 11767556, Undefined). The maximum time that the sensor can take to deliver a frame (microseconds). Reciprocal of frame rate
+&lt;/p&gt;
+    &lt;/div&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</string>
+                 </property>
                  <property name="minimum">
                   <number>47183</number>
                  </property>
@@ -461,6 +1402,63 @@
                 </widget>
                </item>
               </layout>
+             </item>
+             <item row="5" column="4">
+              <widget class="QLabel" name="label_41">
+               <property name="text">
+                <string>CameraMode</string>
+               </property>
+              </widget>
+             </item>
+             <item row="5" column="6">
+              <widget class="QSpinBox" name="f1_CamMode">
+               <property name="toolTip">
+                <string>&lt;html&gt;
+&lt;head&gt;
+&lt;style&gt;
+    body {
+        font-family: 'Arial', sans-serif;
+        font-size: 12px;
+        color: #333;
+        margin: 0;
+        padding: 0;
+    }
+
+    .tooltip {
+        background-color: #f2f2f2;
+        border: 1px solid #ccc;
+        padding: 10px;
+        border-radius: 5px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        max-width: 300px;
+    }
+
+    .tooltip-heading {
+        font-weight: bold;
+        color: #555;
+        margin-bottom: 5px;
+    }
+
+    .tooltip-text {
+        margin: 0;
+    }
+&lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;div class=&quot;tooltip&quot;&gt;
+        &lt;p class=&quot;tooltip-heading&quot;&gt;CameraMode&lt;/p&gt;
+        &lt;p class=&quot;tooltip-text&quot;&gt;
+This settings sets the CameraMode. (0, 1, 2, 3), 1 is for low resolution and 3 is highest
+&lt;/p&gt;
+    &lt;/div&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</string>
+               </property>
+               <property name="maximum">
+                <number>3</number>
+               </property>
+              </widget>
              </item>
             </layout>
            </item>
