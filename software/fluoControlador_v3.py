@@ -804,17 +804,7 @@ class ExperimentosManagerThread(QThread):
 
 if __name__ == "__main__":
 
-    app = QApplication([])
-    main = MainWindow()
-    main.show()
-    #
-    #def exit_program():
-    #    print("exitinig from program")
-    #    main.StopAll()
-    #    main.closeAll()
-    #    app.exec_()
-    #sys.exit(exit_program())
-    ret = app.exec_()
-    main.Close()
-    print("stoped")
-    sys.exit(ret)
+    app = QApplication(sys.argv)
+    window = MainWindow()
+    window.show()
+    sys.exit(app.exec_())
