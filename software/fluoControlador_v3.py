@@ -696,6 +696,7 @@ class PatronConfig(QMainWindow):
         self.guardar_patron()
         capture_controls = self.dic_final[f]
         print("capture_controls: ", capture_controls)
+        print("Controles imprimidos")
         self.fluo.startCamera()
         print("camera started")
         # define the camera configuration
