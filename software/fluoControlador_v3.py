@@ -219,6 +219,7 @@ class MainWindow(QMainWindow):
         self.bloque_timer.setInterval(1000)
         self.bloque_timer.timeout.connect(self.updateTime)
         self.bloque_timer.start()
+        print("INICIANDO TIMER EXPERIMENTOS")
 
     def inicio_bloque(self, bloque, t_exp):
         #self.time_elapsed = 0
