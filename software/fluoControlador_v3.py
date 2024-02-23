@@ -172,12 +172,12 @@ class MainWindow(QMainWindow):
         self.pushButton_10.clicked.connect(self.stopTempCtrl)
 
         #startVideo
-        self.capture = cv2.VideoCapture(0)
-        self.image = None
+        # self.capture = cv2.VideoCapture(0)
+        # self.image = None
         #video timer
-        self.video_timer = QtCore.QTimer()
-        self.video_timer.setInterval(10)
-        self.video_timer.timeout.connect(self.updateFrame)
+        # self.video_timer = QtCore.QTimer()
+        # self.video_timer.setInterval(10)
+        # self.video_timer.timeout.connect(self.updateFrame)
         #self.video_timer.start()
         #timer for Video
 
