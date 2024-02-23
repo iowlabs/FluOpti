@@ -32,9 +32,13 @@ class MainWindow(QMainWindow):
         loadUi('GUI/gui_test_v3.ui', self)
         self.sec = Secuenciador()
         self.sec.setWindowModality(2) # 2 = Qt.ApplicationModal
+        self.pat = PatronConfig()
+        self.pat.setWindowModality(2)
         self.dic_bloques = {}
         self.sec.senal_dic_final.connect(self.recibir_diccionario)
+        self.pat.senal_config_ready.connect(self.recibir_patrones)
         self.button_aceptar.clicked.connect(self.configurar_secuenciador)
+        self.button_fotos.clicked.connect(self.configurar_patrones)
         self.pushButton_run.clicked.connect(self.comenzar_experimentos)
         self.status = QtWidgets.QStatusBar()
         self.setStatusBar(self.status)
@@ -91,6 +95,14 @@ class MainWindow(QMainWindow):
         self.label_tiempo.setText('Experimentos terminados')
         self.bloque_timer.stop()
 
+    def configurar_patrones(self):
+        self.pat.show()
+    
+    def recibir_patrones(self, dic_patrones):
+        print('Recibiendo patrones...')
+        self.dic_patrones = dic_patrones
+        print(self.dic_patrones)
+        self.pat.close()
 
     def configurar_secuenciador(self):
         n_bloques = int(self.run_spinBox_bloques.value())
@@ -332,8 +344,6 @@ class PatronConfig(QMainWindow):
         pixmap = QPixmap.fromImage(qImg)
         # display the QPixmap
         self.label_f1_preview.setPixmap(pixmap)
-
-            
         
 
     def guardar_patron(self, ready=False):
@@ -371,10 +381,15 @@ class PatronConfig(QMainWindow):
         else:
             return
 
-    def cargar_patron(self):
-        print('Cargando patrón...')
-        dic_patron = {'t_exp': 10, 't_control' : 37, 'I_rojo': 50, 'I_verde': 50}
-        return dic_patron
+    def show(self):
+        #herencia de show original
+        super().show()
+        #inicializar tabs
+        # for i in range(len(self.tabs)):
+        #     if i < self.bloques_activos:
+        #         self.tabs[i].setEnabled(True)
+        #     else:
+        #         self.tabs[i].setEnabled(False)
 
 
 

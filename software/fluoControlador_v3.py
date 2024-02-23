@@ -77,8 +77,11 @@ class MainWindow(QMainWindow):
         self.file_name      = ""
 
 
+        ##### CONFIGURACION DE PATRONES
         self.pat = PatronConfig(self.Fluo)
         self.pat.setWindowModality(2)
+        self.pat.senal_config_ready.connect(self.recibir_patrones)
+        self.button_fotos.clicked.connect(self.configurar_patrones)
 
         #PID modules to control temperature
         self.pid_temp1 = PID(1,0.1,0.05,setpoint = 1)
@@ -472,6 +475,15 @@ class MainWindow(QMainWindow):
         self.video_timer.stop()
         self.run_timer.stop()
         self.Fluo.close()
+
+    def configurar_patrones(self):
+        self.pat.show()
+    
+    def recibir_patrones(self, dic_patrones):
+        print('Recibiendo patrones...')
+        self.dic_patrones = dic_patrones
+        print(self.dic_patrones)
+        self.pat.close()
 
     def configurar_secuenciador(self):
         n_bloques = int(self.run_spinBox_bloques.value())
