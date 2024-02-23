@@ -423,7 +423,8 @@ class MainWindow(QMainWindow):
 
 
     def LEDOff(self, ch):
-        self.Fluo.LEDoff(self.channel[ch])
+        #self.Fluo.LEDoff(self.channel[ch])
+        self.FLuo.LEDSetPWR(self.channel[ch],0)  ## Solucion temporal. Reemplazar despues por module_switch
         self.btnOn[ch].setDisabled(False)
         self.btnOff[ch].setDisabled(True)
         # Se AGREGAN LOS COLORES DE LAS LUCES A LA INTERFAZ

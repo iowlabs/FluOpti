@@ -249,6 +249,9 @@ class MainWindow(QMainWindow):
         label = self.map_color_to_label[channel]
         self.actualizar_estilo_led(label, True, color)
 
+    def LEDset(self, channel, intensidad):
+        self.LEDOn(channel, intensidad)
+
     def LEDOff(self, channel):
         print(f"Apagando LED {channel} desde app")
         color = self.colores[channel]

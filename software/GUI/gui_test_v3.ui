@@ -958,7 +958,7 @@
                  </property>
                 </widget>
                </item>
-               <item>
+               <item alignment="Qt::AlignLeft|Qt::AlignVCenter">
                 <widget class="QSpinBox" name="nfotos_spin_box">
                  <property name="minimumSize">
                   <size>
