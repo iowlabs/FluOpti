@@ -183,10 +183,10 @@ class MainWindow(QMainWindow):
 
 
         #MGMT UPDATE DATA
-        self.run_timer = QtCore.QTimer()
-        self.run_timer.setInterval(1000*self.sample_time)
-        self.run_timer.timeout.connect(self.updateData)
-        self.run_timer.start()
+        # self.run_timer = QtCore.QTimer()
+        # self.run_timer.setInterval(1000*self.sample_time)
+        # self.run_timer.timeout.connect(self.updateData)
+        # self.run_timer.start()
 
 
         #STATUS BAR
