@@ -730,14 +730,14 @@ class PatronConfig(QMainWindow):
         print("array created")
         request.release()
         print("request released")
-        # # convert the array to a QImage
-        # height, width, channel = im_array.shape
-        # bytesPerLine = 3 * width
-        # qImg = QImage(im_array.data, width, height, bytesPerLine, QImage.Format_RGB888)
-        # # convert the QImage to a QPixmap
-        # pixmap = QPixmap.fromImage(qImg)
-        # # display the QPixmap
-        # self.label_f1_preview.setPixmap(pixmap)
+        # convert the array to a QImage
+        height, width, channel = im_array.shape
+        bytesPerLine = 3 * width
+        qImg = QImage(im_array.data, width, height, bytesPerLine, QImage.Format_RGB888)
+        # convert the QImage to a QPixmap
+        pixmap = QPixmap.fromImage(qImg)
+        # display the QPixmap
+        self.label_f1_preview.setPixmap(pixmap)
 
             
         
