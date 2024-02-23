@@ -354,10 +354,11 @@ class FluOpti():
                 cam_props = camera.camera_configuration()
                 with open(fpath, 'w') as f:
                     
-                    	for key in cam_props.keys():
-                    		f.write(str(key)+': ')
-                    		f.write(str(cam_props[key])+'\n')        
+                    for key in cam_props.keys():
+                        f.write(str(key)+': ')
+                        f.write(str(cam_props[key])+'\n')        
         
+            print('\nCamera configured successfully\n')
         # in case something fails at camera configuration                
         except Exception as e:
     

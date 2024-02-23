@@ -723,6 +723,7 @@ class PatronConfig(QMainWindow):
         # define the camera configuration
         self.fluo.setCamera(mode_number = 0, configuration_values = capture_controls)
         print("camera seted")
+        self.fluo.camera.start()
         request = self.fluo.camera.capture_request()
         print("request created")
         im_array = request.make_array("main")  # array from the "main" stream
