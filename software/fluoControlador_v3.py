@@ -203,11 +203,11 @@ class MainWindow(QMainWindow):
 
     def comenzar_experimentos(self):
         self.experimentos = ExperimentosManagerThread(self.dic_bloques, self)
-        self.experimentos.start()
-        self.experimentos.senal_final.connect(self.experimentos_terminados)
-        self.experimentos.senal_inicio_bloque.connect(self.inicio_bloque)
         self.experimentos.senal_inicio_total.connect(self.inicio_total_experimentos)
+        self.experimentos.senal_inicio_bloque.connect(self.inicio_bloque)
         self.experimentos.senal_fin_bloque.connect(self.fin_bloque)
+        self.experimentos.senal_final.connect(self.experimentos_terminados)
+        self.experimentos.start()
         self.tabWidget.setEnabled(False)
 
     def inicio_total_experimentos(self, tiempo_total):
