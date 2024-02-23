@@ -740,6 +740,7 @@ class PatronConfig(QMainWindow):
         # self.dic_f = {'f1': self.dic_f1, 'f2': self.dic_f2, 'f3': self.dic_f3, 'f4': self.dic_f4, 'f5': self.dic_f5, 'f6': self.dic_f6}
         fs = ['f1', 'f2', 'f3', 'f4', 'f5', 'f6']
         dic_final = {}
+        self.dic_final = {"f1": self.dic_f1}
         if ready:
             for i in range(self.bloques_activos):
                 dic_final[fs[i]] = self.dict_sec[fs[i]]
