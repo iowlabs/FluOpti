@@ -10,11 +10,11 @@ import os
 from time import sleep,time,ctime, localtime
 
 # import FluOpti library
-from hardware.FluOpti import FluOpti
+import hardware.FluOpti as flp
 
 ################################################
 ## get the indicated configuration file
-param_msj = "\nRequired parameter: folder_name/configuration_file.txt\n"
+param_msg = "\nRequired parameter: folder_name/configuration_file.txt\n"
 #example of calling: python3 timelapse.py experiment_folder/tl_config.txt
 
 if len(sys.argv) > 1: # sys.argv[0] is the name of the rutine
@@ -45,45 +45,27 @@ if len(sys.argv) > 1: # sys.argv[0] is the name of the rutine
         sys.exit()
     
 else:
-    print (param_msj )
+    print (param_msg )
     sys.exit()
 
 ##########################################################################
+
+## read the configuration file:
+input_values = flp.read_settings(fpath)
     
 # init FluOpti object
-Fluopti =  FluOpti() 
+Fluopti =  flp.FluOpti(model=input_values['board_model']) 
 
-    
-    
-## read the configuration file:
-config_file = ''
-
-with open(fpath, 'r') as f:
-    config_file = f.read()
-    #config_file=f.readlines()
-    f.close()
-        
-print(config_file)
-
-imformat = '.png'
-
-'''
-while True:
-        
-    content=config_file.readline()
-    if not content:
-        break
-'''
+# transform the input_values in Fluopti parameters
+Fluopti.get_setting_parameters(input_values)
 
 # Initial messages
 print('\n--- Running FluOpti ---\n')
 
-# Perform autotest
-autotest = True
+# Perform autotest if was indicated in input file
+Fluopti.autotest()
 
-if autotest:
-    Fluopti.autotest()
-
+# get let modules
 leds = Fluopti.get_modules(m_type = 'LED')
 
 # init and set the camera object
@@ -126,7 +108,7 @@ capture_controls = {
             'Brightness': 0.0,                      #(-1.0, 1.0, 0.0) - (-1.0) is very dark, 1.0 is very brigh
             'ColourGains': (1,1),                   #tuple (red_gain, blue_gain), each value: (0.0, 32.0, Undefined) - Setting these numbers disables AWB.
             'Contrast': 1.0,                        #(0.0, 32.0, 1.0) -  zero means "no contrast", 1.0 is the default "normal" contrast
-            'ExposureTime': 15000,                   #(75, 11766829, Undefined). unit microseconds.
+            'ExposureTime': 10000,                   #(75, 11766829, Undefined). unit microseconds.
             'ExposureValue': 0.0,                   #(-8.0, 8.0, 0.0) - Zero is the base exposure level. Positive values increase the target brightness, and negative values decrease it 
             'FrameDurationLimits': (47183,11767556),   # tuple, each value: (47183, 11767556, Undefined). The maximum and minimum time that the sensor can take to deliver a frame (microseconds). Reciprocal of frame rate
             'NoiseReductionMode': 0,                #(0, 4, 0) - 0 is off.
@@ -164,17 +146,19 @@ ltime = localtime()
 print('\nTimelapse starting at:')
 print(f'{ltime[3]}:{ltime[4]}:{ltime[5]} - '+ f'{ltime[2]}/{ltime[1]}/{ltime[0]}')
 
+temperatures = list()
+
 Fluopti.init_timer(tpc)
 
 while Fluopti.cicle <= cicles:
     
-    t1 = time()   # to display the time elapsed taking the pictures
+    time_init = time()   # to display the time elapsed taking the pictures
     
-    print('\nCicle '+str(Fluopti.cicle)+' '+ Fluopti.cicle/cicles_per_h+' running...\n')
+    print('\nCicle '+str(Fluopti.cicle)+' ('+ '%.2f'%(Fluopti.cicle/cicles_per_h)+' h) running...\n')
     
     # turn OFF all the LEDs
     for led in leds:
-        Fluopti.module_switch(led,'OFF', msj = False)
+        Fluopti.module_switch(led,'OFF', msg = False)
     print('--All LEDs OFF--')
     sleep(1) # wait one second to be sure all LEDs are off
     
@@ -182,7 +166,7 @@ while Fluopti.cicle <= cicles:
     
     for led in pLEDs:
         # turn ON the LED
-        Fluopti.module_switch(led, 'ON', msj = True)
+        Fluopti.module_switch(led, 'ON', msg = True)
         sleep(1)
         print('\nTaking picture\n')
         #'''
@@ -196,17 +180,25 @@ while Fluopti.cicle <= cicles:
         Fluopti.im_capture(impath, n_imgs = 3, mfpath = mfpath, printm = False, display = display)
         #'''
         # turn OFF the LED
-        Fluopti.module_switch(led, 'OFF', msj = True)
+        Fluopti.module_switch(led, 'OFF', msg = True)
         sleep(1) # wait one second to be sure all LEDs are off
         
     #turn ON the proper optogenetics lights
     Fluopti.opto_ON()
     
+    # Read current temperature
+    t1,t2 = Fluopti.updateTemps()
+    
+    print('\nt1 = '+'%.2f'%(t1)+ '°C')
+    print('t2 = '+'%.2f'%(t2)+ '°C')
+    temperatures.append([Fluopti.cicle,t1,t2])
+    
     # update some variables
     Fluopti.cicle+=1
-    display  = False  # just display the first image
+    display  = False  # just to display the first image
     
-    print('Cicle time: '+ str(time()-t1) + ' seconds')
+    
+    print('Cicle time: '+ str(time()-time_init) + ' seconds')
     
     print(' --- Wainting the time to the next cicle... ---')
     
@@ -219,16 +211,29 @@ while Fluopti.cicle <= cicles:
             # Check the schedule time
             Fluopti.update_schedule()
             
-            sleep(5) # time windows span to check
+            sleep(Fluopti.update_freq) # time windows span to check
 
 # turn OFF all the LEDs
 for led in leds:
-    Fluopti.module_switch(led,'OFF', msj = False)
+    Fluopti.module_switch(led,'OFF', msg = False)
 print('-- All LEDs OFF --')  
+
+#save the temperatures in a file:       
+tfpath = folder+'/'+'temperatures.txt'
+with open(tfpath, 'w') as f:
+    # Headers
+    f.write('Cicle,Sensor_1[°C],Sensor_2[°C]\n')
+    
+    for values in temperatures:
+        f.write(str(values[0]) + ','+ '%.2f'%(values[1])+ ','+'%.2f'%(values[2])+'\n')
 
 # Final mesages and information
 print('-- Timelapse completed --')
 ltime = localtime()
 print(f'{ltime[2]}/{ltime[1]}/{ltime[0]} - 'f'{ltime[3]}:{ltime[4]}:{ltime[5]}')
-    
-      
+
+
+
+
+
+

@@ -109,7 +109,7 @@ input_leds = indicate_leds(options, str_options)
 turnON(input_leds, power)
 
 # -- Turning OFF --
-leds_on = Fluopti.get_modules(m_type = mtype, status = 1, msj = False) # list of LEDs in ON state
+leds_on = Fluopti.get_modules(m_type = mtype, status = 1, msg = False) # list of LEDs in ON state
 
 str_ledons = ''
 
@@ -125,7 +125,7 @@ while len(leds_on) > 0:
     Fluopti.module_switch(leds_off, 'OFF')
     
     #update the list of leds in ON state
-    leds_on = Fluopti.get_modules(m_type = mtype, status = 1, msj = False)
+    leds_on = Fluopti.get_modules(m_type = mtype, status = 1, msg = False)
     str_ledons = ''
 
 print('\nAll LED channels turned OFF.\nProgram Finished\n')

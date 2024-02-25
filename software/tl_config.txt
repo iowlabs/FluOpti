@@ -1,0 +1,71 @@
+## Fluopti timelapse configuration file ###
+
+# General Settings
+
+board_model=normal	# normal or mini
+autotest=True		# True or False
+date=automatic		# automatic or any explicit value
+total_time = 48		# Experiment total time in hours (accept decimal values)
+update_frequency = 5	# update frequency time resolution. Indicated in seconds.
+
+display_t0 = True	# boolean. If True, display the captured images in the first cicle.
+
+## Connected modules
+# mod_x = module_name, board, channel, type
+mod_1 = R,FluOPti,5,LED
+mod_2 = G,FluOPti,6,LED
+mod_3 = B,FluOPti,9,LED
+mod_4 = W,FluOPti,10,LED
+mod_5 = H1,FluOPti,11,Heater
+mod_6 = H2,FluOPti,12,Heater
+mod_7 = 37,GPIO,37,100,LED
+
+# Timelapse settings
+control_modules = R,G,H1
+control_times = [12,24.5,total_time][6,total_time][total_time]  
+control_value = [33.5,100,20][100,0][37.0]
+
+# Capture settins
+capture_leds = [B,W,B]		   # LED to use in each image capture setting
+capture_leds_power = [100,100,50]  # led power to be used in that LED at the moment of capture the image	
+frames_to_average = [3,3,3]        # number of images to average in just one image (to reduce the noise)
+image_format = [png,png,jpeg]        # image format of each set. optios: jpeg, bmp, png and gif
+cicles_per_hour = 4                # image capture cicles per hour
+
+# global camera parameters
+sensor_mode = 3			   # sensor mode number [0 to 7] (3 recommendend)
+
+# camera capture parameter values for each capture setting. Every setting group value have to be inside brackets.                                   
+# cc_ParameterName = [values_set_1][values_set_..][values_set_n]									#(min, max, default_value)
+
+cc_AeConstraintMode = [0][0][0]                  				#(0, 3, 0) - AEC/AGC constrain mode - 0 = Normal
+cc_AeEnable = [False][False][False]                      			#(False, True, None) - When if is False ( = AEC/AGC off), there will be no automatic updates to the camera’s gain or exposure settings
+cc_AeExposureMode = [0][0][0]                    				#(0, 3, 0) - 0 = normal exposures, 1 = shorter exposures, 2 = longer exposures, 3= custom exposures
+cc_AeMeteringMode = [0][0][0]                    				#(0, 3, 0) - Metering mode for AEC/AGC
+cc_AnalogueGain = [1][1][1]                      				#(1.0, 10.666666984558105, Undefined) - Analogue gain applied by the sensor
+cc_AwbEnable = [False][False][False]                     			#(False, True, None) When it is False (AutoWhiteBalance off), there will be no automatic updates to the colour gains
+cc_AwbMode = [0][0][0]                           				#(0, 7, 0)
+cc_Brightness = [0.0][0.0][0.0]                      			#(-1.0, 1.0, 0.0) - (-1.0) is very dark, 1.0 is very brigh
+cc_ColourGains = [1,1][1,1][1,1]                   			#tuple (red_gain, blue_gain), each value: (0.0, 32.0, Undefined) - Setting these numbers disables AWB.
+cc_Contrast = [1.0][1.0][1.0]                        			#(0.0, 32.0, 1.0) -  zero means "no contrast", 1.0 is the default "normal" contrast
+cc_ExposureTime = [50000][10000][100000]                   		#(75, 11766829, Undefined). unit microseconds.
+cc_ExposureValue = [0.0][0.0][0.0]                   			#(-8.0, 8.0, 0.0) - Zero is the base exposure level. Positive values increase the target brightness, and negative values decrease it 
+cc_FrameDurationLimits = [47183,11767556][47183,11767556][47183,11767556]  # tuple, each value: (47183, 11767556, Undefined). The maximum and minimum time that the sensor can take to deliver a frame (microseconds). Reciprocal of frame rate
+cc_NoiseReductionMode = [0][0][0]                				#(0, 4, 0) - 0 is off.
+cc_Saturation = [1.0][1.0][1.0]                      			#(0.0, 32.0, 1.0) - zero greyscale images, 1.0 "normal" saturation, higher values for more saturated colours.
+cc_ScalerCrop = [0, 2, 3280, 2460][0, 2, 3280, 2460][0, 2, 3280, 2460]     #((0, 0, 64, 64), (0, 0, 3280, 2464), (0, 2, 3280, 2460)) - to use just a sub part of the sensor area: (x_offset, y_offset, width, height)
+cc_Sharpness = [0.0][0.0][0.0]                       			#(0.0, 16.0, 1.0)} - zero no additional sharpening, 1.0 is "normal" level of sharpening, larger values apply proportionately stronger sharpening
+
+# camera options parameters
+# co_OptionName= [values_set_1][values_set_..][values_set_n]
+
+co_quality = [90][10][95]	#JPEG quality level, 90 is default, 0 is the worst quality and 95 is best
+co_compress_level = [1][0][9]   #PNG compression level, where 0 gives no compression, 1 is the fastest that actually does any compression, and 9 is the slowest
+
+
+
+# additonal text notes about the experiment
+notes = regimen 24h verde y luego rojo hasta las 72h
+cultivo control tabor 50 uL de cultivo ON de la cepa C18 col 1.
+Se plaqueo y se introdujo en menos de 15 min a la incubadora a 37°C
+(se dejo a las 22:45)
