@@ -1,4 +1,11 @@
 # -*- coding: utf-8 -*-
+"""
+Created on Wed Feb 7 2024
+
+@author: Cristobal Vasquez
+
+Codigo modificado de fluoControlador.py para agregar nueva interfaz y funcionalidades
+"""
 import matplotlib
 matplotlib.use('Agg')  # 'Agg' es un backend sin interfaz
 
@@ -201,6 +208,13 @@ class MainWindow(QMainWindow):
     def inicio_bloque(self, bloque, t_exp):
         self.time_elapsed = 0
         print(f'Iniciando bloque {bloque}')
+
+        # DESCOMENTAR ESTO AL PASAR EL T_EXP A MINUTOS        
+        # hours, remainder = divmod(t_exp * 60, 3600)
+        # minutes, seconds = divmod(remainder, 60)
+        # time_format = "{:02}:{:02}:{:02}".format(int(hours), int(minutes), int(seconds))
+        # self.status.showMessage(f'Corriendo {bloque} de duración {time_format}')
+
         self.status.showMessage(f'Corriendo {bloque} de duración {t_exp} segundos')
         # crear timer para actualizar el tiempo desde el inicio del bloque
         self.bloque_timer = QtCore.QTimer()
@@ -381,16 +395,35 @@ class MainWindow(QMainWindow):
         self.data_writer.writerow(row)
         self.data_file.close()
 """
+
+    def actualizar_estilo_led(self, label, estado, color):
+        # Actualizar el estilo del QLabel para representar el estado del LED EN INTERFAZ
+        if estado:
+            label.setStyleSheet(f'QLabel {{ background-color: {color}; border-radius: 50px; }}')
+            print(f'stylesheet LED {color}')
+        else:
+            label.setStyleSheet('QLabel {}')
+
     def LEDOn(self, ch):
         self.Fluo.LEDSetPWR(self.channel[ch],self.led_pwr[ch])
         self.Fluo.LEDon(self.channel[ch])
         self.btnOn[ch].setDisabled(True)
         self.btnOff[ch].setDisabled(False)
+        # Se AGREGAN LOS COLORES DE LAS LUCES A LA INTERFAZ
+        color = self.colores[ch]
+        label = self.map_color_to_label[ch]
+        self.actualizar_estilo_led(label, True, color)
+
 
     def LEDOff(self, ch):
         self.Fluo.LEDoff(self.channel[ch])
         self.btnOn[ch].setDisabled(False)
         self.btnOff[ch].setDisabled(True)
+        # Se AGREGAN LOS COLORES DE LAS LUCES A LA INTERFAZ
+        color = self.colores[ch]
+        label = self.map_color_to_label[ch]
+        self.actualizar_estilo_led(label, False, color)
+
 
     def LEDset(self,ch):
         val = self.sliders[ch].value()

@@ -67,7 +67,7 @@ class Plot_bloque(QWidget):
         vertical_layout = QVBoxLayout()
         vertical_layout.addWidget(self.canvas)
         
-        self.canvas.axes =  self.canvas.figure.subplots(nrows= 5, sharex=True)
+        self.canvas.axes =  self.canvas.figure.subplots(nrows= 3, sharex=True)
         self.canvas.figure.set_facecolor('#F2F2F2')
         self.canvas.figure.subplots_adjust(hspace=0)
         # clear the axes and redraw the plot
