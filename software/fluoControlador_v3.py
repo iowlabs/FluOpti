@@ -759,10 +759,6 @@ class PatronConfig(QMainWindow):
         else:
             return
 
-    def cargar_patron(self):
-        print('Cargando patrón...')
-        dic_patron = {'t_exp': 10, 't_control' : 37, 'I_rojo': 50, 'I_verde': 50}
-        return dic_patron
 
 class ExperimentoThread(QThread):
     def __init__(self, bloque, app):
@@ -785,7 +781,7 @@ class ExperimentoThread(QThread):
         self.app.LEDset(channel_dic['verde'], intensidad_verde)
 
         time.sleep(t_exp) # Esperar el tiempo total del experimento
-        #time.sleep(t_exp * 60 * 60) # Esperar el tiempo total del experimento
+        #time.sleep(t_exp * 60 * 60) # Descomentar cuando se pase a horas.
 
         print("Apagando LEDs...")
         self.app.LEDOff(channel_dic['rojo'])
