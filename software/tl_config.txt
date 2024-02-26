@@ -7,6 +7,7 @@ autotest=True		# True or False
 date=automatic		# automatic or any explicit value
 total_time = 48		# Experiment total time in hours (accept decimal values)
 update_frequency = 5	# update frequency time resolution. Indicated in seconds.
+path_folder = TLXXXXX	# Timelapse folder to store the files
 
 display_t0 = True	# boolean. If True, display the captured images in the first cicle.
 
@@ -25,12 +26,13 @@ control_modules = R,G,H1
 control_times = [12,24.5,total_time][6,total_time][total_time]  
 control_value = [33.5,100,20][100,0][37.0]
 
-# Capture settins
+# Capture settings
+cicles_per_hour = 4                # image capture cicles per hour
 capture_leds = [B,W,B]		   # LED to use in each image capture setting
 capture_leds_power = [100,100,50]  # led power to be used in that LED at the moment of capture the image	
 frames_to_average = [3,3,3]        # number of images to average in just one image (to reduce the noise)
 image_format = [png,png,jpeg]        # image format of each set. optios: jpeg, bmp, png and gif
-cicles_per_hour = 4                # image capture cicles per hour
+im_name_pattern = [B1_XXX][W_XXX][B2_XXX] # images filenames patterns. The X at the end indicate the number of digits to use at name the files (e.g. XXX = 000, 001, 002, etc)
 
 # global camera parameters
 sensor_mode = 3			   # sensor mode number [0 to 7] (3 recommendend)
