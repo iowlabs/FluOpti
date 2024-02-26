@@ -2,11 +2,11 @@
 
 # import general libraries
 import json, signal, sys, os, glob, datetime, io
-from time import sleep,time
+from time import sleep, time, localtime
 import numpy as np
 from picamera2 import Picamera2, Preview
 from PIL import Image
-from pprint import *
+from pprint import pprint
 #from picamera import PiCamera, Color #Pruebas en IOWLABS con Raspi 4 genera errores
 
 #from FluOpti.camera_pi import Camera #Esta libreria no esta en la carpeta
@@ -26,11 +26,15 @@ import RPi.GPIO as GPIO
 GPIO.setwarnings(False)
 GPIO.setmode(GPIO.BOARD) # set BOARD PIN nomenclature
 
+## Fluoti class and functions
 class FluOpti():
-    def __init__(self,type = "normal"):
+    def __init__(self, model = "normal"):
 
-        self.type = type
-        if self.type == "normal":
+        self.board_model = model        # It is important for temperature sensor functions and default modules.
+        
+        if self.board_model == 'normal':
+            
+            # Default modules
             self.modules = {
             #MODULE_NAME  #BOARD           #CHANNEL  #VALUE    #STATUS  
             'R'    :{ 'board': 'FluOpti' , 'chan':5, 'value': 0, 'status':0, 'm_type': 'LED'},
@@ -43,8 +47,10 @@ class FluOpti():
         	}
             ## ** CHANNEL refers to related pin connection in the FluOpti Board or Raspberry Pi GPIO Pin
             
-        if self.type == "mini":
-            self._default_modules  = {
+        if self.board_model == 'mini':
+            
+            # Default modules
+            self.modules  = {
             #MODULE_NAME   #BOARD               #CHANNEL  #VALUE    #STATUS
             'R'    :{ 'board': 'FluOpti' , 'chan':5, 'value': 0,'status':0, 'm_type': 'LED'},
             'G'    :{ 'board': 'FluOpti' , 'chan':4, 'value': 0,'status':0, 'm_type': 'LED'},
@@ -66,10 +72,19 @@ class FluOpti():
                 pin = self.modules[mod]['chan']
                 GPIO.setup(pin, GPIO.OUT)
 
-        #data data path
-        self.data_path = "/data"
+        #data path
+        self.data_path = '/data'
         
-        #schedule control regimes
+        # list of parameters to set from input file
+        self.autotest = True
+        self.date = 'automatic'
+        
+        self.total_time = 0
+        self.control_leds = ['R','G']
+        self.control_heaters = ['H1']
+        
+        
+        #schedule control regimes --> typically obtained from setting file
         self.sch = dict()        
         self.sch['times'] = {
                 'th': [24,48],   # schedule module time limits
@@ -118,6 +133,41 @@ class FluOpti():
 
         self.startPWM()
         self.startTemperatureSensor()
+    
+    def get_setting_parameters(self, settings):
+        """
+        This function transform the information read from input file to
+        FluOpti parameters attributes values.
+        It corrects the type() of values, assign them to propper attributes and so on.
+        """
+        # match between backend parameters and input file parameters names:
+        # backen_name = input_file_string_name 
+        date = 'date'
+        autotest = 'autotest'
+        total_time = 'total_time'
+        update_freq = 'update_frequency'
+        display_t0 = 'display_t0'
+        modules = 'mod_'
+        control_modules = 'control_modules'
+        control_times = 'control_times'
+        control_value = 'control_value'
+        camera_controls = 'cc_'
+        camera_options = 'co_' 
+        
+        #use strip to remove leading and trailing whitespaces from parameters
+        
+        # cuando lea los schedule segments, tiene que subdividirlos de acuerdo al más pequeño.
+        
+        
+        #date
+        date_value = settings[date].strip()
+        if date_value == 'automatic':
+            
+            ltime = localtime()
+            self.date = f'{ltime[2]}_{ltime[1]}_{ltime[0]}'
+        
+        else:
+            self.date = date_value
         
     def init_timer(self, tpc):
         # tpc = time per cicle in seconds
@@ -153,7 +203,7 @@ class FluOpti():
         #turn ON the optogenetics light control
         for led in self.sch['leds'].keys():
             
-            self.module_switch(led, 'ON', msj = True)
+            self.module_switch(led, 'ON', msg = True)
     
     def update_schedule(self, t_key = 'ts'):
         # Check the schedule time
@@ -174,7 +224,7 @@ class FluOpti():
         return(chan + 1)
 
 
-    def get_modules(self, msj = True, **properties):
+    def get_modules(self, msg = True, **properties):
         '''
         To get the list with the name of all the present modules on self
         or a subset based on the properties of its modules.
@@ -225,7 +275,7 @@ class FluOpti():
 
                     selected_modules.append(m_name)
 
-            if len(selected_modules) == 0 and msj:
+            if len(selected_modules) == 0 and msg:
                 print('\nThere is no modules with the given characteristics\n')
 
             return(selected_modules)
@@ -260,12 +310,12 @@ class FluOpti():
 
     def startTemperatureSensor(self):
         try:
-            if self.type == "normal":
+            if self.board_model == "normal":
                 self.temp_sensor = pi_temperature()
-            elif self.type == "mini":
+            elif self.board_model == "mini":
                 self.temp_sensor = ntc_module()
             else:
-                print('Error undefined type')
+                print('Error undefined FluOpti board model')
 
             print('temperature sensor module initialized')
             self.temp_status = True
@@ -288,7 +338,8 @@ class FluOpti():
             self.camera_status = False
             print(e, flush=True)
     
-    def setCamera(self, fpath = False, mode_number = 3, configuration_values = False):
+    def setCamera(self, fpath = False, mode_number = 3, 
+                  configuration_values = False, capture_options = False):
         # to set the camera configurations
         # fpath = full path of txt file to store the camera configuration values
         
@@ -345,20 +396,35 @@ class FluOpti():
             # assign the configuration
             camera.configure(capture_config)
             
-            camera.options["quality"] = 90          #JPEG quality level, 90 is default, 0 is the worst quality and 95 is best
-            camera.options["compress_level"] = 1    #PNG compression level, where 0 gives no compression, 1 is the fastest that actually does any compression, and 9 is the slowest
+            # use the default configurations in case capture options were not indicated
+            if type(capture_options) != dict:
+                capture_options = {
+               
+                'quality': 90,                #JPEG quality level, 90 is default, 0 is the worst quality and 95 is best
+                'compress_level': 1           #PNG compression level, where 0 gives no compression, 1 is the fastest that actually does any compression, and 9 is the slowest
+
+                }
+            
+            # Asssign the capture options
+            for option in capture_options.keys():
+                camera.options[option] = capture_options[option]          
+ 
             
             #save the camera and sensor mode properties to a file:
             # These are not the capture configurations
             if type(fpath) == str:
                 cam_props = camera.camera_configuration()
+                
                 with open(fpath, 'w') as f:
                     
                     for key in cam_props.keys():
+                        
                         f.write(str(key)+': ')
-                        f.write(str(cam_props[key])+'\n')        
+                        f.write(str(cam_props[key])+'\n')
+
         
             print('\nCamera configured successfully\n')
+
         # in case something fails at camera configuration                
         except Exception as e:
     
@@ -421,7 +487,7 @@ class FluOpti():
                 for key in metadata_all.keys():
                     f.write(str(key)+': ')
                     f.write(str(metadata_all[key])+'\n')
-        
+                
         # average them
         img = Image.fromarray(np.uint8(sumv / n_imgs))
         img.save(impath)
@@ -438,7 +504,7 @@ class FluOpti():
         self.modules[name]['value'] = p
 
         
-    def module_switch(self,names, turn, msj = True):
+    def module_switch(self,names, turn, msg = True):
         # it replaces LEDon LEDoff/moduleOFF
         # Turn ON or OFF the LED module indicated by name
         # It doesn't change the stored power value
@@ -453,13 +519,13 @@ class FluOpti():
                 # The actual power is obtained from its module's attribute
                 power = self.modules[name]['value']
                 status = 1
-                switch_msj = "Channel "+ name + f" turned ON at {power} %\n"
+                switch_msg = "Channel "+ name + f" turned ON at {power} %\n"
             
             elif turn == 'OFF':
                 
                 power = 0
                 status = 0
-                switch_msj = "\nChannel "+ name + " turned OFF\n"
+                switch_msg = "\nChannel "+ name + " turned OFF\n"
                 
             else:
                 print('\nIt is a toggle switch. "turn" parameter accept only "ON" or "OFF"\n')
@@ -475,14 +541,14 @@ class FluOpti():
                     self.pwm.set_pwm(self.modules[name]['chan'],power)
                     self.modules[name]['status'] = status
                     
-                    if msj == True:
-                        print(switch_msj)
+                    if msg == True:
+                        print(switch_msg)
             
             # for LEDs conected at GPIO board
             elif board == 'GPIO':
                 
                 # Switch the value
-                self.GPIO_control(name, status = status, msj = msj)
+                self.GPIO_control(name, status = status, msg = msg)
             
             # if use another non-defined board
             else:
@@ -534,23 +600,6 @@ class FluOpti():
             print(f"CH1 - t:\t{self.t1} tsp:\t{self.t_sp1} pwr :\t{self.t_pwr1}\nCH2 - t:\t{self.t2} tsp:\t{self.t_sp2} pwr :\t{self.t_pwr2}")
             sleep(self.temp_ctrl_update_time)
 
-    def takePicture(self, led_name,end=False, preview_time = 5, speed = 100000, _contrast = 0, res = [960,600]):
-        
-        for name in list(self.modules.keys()):
-            if name == led_name:
-                self.module_switch(name,'ON')
-            else:
-                self.module_switch(name,'OFF')
-        
-        self.camera.resolution = res
-        self.camera.start_preview()
-        sleep(preview_time)
-        self.camera.shutter_speed = speed
-        self.camera.contrast = _contrast
-        self.photo_counter  += 1
-        self.photo_output   = self.photo_path + led_name +str(self.photo_counter)+'.jpg'
-        self.camera.capture(file_output_photo)
-
     def add_channel(self, name, channel, board = 'FluOpti'):
         # board = 'FluOpti' or 'GPIO'
 
@@ -560,7 +609,7 @@ class FluOpti():
             GPIO.setup(channel, GPIO.OUT)
             print('\nModule '+ str(name) + 'set as output in GPIO '+str(channel)+ '\n')
 
-    def GPIO_control(self, name, status, msj = True):
+    def GPIO_control(self, name, status, msg = True):
 
         pin = self.modules[name]['chan']
 
@@ -571,7 +620,7 @@ class FluOpti():
             #update the status
             self.modules[name]['status'] = status
 
-            if msj == True:
+            if msg == True:
                 print('\nModule '+ str(name) + ' (GPIO Pin ' + str(pin) + ') turned OFF')
 
         elif status == 1:
@@ -581,52 +630,164 @@ class FluOpti():
             #update the status
             self.modules[name]['status'] = status
 
-            if msj == True:
+            if msg == True:
                 print('\nModule '+ str(name) + ' (GPIO Pin ' + str(pin) + ') turned ON')
 
         else:
 
             print('Invalid GPIO state. It have to be 0 or 1')
-
+    
     def autotest(self, values = [30,65,100]):
         # to perform an autotest of the hardware
         # values: list with the power values to test. each value int between [0-100]
         
-        leds = self.get_modules(m_type = 'LED')
+        if self.autotest:
         
-        for led in leds:
+            leds = self.get_modules(m_type = 'LED')
             
-            basal_pwr = self.modules[led]['value']
-            
-            board = self.modules[led]['board']  
-        
-            # for LEDs conected at FluOpti board
-            if board == 'FluOpti':
-                # test different power values
-                for power in values:
-                    
-                    self.LEDSetPWR(led,power)
-                    self.module_switch(led,'ON')
-                    sleep(0.5)
-            # for LEDs conected to GPIO at RPI
-            elif board == 'GPIO':
-                self.module_switch(led,'ON')
-                sleep(1)
+            for led in leds:
                 
-            #turn OFF
-            self.module_switch(led, 'OFF')
-            #return to basal power    
-            self.LEDSetPWR(led,basal_pwr)
-        
-        print('\n-- AutoTest Finished --\n')
+                basal_pwr = self.modules[led]['value']
+                
+                board = self.modules[led]['board']  
+            
+                # for LEDs conected at FluOpti board
+                if board == 'FluOpti':
+                    # test different power values
+                    for power in values:
+                        
+                        self.LEDSetPWR(led,power)
+                        self.module_switch(led,'ON')
+                        sleep(0.5)
+                # for LEDs conected to GPIO at RPI
+                elif board == 'GPIO':
+                    self.module_switch(led,'ON')
+                    sleep(1)
+                    
+                #turn OFF
+                self.module_switch(led, 'OFF')
+                #return to basal power    
+                self.LEDSetPWR(led,basal_pwr)
+            
+            print('\n-- AutoTest Finished --\n')
             
     
-    ''' Clean exit '''
+    def get_attrs(self, attrs):
+        """
+        Return a list with the values of attrs
+        attrs: list of strings
+            list with the names of the attributes of interest
+        """
+        values = []
+        if type(attrs) != list:
+            attrs = [attrs]
+            
+        for attr in attrs:
+            values.append(getattr(self, attr))
+        return(values)
+    
+    def attr_names(self):
+        return(list(self.__dict__.keys()))
+    
+    
     def close(self, *args):
+        ''' Clean exit '''
         try:
             self.camera.close()
         except Exception as e:
             print(e, flush=True)
+
+### Other -non FluOPti Object- Functions ### 
+def read_settings(self, filename, key_sep = '=', com_sym = '#', 
+                      notes_kw= 'notes', msg = True):    
+    """
+    To read the setting parameters included in the input text file (.txt).
+    The key nomenclature can be customized with this function parameters.
+    The default expected estructure of the input file is like this:
+
+    param1 = some_value
+    param2 = some_value or values
+    # after this simbol text in the line is ommited
+    param3 = some_value    # the text after this symbol is ommited too
+    notes = some text
+    more text
+    and even more, and until the end will be included inside "notes_kw" parameters.
+
+    ** notes_kw is a reserved parameter name ** 
+    (be careful to not name another parameter with this exact word)
+
+    Parameters
+    ----------
+    filename: string
+        filename to be read
+    
+    key_sep: string
+        simbol, character or specific string used to split the parameter name from 
+        its value.
+    
+    com_sym: string
+        simbol or character to identify the commentary portions.
+        Everything after this simbol will be ommited.
+    
+    notes_kw: string
+        Parameter keyword name of the extra comments. 
+        Everyhting after this parameter (i.e. at its right and all the lines 
+        to the end of the file) will be included in its value.
+    
+    msg: bool
+        if True, print information message
+    
+    Return
+    ------
+
+    parameters: dictionary
+        Dictionary with the parameters names as keys and their read value
+
+    """
+    
+    if msg:
+        print('Reading settings from "'+filename+'"')
+    
+    parameters = dict()
+    parameters[notes_kw] = ''    # init the "notes" parameter
+
+    with open(filename, 'r') as f:
+
+        counter = 0
+
+        for line in f:
+            
+            counter += 1
+            
+            # if the first element is the comment symbol, pass to next line
+            if line[0] == com_sym:
+                continue
+            
+            # if it is not a "comment line", get the parameter and its value
+            else:
+
+                # in case it reach the "notes" parameter
+                if parameters[notes_kw] != '':
+                    
+                    parameters[notes_kw] += '\n' + line
+
+                # until you start to fill the "notes" parameter
+                else:    
+                    # the parameter name is everything at the left of the first "key_sep"
+                    
+                    key = line.split(key_sep)[0].strip()  # strip eliminate front and back white spaces
+                    
+                    # the value is all between the first 'key_sep" and any other comment (indicated by "com_sym")
+                    try:
+                        value = line.split(key_sep)[1].split(com_sym)[0].strip()
+                    except:
+                        print("\n[Error]Cannot be able to split parameter and its value at line " + str(counter))
+                        print("----- Check the separator character in tl_config file -----\n")
+                        raise
+
+                    parameters[key] = value.split('\n')[0]  #eliminate the break line symbol if present
+
+    return(parameters)
 
 # --------------- Testing  -------------------------
 if __name__ == '__main__':
@@ -648,3 +809,11 @@ if __name__ == '__main__':
         sleep(5)
     #Fluo.stopTempCtrl()
     Fluopti.module_switch('B','OFF')
+    
+    # Test temperature reading
+    t1,t2 = Fluopti.updateTemps()
+    
+    print('\nt1 = '+str(t1)+ '°C')
+    print('t2 = '+str(t2)+ '°C')
+    
+    print('-- Test Finished --')
