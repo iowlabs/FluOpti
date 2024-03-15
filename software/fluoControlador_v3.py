@@ -2,7 +2,10 @@
 """
 Created on Wed Feb 7 2024
 
-@author: Cristobal Vasquez
+@authors:
+	Cristobal Vasquez
+	Wladimir Araya
+	Isaac Nuñez
 
 Codigo modificado de fluoControlador.py para agregar nueva interfaz y funcionalidades
 """
@@ -49,18 +52,19 @@ class MainWindow(QMainWindow):
 
         ############################
 
-        self.Fluo   =  FluOpti("normal")
-        self.temp       = [0.0, 0.0] #pH
+        self.Fluo   	= FluOpti("normal")
+        self.temp  	    = [0.0, 0.0]
         self.temp_sp    = [0.0, 0.0]
         self.temp_pwr   = [0,0]
-        self.led_pwr    = [0,0,0,0,0,0]
-        self.t_     = collections.deque([0.0],200)
-        self.t1_    = collections.deque([self.temp[0]],200)
-        self.t2_    = collections.deque([self.temp[1]],200)
-        self.tsp1_  = collections.deque([self.temp_sp[0]],200)
-        self.tsp2_  = collections.deque([self.temp_sp[1]],200)
-        self.channel = ['B','G','R','W', 'H1','H2']
-        self.collections = [self.t1_,self.t2_,self.tsp1_,self.tsp2_]
+        self.channel_pwr = [0,0,0,0,0,0]
+		self.t_     	= collections.deque([0.0],200)
+        self.t1_    	= collections.deque([self.temp[0]],200)
+        self.t2_    	= collections.deque([self.temp[1]],200)
+        self.tsp1_  	= collections.deque([self.temp_sp[0]],200)
+        self.tsp2_  	= collections.deque([self.temp_sp[1]],200)
+        self.channel 		= ['B','G','R','W', 'H1','H2']
+		self.channel_en 	= [False,False,False,False,False,False]
+		self.collections 	= [self.t1_,self.t2_,self.tsp1_,self.tsp2_]
 
         pen = pg.mkPen(color = (0,0,255),width = 2)
         self.graphicsView.setBackground("w")
@@ -159,12 +163,12 @@ class MainWindow(QMainWindow):
         self.horizontalSlider_6.valueChanged.connect(lambda:self.LEDset(5))
 
 
-        self.spinBox.valueChanged.connect(lambda: self.LEDset2(0))
-        self.spinBox_2.valueChanged.connect(lambda: self.LEDset2(1))
-        self.spinBox_3.valueChanged.connect(lambda: self.LEDset2(2))
-        self.spinBox_4.valueChanged.connect(lambda: self.LEDset2(3))
-        self.spinBox_5.valueChanged.connect(lambda: self.LEDset2(4))
-        self.spinBox_6.valueChanged.connect(lambda: self.LEDset2(5))
+        self.spinBox.valueChanged.connect(lambda: self.LEDset(0))
+        self.spinBox_2.valueChanged.connect(lambda: self.LEDset(1))
+        self.spinBox_3.valueChanged.connect(lambda: self.LEDset(2))
+        self.spinBox_4.valueChanged.connect(lambda: self.LEDset(3))
+        self.spinBox_5.valueChanged.connect(lambda: self.LEDset(4))
+        self.spinBox_6.valueChanged.connect(lambda: self.LEDset(5))
 
         #Temperature Control interface
         self.pushButton_9.clicked.connect(lambda: self.setTempSP(0))
@@ -184,10 +188,10 @@ class MainWindow(QMainWindow):
 
 
         #MGMT UPDATE DATA
-        # self.run_timer = QtCore.QTimer()
-        # self.run_timer.setInterval(1000*self.sample_time)
-        # self.run_timer.timeout.connect(self.updateData)
-        # self.run_timer.start()
+        self.run_timer = QtCore.QTimer()
+        self.run_timer.setInterval(1000*self.sample_time)
+        self.run_timer.timeout.connect(self.updateData)
+        self.run_timer.start()
 
 
         #STATUS BAR
@@ -301,8 +305,8 @@ class MainWindow(QMainWindow):
             try:
                 self.Fluo.LEDSetPWR('H1',self.temp_pwr[0])
                 self.Fluo.LEDSetPWR('H2',self.temp_pwr[1])
-                self.Fluo.LEDon('H1')
-                self.Fluo.LEDon('H2')
+                self.Fluo.module_switch('H1', 'ON', msg = False)
+                self.Fluo.module_switch('H2', 'ON', msg = False)
                 self.writeData()
             except Exception as e:
                 print(e)
@@ -327,76 +331,10 @@ class MainWindow(QMainWindow):
         self.pushButton_19.setDisabled(False)
         self.pushButton_10.setDisabled(True)
         self.elapsed_time = 0
-        self.Fluo.LEDoff('H1')
-        self.Fluo.LEDoff('H2')
+        self.Fluo.module_switch('H1', 'OFF', msg = False)
+        self.Fluo.module_switch('H2', 'OFF', msg = False)
 
-    """
-    def start(self):
-        if self.dl.connected:
-            self.run_state = True
-            self.pushButton_7.setDisabled(True)
-            self.pushButton_8.setDisabled(False)
 
-            time_now  =  datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
-
-            self.file_name = time_now+".csv"
-            self.data_file   = open( self.data_path + self.file_name,"w", newline = '')
-            self.data_writer = csv.writer( self.data_file)
-            self.data_writer.writerow(["time","v","i","pwr"])
-            self.data_file.close()
-            self.run_timer.start()
-
-    def stop(self):
-        self.run_state = False
-        self.run_timer.stop()
-        self.pushButton_7.setDisabled(False)
-        self.pushButton_8.setDisabled(True)
-
-    def setSampleTime(self):
-        self.sample_time = float(self.lineEdit_3.text())
-        if self.sample_time < 0.1:
-            self.sample_time = 0.1
-        if self.connected:
-            self.run_timer.stop()
-            self.run_timer.setInterval(1000*self.sample_time)
-            self.run_timer.start()
-
-    def updateTime(self):
-        current_time = QtCore.QTime.currentTime()
-        label_time   = current_time.toString('hh:mm:ss')
-        self.lineEdit_11.setText(label_time)
-        if self.run_state:
-            self.elapsed_time += 1
-            self.lineEdit_12.setText(str(datetime.timedelta(seconds = self.elapsed_time)))
-
-    def updateData(self):
-        if self.run_state:
-
-            print("updating data")
-            self.t_.append(self.elapsed_time)
-            self.lineEdit_13.setText(format(self.dl.i,'.2f'))
-            self.lineEdit_5.setText( format(self.dl.v,'.2f'))
-            self.lineEdit_10.setText(format(self.dl.pwr,'.2f'))
-            self.v_.append(self.dl.v)
-            self.i_.append(self.dl.i)
-            self.pwr_.append(self.dl.pwr)
-            pen = pg.mkPen(color = (0, 0, 255),width = 2)
-
-            for i in range(3):
-                self.graphics[i].clear()
-                self.graphics[i].setXRange( self.t_[0] - 0.001, self.elapsed_time + 0.001, padding=0)
-                self.graphics[i].setYRange( min(self.collections[i])-0.5, max(self.collections[i]) + 0.5, padding=0)
-                self.graphics[i].plot(self.t_,self.collections[i], pen=pen)
-            self.writeData()
-
-    def writeData(self):
-        self.data_file   = open(self.data_path+self.file_name,"a", newline = '')
-        self.data_writer = csv.writer(self.data_file)
-        row = [ self.elapsed_time,self.dl.v,self.dl.i,self.dl.pwr]
-        print(f"saving {row} to {self.data_path+self.file_name}")
-        self.data_writer.writerow(row)
-        self.data_file.close()
-"""
 
     def actualizar_estilo_led(self, label, estado, color):
         # Actualizar el estilo del QLabel para representar el estado del LED EN INTERFAZ
@@ -406,42 +344,36 @@ class MainWindow(QMainWindow):
         else:
             label.setStyleSheet('QLabel {}')
 
-    def LEDOn(self, ch, intensidad=-1):
-        if intensidad < 0:
-            self.Fluo.LEDSetPWR(self.channel[ch],self.led_pwr[ch])
-        else:
-            self.Fluo.LEDSetPWR(self.channel[ch],intensidad)
-        self.Fluo.LEDon(self.channel[ch])
-        self.btnOn[ch].setDisabled(True)
-        self.btnOff[ch].setDisabled(False)
+	def LEDOn(self, ch):
+		self.channel_en[ch] = True
+		self.Fluo.LEDSetPWR(self.channel[ch],self.sBox[ch].value())
+		self.Fluo.module_switch(self.channel[ch], 'ON', msg = False)
+
+		self.btnOn[ch].setDisabled(True)
+		self.btnOff[ch].setDisabled(False)
+		# Se AGREGAN LOS COLORES DE LAS LUCES A LA INTERFAZ
+		color = self.colores[ch]
+		label = self.map_color_to_label[ch]
+		self.actualizar_estilo_led(label, True, color)
+
+	def LEDOff(self, ch):
+		self.channel_en[ch] = False
+		self.Fluo.module_switch(self.channel[ch], 'OFF', msg = False)
+
+		self.btnOn[ch].setDisabled(False)
+		self.btnOff[ch].setDisabled(True)
         # Se AGREGAN LOS COLORES DE LAS LUCES A LA INTERFAZ
-        color = self.colores[ch]
-        label = self.map_color_to_label[ch]
-        self.actualizar_estilo_led(label, True, color)
+		color = self.colores[ch]
+		label = self.map_color_to_label[ch]
+		self.actualizar_estilo_led(label, False, color)
 
 
-    def LEDOff(self, ch):
-        #self.Fluo.LEDoff(self.channel[ch])
-        self.Fluo.LEDSetPWR(self.channel[ch],0)  ## Solucion temporal. Reemplazar despues por module_switch
-        self.btnOn[ch].setDisabled(False)
-        self.btnOff[ch].setDisabled(True)
-        # Se AGREGAN LOS COLORES DE LAS LUCES A LA INTERFAZ
-        color = self.colores[ch]
-        label = self.map_color_to_label[ch]
-        self.actualizar_estilo_led(label, False, color)
-
-
-    def LEDset(self,ch, intensidad=-1):
-        if intensidad < 0:
-            val = self.sliders[ch].value()
-        else:
-            val = intensidad
+    def LEDset(self,ch):
+		val  = self.sliders[ch].value()
         self.sBox[ch].setValue(val)
-        self.led_pwr[ch] = val
-        #if self.Fluo._default_modules[self.channel[ch]]['status']:
-        if self.Fluo.modules[self.channel[ch]]['status']:
-        
-            self.LEDOn(ch)
+		if(self.channel_en[ch]):
+			self.Fluo.LEDSetPWR(self.channel[ch],val)
+			self.Fluo.module_switch(self.channel[ch], 'ON', msg = False)
 
     def LEDset2(self,ch, intensidad=-1):
         if intensidad < 0:
@@ -452,13 +384,14 @@ class MainWindow(QMainWindow):
         self.led_pwr[ch] = val
 
     def setTempSP(self,ch):
-        val =  self.sdBox[ch].value()
-        self.temp_sp[ch] = val
-        if ch == 0:
+        val =  self.sdBox[ch].value() 	#GET DATA FROM BOX
+        self.temp_sp[ch] = val 			#SET NEW SP
+		#UPDATE PID
+		if ch == 0:
             self.pid_temp1.setpoint = self.temp_sp[ch]
         else:
             self.pid_temp2.setpoint = self.temp_sp[ch]
-
+		#SET TO GUI LINE EDIT TO VIEW DE NEW SP
         self.ledit_temp_sp[ch].setText(format(val,'.2f'))
 
     def writeData(self):
@@ -480,7 +413,7 @@ class MainWindow(QMainWindow):
         self.pat.setWindowModality(2)
         self.pat.senal_config_ready.connect(self.recibir_patrones)
         self.pat.show()
-    
+
     def recibir_patrones(self, dic_patrones):
         print('Recibiendo patrones...')
         largo = len(self.dic_patrones)
@@ -503,7 +436,7 @@ class MainWindow(QMainWindow):
 
 
     # FUNCIONALIDADES CON SECUENCIADOR
-        
+
     def mostrar_bloques(self):
         print('Mostrando bloques...')
         # borrar todos los objetos dentro de self.groupBox_estado_bloques
@@ -604,7 +537,7 @@ class MainWindow(QMainWindow):
 
             #self.grafico_bloques.canvas.axes[0].fill_between(t_exp_acum[:tiempo_cambio + 1], 0, I_rojo_acum[:tiempo_cambio], alpha=0.3, color='red')
             #self.grafico_bloques.canvas.axes[1].fill_between(t_exp_acum[:tiempo_cambio + 1], 0, I_verde_acum[:tiempo_cambio], alpha=0.3, color='green')
-            
+
             #self.grafico_bloques.canvas.axes[2].fill_between(t_exp_acum[:tiempo_cambio + 1], 0, T_control_acum[:tiempo_cambio], alpha=0.3, color='blue')
 
             self.grafico_bloques.canvas.axes[0].text(pos_x, 100 + 2, bloque_text, rotation=0, ha='center', va='bottom')
@@ -632,10 +565,10 @@ class MainWindow(QMainWindow):
         # dejar resolucion completa en eje x
         self.grafico_bloques.canvas.axes[0].set_xlim([0, t_exp_acum[-1]])
         self.grafico_bloques.canvas.draw()
-    
+
 
 # VENTANA SECUENCIADOR
-            
+
 class Secuenciador(QMainWindow):
     senal_dic_final = QtCore.pyqtSignal(dict)
     def __init__(self):
@@ -647,11 +580,11 @@ class Secuenciador(QMainWindow):
         self.status.showMessage('Secuenciador de luces', 3000)
         self.tabs = [self.tab_1, self.tab_2, self.tab_3, self.tab_4, self.tab_5, self.tab_6]
         self.actualizar_dics()
-        
+
         self.button_guardar.clicked.connect(self.guardar_secuenciador)
-        
+
     # redefinir show() para inicializar los tabs
-        
+
     def actualizar_dics(self):
         self.dict_b1 = {'t_exp': self.b1_t_exp.value(), 't_control' : self.b1_T_control.value(), 'I_rojo': self.b1_slider_led_rojo.value(), 'I_verde': self.b1_slider_led_verde.value()}
         self.dict_b2 = {'t_exp': self.b2_t_exp.value(), 't_control' : self.b2_T_control.value(), 'I_rojo': self.b2_slider_led_rojo.value(), 'I_verde': self.b2_slider_led_verde.value()}
@@ -681,7 +614,7 @@ class Secuenciador(QMainWindow):
 
         self.senal_dic_final.emit(dic_final)
         return dic_final
-    
+
 
 
 class PatronConfig(QMainWindow):
@@ -722,8 +655,8 @@ class PatronConfig(QMainWindow):
         # display the QPixmap
         self.label_f1_preview.setPixmap(pixmap)
 
-            
-        
+
+
 
     def guardar_patron(self, ready=False):
         print('Guardando patrón...')
@@ -740,7 +673,7 @@ class PatronConfig(QMainWindow):
                     'ColourGains': (self.f1_ColourGains_0.value(), self.f1_ColourGains_1.value()),  #tuple (red_gain, blue_gain), each value: (0.0, 32.0, Undefined) - Setting these numbers disables AWB.
                     'Contrast': self.f1_Contrast.value(),                                   #(0.0, 32.0, 1.0) -  zero means "no contrast", 1.0 is the default "normal" contrast
                     'ExposureTime': self.f1_ExposureTime.value(),                           #(75, 11766829, Undefined). unit microseconds.
-                    'ExposureValue': self.f1_ExposureValue.value(),                         #(-8.0, 8.0, 0.0) - Zero is the base exposure level. Positive values increase the target brightness, and negative values decrease it 
+                    'ExposureValue': self.f1_ExposureValue.value(),                         #(-8.0, 8.0, 0.0) - Zero is the base exposure level. Positive values increase the target brightness, and negative values decrease it
                     'FrameDurationLimits': (self.f1_FrameDurationLimits_0.value(), self.f1_FrameDurationLimits_1.value()),   # tuple, each value: (47183, 11767556, Undefined). The maximum and minimum time that the sensor can take to deliver a frame (microseconds). Reciprocal of frame rate
                     'NoiseReductionMode': self.f1_NoiseReductionMode.value(),               #(0, 4, 0) - 0 is off.
                     'Saturation': self.f1_Saturation.value(),                               #(0.0, 32.0, 1.0) - zero greyscale images, 1.0 "normal" saturation, higher values for more saturated colours.
@@ -752,7 +685,7 @@ class PatronConfig(QMainWindow):
                 'color_led': self.f1_ColorLed.currentText(),
                 'I_led': self.f1_IntensidadLed.value()
             }
-       
+
         if ready:
             self.senal_config_ready.emit(self.dic_final)
             return self.dic_final
@@ -772,7 +705,7 @@ class ExperimentoThread(QThread):
         channel_dic = {'rojo': 2, 'verde': 1, 'azul': 0, 'blanca': 3}
         intensidad_rojo = self.bloque['I_rojo']
         intensidad_verde = self.bloque['I_verde']
-        
+
         print(f"Bloque de {t_exp} minutos")
         print(f"LED Rojo: {intensidad_rojo}")
         print(f"LED Verde: {intensidad_verde}")
