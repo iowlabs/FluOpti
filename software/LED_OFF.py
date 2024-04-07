@@ -20,6 +20,7 @@ leds = Fluopti.get_modules(m_type = 'LED')
 for led in leds:
         
         # turn OFF
-        Fluopti.moduleOFF(led, msj = True)
+        Fluopti.module_switch(led, 'OFF', msg = True)
         
 print('\nAll LEDs turned OFF successfully\n')
+
