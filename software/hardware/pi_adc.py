@@ -48,7 +48,7 @@
 # ----- Imports ---------------
 import sys
 import time
-import threading
+#import threading
 
 try:
   import Adafruit_ADS1x15
@@ -78,6 +78,9 @@ temp_array = [  32651, 31031, 29500, 28054, 26687, 25395, 24172, 23016, 21921, 2
         388,   378,   368,   359,   350,   341  ]
 MIN_TEMP_RES = 341    # At 125 deg C
 MAX_TEMP_RES = 32651  # At 000 deg C
+
+# invalid output, in case the sensor fails. It have to be a big number to stop the heater in case temperature measurement fails.
+invalid_output = 100
 
 
 class pi_temperature():
@@ -144,7 +147,7 @@ class pi_temperature():
     # Lookup temperature table
     # If out of bounds, return -1
     if resistance < MIN_TEMP_RES or resistance > MAX_TEMP_RES:
-      return -1
+      return invalid_output
 
     # Search resistore range
     r0 = -1
@@ -155,7 +158,7 @@ class pi_temperature():
         r1 = temp_array[i+1]
         break
     if r0 < 0:
-      return -1
+      return invalid_output
 
     # Linear interpolation
     return ((resistance-r0) / (r1-r0))  + i
