@@ -4,28 +4,49 @@ Created on Thu Jan 25 17:35:39 2024
 
 @author: Prosimios
 """
+'''
+pendientes:
+    
+    añadir localtime al nombre
+    permitir tomar rafaga de fotos con distintos ss
+    permitir modificar otros parámetros
+    
+'''
 
-from picamera2 import Picamera2, Preview
-import time
+
+from picamera2 import Picamera2 #, Preview
+from time import sleep, localtime
 import sys
-from PIL import Image
+#from PIL import Image
 from pprint import *
 
 # Basic settings at calling the rutine
-param_msj = "\nRequired parameters: folder_name/filename\n, set_controls[True/False]"
-
+param_msg = "\nRequired parameters: folder_name/filename\n, set_controls[True/False]"
 
 if len(sys.argv) > 1: # sys.argv[0] is the name of the rutine
     
     fname = sys.argv[1]
     
+    # True to use the defined settings. Default is False
     try:
         set_controls = bool(sys.argv[2])
     except:
         set_controls = False
-        
+    
+    # set other parameters
+    try:
+        ss = int(sys.argv[3])
+    except:
+        ss = 100000 # default value
+
 else:
     fname = False
+
+
+# to add the date and shutter spped to the filename
+add_date = True
+add_ss = True
+
 
 #create the camera object
 picam2 = Picamera2()
@@ -55,7 +76,7 @@ if set_controls == True:
             'Brightness': 0.0,                      #(-1.0, 1.0, 0.0) - (-1.0) is very dark, 1.0 is very brigh
             'ColourGains': (1,1),                   #tuple (red_gain, blue_gain), each value: (0.0, 32.0, Undefined) - Setting these numbers disables AWB.
             'Contrast': 1.0,                        #(0.0, 32.0, 1.0) -  zero means "no contrast", 1.0 is the default "normal" contrast
-            'ExposureTime': 10000,                   #(75, 11766829, Undefined). unit microseconds.
+            'ExposureTime': ss,                     #(75, 11766829, Undefined). unit microseconds.
             'ExposureValue': 0.0,                   #(-8.0, 8.0, 0.0) - Zero is the base exposure level. Positive values increase the target brightness, and negative values decrease it 
             'FrameDurationLimits': (47183,11767556),   # tuple, each value: (47183, 11767556, Undefined). The maximum and minimum time that the sensor can take to deliver a frame (microseconds). Reciprocal of frame rate
             'NoiseReductionMode': 0,                #(0, 4, 0) - 0 is off.
@@ -89,7 +110,7 @@ print('Preview stopped')
 '''
 # start the camera
 picam2.start()
-time.sleep(2)
+sleep(2)
 
 # capture the file
 #picam2.capture_file(filename)
@@ -100,4 +121,33 @@ picam2.stop()
 
 # if filename was indicates, then save the file
 if fname != False:
-    image.save(fname)  
+    
+    
+    name_split = fname.split('.')
+    base = name_split[0]
+    
+    try:
+        imformat = name_split[1]
+    except:
+        imformat = 'png'
+    
+    # add the shutter speed to the name
+    ss_text = ''
+    
+    if add_ss:
+        ss_text = f'_{int(ss/1000)}ss'
+    
+    # add the date to the name
+    date_text = ''
+    
+    if add_date:
+        ltime = localtime()
+        date_text =f'_{ltime.tm_mday:02d}{ltime.tm_mon:02d}'+str(ltime[0])[2:]
+    
+    #join the filepath
+    fpath = base + date_text + ss_text + '.' + imformat
+    
+    # save the image
+    image.save(fpath)
+    
+    print('\nFilename '+fpath+' stored successfully\n')

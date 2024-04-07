@@ -7,22 +7,15 @@ from time import sleep
 import threading
 import os
 
-<<<<<<< HEAD
-from hardware.FluOpti import fluOpti
-
-
-print('Testing Fluo\n')
-Fluopti =  fluOpti()
-=======
 # import FluOpti library
-from FluOpti.FluOpti import FluOpti
+from hardware.FluOpti import FluOpti
 
-
+# Create the FluOpti object
 Fluopti =  FluOpti()
 
 # Initial messages
 print('\nTesting FluOpti\n')
->>>>>>> 533f9c3c1e8d9d07294a18eec16ca268fb882480
+
 print('Testing PWM, press Ctrl-C to quit...')
 
 ####  PWM percentage list to be tested #####
@@ -35,7 +28,8 @@ Fluopti.setTempSampleTime(1)
 Fluopti.setTempSP(1,30)
 Fluopti.setTempSP(2,35)
 #miniFluo.startTempCtrl()
-<<<<<<< HEAD
+
+'''
 # -- Testing channel BLUE
 for prcnt in seq:
     sys.stdout.flush()
@@ -84,8 +78,8 @@ Fluopti.LEDoff('G')
 Fluopti.LEDoff('R')
 Fluopti.LEDoff('W')
 Fluopti.LEDoff('B')
-=======
 
+'''
 
 ### Channels definition ####
 print('\nNote: you can run this code with the list of channels to be tested as an input\n')
@@ -123,10 +117,10 @@ for c in channels:
             sys.stdout.flush()
             
             Fluopti.LEDSetPWR(c,prcnt)
-            Fluopti.LEDon(c)
+            Fluopti.module_switch(c,'ON', msj = True)
             sleep(1)
             
-        Fluopti.LEDoff(c)
+        Fluopti.module_switch(c,'OFF', msj = True)
         
     elif c_board == 'RPI_GPIO':
         
@@ -141,5 +135,11 @@ for c in channels:
         print('Indefined action for board '+ c_board +' of channel '+ str(c) +'\n')
 
 #Fluo.stopTempCtrl()
+        
+# Test temperature reading
+t1,t2 = Fluopti.updateTemps()
 
->>>>>>> 533f9c3c1e8d9d07294a18eec16ca268fb882480
+print('\nt1 = '+'%.2f'%(t1)+ '°C')  # dislay just two decimal points 
+print('t2 = '+'%.2f'%(t2)+ '°C\n')
+
+print('-- Test Finished --')

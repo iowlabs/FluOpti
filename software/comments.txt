@@ -11,4 +11,4 @@ pyinstaller --onefile --windowed EQ_main.py
 
 sudo pip install adafruit-ADS1x15
 sudo pip install adafruit-pca9685
-sudo  pip install simple-pid
+sudo pip install simple-pid
