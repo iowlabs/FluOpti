@@ -26,7 +26,7 @@
          <item>
           <widget class="QTabWidget" name="tabWidget">
            <property name="currentIndex">
-            <number>2</number>
+            <number>1</number>
            </property>
            <widget class="QWidget" name="tab_4">
             <attribute name="title">
@@ -848,46 +848,6 @@
              </item>
             </layout>
            </widget>
-           <widget class="QWidget" name="tab_5">
-            <attribute name="title">
-             <string>Camara</string>
-            </attribute>
-            <layout class="QHBoxLayout" name="horizontalLayout">
-             <item>
-              <widget class="QGroupBox" name="groupBox_8">
-               <property name="title">
-                <string>Camara</string>
-               </property>
-               <widget class="Line" name="line_2">
-                <property name="geometry">
-                 <rect>
-                  <x>-17</x>
-                  <y>10</y>
-                  <width>20</width>
-                  <height>361</height>
-                 </rect>
-                </property>
-                <property name="lineWidth">
-                 <number>1</number>
-                </property>
-                <property name="orientation">
-                 <enum>Qt::Vertical</enum>
-                </property>
-               </widget>
-               <widget class="QLineEdit" name="lineEdit_7">
-                <property name="geometry">
-                 <rect>
-                  <x>2</x>
-                  <y>24</y>
-                  <width>160</width>
-                  <height>120</height>
-                 </rect>
-                </property>
-               </widget>
-              </widget>
-             </item>
-            </layout>
-           </widget>
            <widget class="QWidget" name="tab_6">
             <attribute name="title">
              <string>RUN</string>
@@ -954,7 +914,7 @@
                   </font>
                  </property>
                  <property name="text">
-                  <string>N° de Fotos:</string>
+                  <string>N° de Fotos/h:</string>
                  </property>
                 </widget>
                </item>
@@ -1015,7 +975,7 @@
                   </font>
                  </property>
                  <property name="text">
-                  <string>Configurar Fotos</string>
+                  <string>Configurar Patrones de Fotos</string>
                  </property>
                 </widget>
                </item>
@@ -1025,7 +985,7 @@
               <widget class="QGroupBox" name="groupBox_estado_bloques">
                <property name="font">
                 <font>
-                 <pointsize>12</pointsize>
+                 <pointsize>10</pointsize>
                 </font>
                </property>
                <property name="title">
@@ -1036,6 +996,11 @@
              </item>
              <item>
               <widget class="QGroupBox" name="groupBox_2">
+               <property name="font">
+                <font>
+                 <pointsize>8</pointsize>
+                </font>
+               </property>
                <property name="title">
                 <string>Gráfico Bloques</string>
                </property>
@@ -1053,6 +1018,7 @@
                     <widget class="QLabel" name="label_luz_verde">
                      <property name="font">
                       <font>
+                       <pointsize>8</pointsize>
                        <weight>75</weight>
                        <bold>true</bold>
                       </font>
@@ -1069,6 +1035,7 @@
                     <widget class="QLabel" name="label_luz_roja">
                      <property name="font">
                       <font>
+                       <pointsize>8</pointsize>
                        <weight>75</weight>
                        <bold>true</bold>
                       </font>
@@ -1085,6 +1052,7 @@
                     <widget class="QLabel" name="label_luz_azul">
                      <property name="font">
                       <font>
+                       <pointsize>8</pointsize>
                        <weight>75</weight>
                        <bold>true</bold>
                       </font>
@@ -1101,6 +1069,7 @@
                     <widget class="QLabel" name="label_luz_blanca">
                      <property name="font">
                       <font>
+                       <pointsize>8</pointsize>
                        <weight>75</weight>
                        <bold>true</bold>
                       </font>

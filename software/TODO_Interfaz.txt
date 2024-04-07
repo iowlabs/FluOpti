@@ -1,0 +1,32 @@
+**TODO's pendientes de la interfaz **
+
+
+Actualmente la interfaz es funcional considerando n° maximo de bloques (6). De esta forma, se pueden setear hasta 6 bloques con sus tiempos respectivos, e intensidad de led verde y rojo en cada bloque. Además, se implemento una funcionalidad para setear infinitos patrones de fotos que al apretar el boton "Guardar" se guardan en un diccionario que se entrega a la MainWindow (gui_test_v3). En la configuracion de seteo de patrones se puede ver el preview de la foto a tomar y configurar distintos parametros de la cámara.
+
+
+TODO's:
+
+1.- Hacer la logica que haga que se tomen las fotos segun los tiempos (segun frecuencia seteada) y parametros seteados en el diccionario de patrones. Probablemente haya que usar threads para tomar fotos para que la interfaz no se quede pegada ("No responde").
+
+2.- Hacer que los bloques posibles sean infinitos (Se puede seguir el ejemplo usado para los patrones). Sin embargo, esto tiene el problema de que habría que hacer una logica para eliminar algún bloque que haya quedado mal configurado. Lo que puede ser engorroso. Al mismo tiempo, si se hace eso, se debería mostrar en la interfaz los bloques actuales que estan configurados, y los patrones actuales que estan configurados (Había dejado un GroupBox llamado "Patron de Fotos Seteado" puesto para poner esto, pero hay que ver si eso queda bien).
+
+3.- Implementar que al tomar las fotos, se guarde la metadata de estas. (Creo que en las funciones implementadas por Isaac ya se hace esto, pero habría que integrarlo)
+
+4.- Agregar 2da temperatura de control y conectar logica de control de temperatura a la interfaz. Actualmente la temperatura seteada por interfaz no se encuentra conectada a ningúna parte del backend (basicamente no toque nada del control de temperatura).
+
+5.- Exportar e importar datos. Editar y elimar bloques o patrones.
+
+6.- Cambiar la duración de los bloques de segundos a horas (Esto esta comentado en el metodo run de ExperimentoThread).
+
+7.- Hacer que al agregar un nuevo bloque, se pongan por defecto los parametros del bloque anterior.
+
+8.- Agregar boton de "Restablecer por defecto" en la ventana de configuracion de patron de fotos. Esto por si el usuario movió mucho los parametros, sea más facil volver a los que estaban por defecto.
+
+
+Flujo programa (considerando estado actual, sin los TODO's propuestos):
+
+El flujo ideal del programa sería ir a la tab de "RUN", luego elegir el numero de bloques que se quieren configurar y apretar "configurar bloques". Esto llamara a una ventana emergente que permitirá elegir los parametros de tiempo_exp, intensidad de led verde y rojo, así como temperatura de control. Una vez seleccionados los parametros, se aprieta "Guardar", y con esto se cierra la ventana emergente y se muestran los bloques escogidos en la interfaz.
+
+Luego, se puede apretar el boton de configuración de foto para agregar una nueva configuración de patrón y seguir la logica anterior. 
+
+Finalmente, al apretar el boton "run", comienza el experimento (se marca el tiempo actual y el total) y se prenden los leds con la intensidad seteada, durante el tiempo específicado.
