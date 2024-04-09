@@ -1,6 +1,10 @@
 FluOpti
 =======
 
+
+
+
+
 Este proyecto consiste en la realización de un control integrado para la
 iluminación del proyecto FluOpti. Más información respecto al poyecto se
 puede encontrar en los siguientes enlaces: 1.
@@ -9,6 +13,8 @@ https://docs.google.com/document/d/1PmyignsIkzQdomBdSQQ2lFlBKneosc83GTr52-iTTBQ/
 `Git <https://github.com/SynBioUC/FluoPi/tree/master/Hardware_design_files/PCB>`__
 3. `OSF <https://osf.io/dy6p2/>`__ 4. `Manual de diseño de proyectos de
 LEDs estandar <https://www.overleaf.com/4759732231nspqcngnnhdq>`__
+
+
 
 Descripción de problema electrónico
 -----------------------------------
@@ -33,7 +39,7 @@ El proyecto también considera la necesidad de implementar sensores que
 permitan calibrar el sistema y monitorear variables determinadas, tales
 como intensidad o temperatura.
 
-.. figure:: /README_images/Diagrama_1.PNG
+.. image:: /README_images/Diagrama_1.PNG
    :alt: Diagrama General
 
    Diagrama General
