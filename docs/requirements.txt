@@ -1,2 +1,4 @@
 # Add your project dependencies here
-Sphinx==4.2.0
+Sphinx==5.0
+myst-parser
+sphinx-rtd-theme
