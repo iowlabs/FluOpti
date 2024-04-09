@@ -5,6 +5,16 @@
 
 # -- Project information -----------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information
+import sphinx_rtd_theme
+
+# Add RTD theme to the list of extensions
+extensions = [
+    ...
+    'sphinx_rtd_theme',
+    ...
+]
+
+
 
 project = 'FluOpti'
 copyright = '2024, Lab Tec Libre'
@@ -24,5 +34,8 @@ exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store']
 # -- Options for HTML output -------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#options-for-html-output
 
-html_theme = 'alabaster'
+#html_theme = 'alabaster'
+# Set the theme to RTD theme
+html_theme = 'sphinx_rtd_theme'
+html_theme_path = [sphinx_rtd_theme.get_html_theme_path()]
 html_static_path = ['_static']
