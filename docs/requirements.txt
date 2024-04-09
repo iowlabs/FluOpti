@@ -1,3 +1,4 @@
 # Add your project dependencies here
 Sphinx==5.0
 myst-parser
+sphinx-rtd-theme
