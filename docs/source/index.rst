@@ -39,7 +39,7 @@ El proyecto también considera la necesidad de implementar sensores que
 permitan calibrar el sistema y monitorear variables determinadas, tales
 como intensidad o temperatura.
 
-.. image:: /README_images/Diagrama_1.PNG
+.. image:: Diagrama_1.PNG
    :alt: Diagrama General
 
    Diagrama General
