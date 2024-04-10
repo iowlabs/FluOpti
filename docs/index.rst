@@ -8,11 +8,15 @@ Welcome to FluOpti's documentation!
 
 .. toctree::
    :maxdepth: 2
-   :caption: Contents:
+   :caption: Contenidos:
 
    modules.rst
 
-   :caption: Other
+.. toctree::
+   :maxdepth: 2   
+   :caption: Other:
+
+   something.rst
 
 
 
