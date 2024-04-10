@@ -21,13 +21,12 @@ Table of Contents
 
 .. toctree::
    :maxdepth: 1
-
-   Descripcion_genereal/descripcion_general.rst
-   Requerimientos/requerimientos.rst
-   Consideraciones_adicionales/consideraciones_adicionales.rst
-   Resumen/resumen.rst
-   Detalle_modulos/detalle_modulos.rst
-   Esquematico/esquematico.rst
+   Descripcion_problema/index.rst
+   Requerimientos/index.rst
+   Consideraciones_adicionales/index.rst
+   Resumen/index.rst
+   Detalle_modulos/index.rst
+   Esquematico/index.rst
 
 Indices and tables
 ==================
