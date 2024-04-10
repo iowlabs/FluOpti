@@ -12,6 +12,8 @@ Welcome to FluOpti's documentation!
 
    modules.rst
 
+   :caption: Other
+
 
 
 
