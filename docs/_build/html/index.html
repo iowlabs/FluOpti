@@ -1,319 +1,137 @@
 <!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-<html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Welcome to FluOpti’s documentation! &mdash; FluOpti V2.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=92fd9be5" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=19f00094" />
 
-    <title>FluOpti &#8212; FluOpti V2.0 documentation</title>
-    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=4f649999" />
-    <link rel="stylesheet" type="text/css" href="_static/alabaster.css?v=039e1c02" />
-    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js?v=3e8b1fe0"></script>
-    <script src="_static/doctools.js?v=888ff710"></script>
-    <script src="_static/sphinx_highlight.js?v=4825356b"></script>
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="_static/jquery.js?v=5d32c60e"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="_static/documentation_options.js?v=464bee56"></script>
+        <script src="_static/doctools.js?v=888ff710"></script>
+        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-   
-  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
-  
-  
-  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+    <link rel="next" title="FluOpti" href="modules.html" /> 
+</head>
 
-  </head><body>
-  
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: white" >
 
-    <div class="document">
-      <div class="documentwrapper">
-        <div class="bodywrapper">
           
-
-          <div class="body" role="main">
-            
-  <section id="fluopti">
-<h1>FluOpti<a class="headerlink" href="#fluopti" title="Permalink to this heading">¶</a></h1>
-<p>Este proyecto consiste en la realización de un control integrado para la iluminación del proyecto FluOpti. Más información respecto al poyecto se puede encontrar en los siguientes enlaces:</p>
-<ol class="arabic simple">
-<li><p>https://docs.google.com/document/d/1PmyignsIkzQdomBdSQQ2lFlBKneosc83GTr52-iTTBQ/edit?usp=sharing</p></li>
-<li><p><a class="reference external" href="https://github.com/SynBioUC/FluoPi/tree/master/Hardware_design_files/PCB">Git</a></p></li>
-<li><p><a class="reference external" href="https://osf.io/dy6p2/">OSF</a></p></li>
-<li><p><a class="reference external" href="https://www.overleaf.com/4759732231nspqcngnnhdq">Manual de diseño de proyectos de LEDs estandar</a></p></li>
-</ol>
-<section id="descripcion-de-problema-electronico">
-<h2>Descripción de problema electrónico<a class="headerlink" href="#descripcion-de-problema-electronico" title="Permalink to this heading">¶</a></h2>
-<p>El sistema consiste en un dispositivo que permite observar muestras biológicas, a las cuales se les realizan procesos de activación genética por medio de otpogenética.
-En la práctica, el dispositivo consiste en una cámara conectada a una raspberry, la que permite observar las muestras, un set de LEDs, los que permiten realizar los procesos optogenéticos, y la respectiva electrónica de control.</p>
-<p>Los LEDs que se deben controlar realizan 3 tareas distintas:</p>
-<ol class="arabic simple">
-<li><p>Excitar la muestra para poder adquirir imágenes de fluorescencia: LEDs azules.</p></li>
-<li><p>Iluminar la muestra para obtener imágenes de campo claro que permitan medir el crecimiento de las colonias bacterianas de manera apropiada: LEDs blancos.</p></li>
-<li><p>Generar estímulos para activación de procesos optogenéticos. Estos LEDs son de longitudes de onda específicas dependiendo del gen que se desee activar/desactivar: LEDs rojos y verdes.</p></li>
-</ol>
-<p>El proyecto también considera la necesidad de implementar sensores que permitan calibrar el sistema y monitorear variables determinadas, tales como intensidad o temperatura.</p>
-<p><img alt="Diagrama General" src="README_images/Diagrama_1.PNG" /></p>
-</section>
-<section id="requerimientos">
-<h2>Requerimientos<a class="headerlink" href="#requerimientos" title="Permalink to this heading">¶</a></h2>
-<section id="requerimientos-generales">
-<h3>Requerimientos generales<a class="headerlink" href="#requerimientos-generales" title="Permalink to this heading">¶</a></h3>
-<p>A continuación se enlista un set de requerimientos generales del proyecto:</p>
-<ol class="arabic simple">
-<li><p>Implementar una electrónica compatible con los componentes actuales disponibles.</p></li>
-<li><p>Proponer una solución completa al problema.</p></li>
-<li><p>Considerar diseños modulares que permitan adaptarse a parámetros futuros.</p></li>
-</ol>
-</section>
-<section id="requerimientos-especificos">
-<h3>Requerimientos específicos<a class="headerlink" href="#requerimientos-especificos" title="Permalink to this heading">¶</a></h3>
-<p>A continuación se enlista un set de requerimientos específicos del proyecto:</p>
-<ol class="arabic simple">
-<li><p>Los LEDs azules empleados para iluminar la muestra corresponden a los <a class="reference external" href="https://www.superbrightleds.com/moreinfo/through-hole/5mm-blue-led-120-degree-viewing-angle-flat-tipped-1200-mcd/265/1192/">Super Bright 5mm Blue</a>:</p>
-<ul class="simple">
-<li><p>Longitud de onda: 470nm</p></li>
-<li><p>Forward current: 30mA &#64; 3.3V</p></li>
-<li><p>Peak forward current: 100mA</p></li>
-<li><p>Max voltage forward: 3.8V</p></li>
-</ul>
-</li>
-<li><p>Actualmente, se está pensando en una placa de LEDs azules con distribución física del tipo circular. Esto implicaría una cantidad de 55 LEDs. En la siguiente imagen se muestra esta topología propuesta:</p></li>
-</ol>
-<p><img alt="Propuesta nueva disposición LEDs azules" src="README_images/disposicionBLUE.PNG" /></p>
-<ol class="arabic simple" start="3">
-<li><p>Los LEDs verdes empleados para la activación de genes corresponden a los <a class="reference external" href="http://www.kingbrightusa.com/images/catalog/SPEC/WP7083ZGD-G.pdf">Kingbright WP7083ZGD/G</a>:</p>
-<ul class="simple">
-<li><p>Longitud de onda: 520nm</p></li>
-<li><p>Forward current (typ): 20mA &#64; 3.2V</p></li>
-<li><p>Peak forward current: 100mA</p></li>
-<li><p>Max voltage forward: 4V</p></li>
-</ul>
-</li>
-<li><p>Los LEDs rojos empleados para la desactivación de genes corresponden a los <a class="reference external" href="https://www.ledsupply.com/leds/5mm-led-deep-red-660nm-50-degree-viewing-angle">Deep-Red 5mm LED</a>:</p>
-<ul class="simple">
-<li><p>Longitud de onda: 660nm</p></li>
-<li><p>Forward current (typ): 20mA &#64; 2.2V</p></li>
-<li><p>Peak forward current: 100mA</p></li>
-<li><p>Max voltage forward: 2.8V</p></li>
-</ul>
-</li>
-<li><p>Los LEDs blancos se implementan por medio de una tira LED comercial. Típicamente su operación se caracteriza por:</p>
-<ul class="simple">
-<li><p>Forward current: 20mA &#64; 12V</p></li>
-</ul>
-</li>
-<li><p>El control implementado debe corresponder a PWM, con el fin de regular la intensidad lumínica de los LEDs. Se opta por este control debido a su sencilla implementación.</p></li>
-<li><p>El sistema  debe contar con un sistema de distribución de potencia para alimentar todos los sub-módulos, LEDs y raspberry.</p></li>
-<li><p>El sistema debe contar, además, con la posibilidad de leer sensores que permitan medir y calibrar la intensidad de luz proveniente desde los LEDs. Dado que el control se implementa por medio de una raspberry, es necesario utilizar sensores digitales o incluir en el diseño un ADC que permita realizar la conversión. En este último caso será necesaria la inclusión de una etapa que acondicione las señales provenientes desde los sensores.</p></li>
-<li><p>El sensor de intensidad lumínica tiene que cumplir:</p></li>
-</ol>
-<ul class="simple">
-<li><p>Bajo costo</p></li>
-<li><p>Fácil de conseguir</p></li>
-<li><p>Respuesta plana para los LED Rojo y Verde</p></li>
-</ul>
-<p>Una alternativa es el fototransistor <a class="reference external" href="https://learn.sparkfun.com/tutorials/temt6000-ambient-light-sensor-hookup-guide/all">TEMT6000</a>.</p>
-<ol class="arabic simple" start="10">
-<li><p>El sensor de temperatura es un NTC (termistor). <a class="reference external" href="https://www.adafruit.com/product/372">Aquí</a> se presenta una alternativa.</p></li>
-<li><p>El heater es del tipo resistivo y se debe poder alimentar con 9V ó 12V. Se debe implementar un control PWM de corriente utilizando un transistor. Una posible alternativa de heater es el <a class="reference external" href="http://www.icstation.com/heating-thin-film-polyimide-heating-plate-panel-25x50mm-b1221-p-9887.html">Film Heating Panel</a>.</p></li>
-</ol>
-</section>
-<section id="consideraciones-de-diseno-adicionales">
-<h3>Consideraciones de diseño adicionales<a class="headerlink" href="#consideraciones-de-diseno-adicionales" title="Permalink to this heading">¶</a></h3>
-<ol class="arabic simple">
-<li><p>Consideraciones de operación: El dispositivo debe ser diseñado para funcionar en espacios interiores y dentro de una cápsula cerrada, en la se realiza el análisis de las muestras, por lo que no es necesaria la resistencia al agua o a condiciones de humedad extremas. La placa estará, además, dentro de una caja, por lo que tampoco estará expuesta a polvo u otros contaminantes. Una vez instalado el dispositivo, este permanecerá siempre en el mismo lugar (a menos que se deba extraer por alguna situación en particular), por lo que no es necesario que el diseño considere la exposición a posibles golpes o vibraciones muy significativas.</p></li>
-<li><p>La única etapa del circuito que puede significar un peligro para el usuario es la alimentación, puesto que esta proviene desde la red eléctrica, por lo cual es prudente que la carcasa del producto cumpla con normas acorde al voltaje y corriente de operación, por ejemplo, IP67. Sin embargo, esta protección será ajena al circuito mismo. Es pertinente, de todas formas, la inclusión de disipadores en algunos integrados, en el caso que operen con altas corrientes. Esto, para evitar fallas durante la operación o incluso que se quemen componentes.</p></li>
-</ol>
-</section>
-</section>
-<section id="propuesta">
-<h2>Propuesta<a class="headerlink" href="#propuesta" title="Permalink to this heading">¶</a></h2>
-<p>Teniendo presente los requerimientos planteados en la sección anterior se propone una solución basada en el siguiente esquema</p>
-<p><img alt="Esquema de la solución electrónica propuesta" src="README_images/soluci%C3%B3n_propuesta.png" /></p>
-<p>El principal criterio de diseño considerado es la modularidad, con el objetivo de poder entregar una solución adaptable y escalable. Los parámetros prácticos de elección de componentes dependen de los requerimientos específicos del sistema. El esquema general consiste en un módulo que genera señales PWM, el cual es controlado por protocolo serial I2C. Este módulo genera 16 señales de PWM permitiendo controlar hasta 16 canales. Estas señales PWM controlan los módulos driver. Estos últimos ajustan la señal PWM a los requerimientos que necesitan los distintos tipos de circuitos de LEDs. Cada driver puede poseer uno o más canales dependiendo de la cantidad de subcircuitos independientes que se deseen controlar por tipo de LED. Del mismo modo, algunas de estas señales de control PWM pueden dejarse a disposición del usuario en caso que necesite controlar una placa con driver ya existente, como es el caso de este proyecto.</p>
-<p>El otro bloque importante es el sistema de distribución de poder, el cual se encarga de generar todos los voltajes necesarios para los distintos bloques y etapas del circuito, dependiendo de cada requerimiento. La idea principal es que la placa reciba una única alimentación y que, internamente, genere los distintos voltajes y corrientes, contribuyendo, así, a la adaptabilidad de la solución.</p>
-<p>Por último, la placa considera la inclusión de un ADC de 4 canales, controlado por I2C, el cual permite leer hasta 4 sensores analógicos. Es necesario contar con un ADC, ya que la Raspberry Pi no cuenta con ADC. Esto permite otorgar una alta adaptabilidad, ya que es posible conectar distintos tipos de sensores analógicos, dependiendo de la aplicación. Para esto, la placa considera etapas de acondicionamiento de señal, las cuales se deben configurar para el sensor específico.</p>
-<section id="resumen-de-caracteristicas-de-la-solucion-propuesta">
-<h3>Resumen de características de la solución propuesta<a class="headerlink" href="#resumen-de-caracteristicas-de-la-solucion-propuesta" title="Permalink to this heading">¶</a></h3>
-<p>Las principales características de la solución propuesta son:</p>
-<ol class="arabic simple">
-<li><p>Adaptabilidad: La placa total solo se controla por medio de un bus I2C (3 pines), independiente de la cantidad de LEDs y sensores que se deseen utilizar.</p></li>
-<li><p>Integración: La disposición de canales de control PWM permite integrar tanto las soluciones existentes como soluciones creadas por distintos fabricantes.</p></li>
-<li><p>Escalabilidad: Gracias a la utilización del protocolo I2C, es posible controlar múltiples de estas placas con una sola Raspberry Pi (o un solo microcontrolador/procesador en general). Si se integran dos placas en serie se puede llegar a disponer de 32 canales de control de LEDs y 8 canales de sensores analógicos.</p></li>
-</ol>
-<p>A continuación, se describen en detalle los módulos a implementar. Es importante mencionar que se utilizó como guía el <a class="reference external" href="https://www.overleaf.com/4759732231nspqcngnnhdq">documento tutorial</a> generado en el marco de este proyecto.</p>
-</section>
-<section id="detalle-de-modulos">
-<h3>Detalle de módulos<a class="headerlink" href="#detalle-de-modulos" title="Permalink to this heading">¶</a></h3>
-<section id="adc">
-<h4>ADC<a class="headerlink" href="#adc" title="Permalink to this heading">¶</a></h4>
-<p>El ADC escogido es el <a class="reference external" href="https://cdn-shop.adafruit.com/datasheets/ads1115.pdf">ADC</a> de la empresa Texas Instruments. La empresa <a class="reference external" href="https://www.adafruit.com/product/1085">adafruit</a> posee un módulo autocontenido para integrar este ADC a la Raspberry Pi, así como una completa documentación y las bibliotecas para utilizarlo.</p>
-<p>Las principales características de este ADC se enlistan a continuación</p>
-<ul class="simple">
-<li><p>4 canales, single-ended.</p></li>
-<li><p>16 bits de resolución</p></li>
-<li><p>Voltaje de alimentación entre 2V a 5V</p></li>
-<li><p>Interfaz I2C</p></li>
-<li><p>Referencia interna</p></li>
-</ul>
-</section>
-<section id="acondicionamiento-de-senal">
-<h4>Acondicionamiento de señal<a class="headerlink" href="#acondicionamiento-de-senal" title="Permalink to this heading">¶</a></h4>
-<p>Los sensores que se utilizarán permiten implementar el proceso de medición gracias a la variación de sus propiedades eléctricas. En general, estas variaciones se evidencian mediante un cambio de voltaje. En consecuencia, este es el voltaje que debe ser adquirido por el circuito electrónico. Por ello, en primera instancia, se dispone de un circuito divisor que, al ser conectado con el respectivo sensor, permite obtener el voltaje asociado a la medición. En la siguiente figura se muestra un ejemplo de esta conexión circuital, para el caso de un sensor de temperatura del tipo termistor (NTC):</p>
-<p><img alt="Divisor" src="README_images/divisor_ntc.png" /></p>
-<p>Para realizar correctamente la adquisición de las señales desde los sensores es necesario contar con una etapa de acondicionamiento de señal. De esta forma, se asegura que los valores de voltaje que entreguen los sensores se encuentren dentro de los límites que permiten las entradas del ADC y de la Raspberry. No solo es deseable que se opere dentro de los límites, sino también aprovechar el rango de lectura al máximo, es decir, que el voltaje mínimo de medición sea igual (o lo más cercano posible) al voltaje mínimo que permiten los pines del ADC. Y, la misma relación con el voltaje máximo de medición.</p>
-<p>Dado que aún no existe 100% de certeza sobre los sensores a utilizar, se implementó una circuito genérico de acondicionamiento, el cual se compone de una etapa de amplificación y otra de adición de offset. En la siguiente figura se muestra este circuito:</p>
-<p><img alt="Acondicionador" src="README_images/acondicionador.png" /></p>
-<p>Los símbolos de switches corresponden, en la práctica, a un solder jumper, el cual conecta la entrada con la salida solo si se unen con soldadura sus terminales. Si se conectan S1, S2 y S3 el circuito queda configurado como un buffer, lo cual, de todas formas, beneficia a la señal adquirida puesto que el buffer disminuye su impedancia. Conectando o no S1, S2 y S3 se pueden obtener distintas configuraciones: solo amplificador, solo adición de offset, o ambas. Además, los valores de las resistencias se pueden ajustar dependiendo de los sensores que se utilicen, de tal forma de fijar correctamente la ganancia y el offset, según sea el caso.</p>
-</section>
-<section id="generador-de-pwm">
-<h4>Generador de PWM<a class="headerlink" href="#generador-de-pwm" title="Permalink to this heading">¶</a></h4>
-<p>La generación de PWM se realiza por medio de un circuito integrado <a class="reference external" href="https://cdn-shop.adafruit.com/datasheets/PCA9685.pdf">PCA9685</a>. La empresa <a class="reference external" href="https://www.adafruit.com/product/2928">adafruit</a> posee un módulo autocontenido para integrar este módulo a la Raspberry Pi, así como una documentación completa y las bibliotecas para utilizarlo.</p>
-<p>Principales características:</p>
-<ul class="simple">
-<li><p>16 canales dimeables por PWM.</p></li>
-<li><p>12 bits de resolución</p></li>
-<li><p>Voltaje de alimentación etre 2.3V a 5.5V</p></li>
-<li><p>Interfaz I2C</p></li>
-</ul>
-</section>
-<section id="driver-de-baja-corriente">
-<h4>Driver de baja corriente<a class="headerlink" href="#driver-de-baja-corriente" title="Permalink to this heading">¶</a></h4>
-<p>Para los canales de bajo consumo de corriente, tales como los arreglos de LEDs rojos y verdes, se utilizará el integrado <a class="reference external" href="https://www.electroschematics.com/wp-content/uploads/2013/07/uln2803a-datasheet.pdf">ULN2803</a>. Este integrado implementa un arreglo de 8 transistores tipo darlington, haciendo posible el control de hasta 8 canales en un único integrado.</p>
-<p>Principales características:</p>
-<ul class="simple">
-<li><p>Arreglo de 8 canales</p></li>
-<li><p>Poseen alimentación común</p></li>
-<li><p>La corriente máxima por canal es de 500mA, pudiendo aumentar esta cantidad si se consideran canales en paralelo.</p></li>
-</ul>
-</section>
-<section id="driver-de-alta-corriente">
-<h4>Driver de alta corriente<a class="headerlink" href="#driver-de-alta-corriente" title="Permalink to this heading">¶</a></h4>
-<p>Para los canales de alto consumo se utilizará un transistor mosfet <a class="reference external" href="https://datasheet.lcsc.com/szlcsc/1808281645_Infineon-Technologies-IRF7402TRPBF_C169089.pdf">IRF740</a>. Es necesario contar con un transistor por canal. Y, para casos de alta corriente (superiores a 1A) es necesario considerar la inclusión de disipadores (heatsink) o pads de disipación que permitan una evacuación efectiva del calor.</p>
-<p>Principales características:</p>
-<ul class="simple">
-<li><p>Altas frecuencias de switching</p></li>
-<li><p>Bajo consumo de operación</p></li>
-<li><p>Control de hasta 10A (ó 40A en corrientes pulsantes)</p></li>
-<li><p>Simple implementación</p></li>
-</ul>
-</section>
-<section id="sistema-de-distribucion-de-poder">
-<h4>Sistema de distribución de poder<a class="headerlink" href="#sistema-de-distribucion-de-poder" title="Permalink to this heading">¶</a></h4>
-<p>Como se mencionará más adelante, la alimentación que llegará al circuito electrónico implementado será de 12VDC, por lo que es necesario contar con convertidores de voltaje DC-DC para generar los distintos voltajes de alimentación que se requieren en el circuito. En particular, es necesario generar 5V y 3.3V para alimentar los circuitos analógicos y digitales, y un set de voltajes para alimentar los distintos arreglos de LEDs y el Heater. Se decidió disponer de los siguientes voltajes para este último uso: 9V, 16V, 20V y 24V. A continuación se especifican los convertidores empleados para generar cada uno de los voltajes mencionados.</p>
-<section id="v">
-<h5>5V<a class="headerlink" href="#v" title="Permalink to this heading">¶</a></h5>
-<ul class="simple">
-<li><p>Integrado: <a class="reference external" href="https://datasheet.lcsc.com/szlcsc/1811131510_HTC-Korea-TAEJIN-Tech-LM2596R-5-0_C77782.pdf">LM2596R-5.0</a></p></li>
-<li><p>Tipo: Step-down, regulador switching</p></li>
-<li><p>Frecuencia de switcheo: 150kHz</p></li>
-<li><p>Corriente máxima de salida: 3A</p></li>
-</ul>
-</section>
-<section id="id1">
-<h5>3.3V<a class="headerlink" href="#id1" title="Permalink to this heading">¶</a></h5>
-<ul class="simple">
-<li><p>Integrado: <a class="reference external" href="https://datasheet.lcsc.com/szlcsc/1809192242_Diodes-Incorporated-AP2112K-3-3TRG1_C51118.pdf">AP2112K-3.3</a></p></li>
-<li><p>Tipo: LDO, regulador lineal</p></li>
-<li><p>Corriente máxima de salida: 600mA</p></li>
-</ul>
-</section>
-<section id="id2">
-<h5>9V<a class="headerlink" href="#id2" title="Permalink to this heading">¶</a></h5>
-<ul class="simple">
-<li><p>Integrado: <a class="reference external" href="https://datasheet.lcsc.com/szlcsc/1809192335_Texas-Instruments-LM2596SX-ADJ-NOPB_C29781.pdf">LM2696SX-ADJ</a></p></li>
-<li><p>Tipo: Step-down, regulador switching ajustable (voltaje de salida es configurable según indicaciones de conexión en el datasheet)</p></li>
-<li><p>Frecuencia de switcheo: 150kHz</p></li>
-<li><p>Corriente máxima de salida: 3A</p></li>
-</ul>
-</section>
-<section id="v-20v-24v">
-<h5>16V, 20V, 24V<a class="headerlink" href="#v-20v-24v" title="Permalink to this heading">¶</a></h5>
-<ul class="simple">
-<li><p>Integrado: <a class="reference external" href="https://datasheet.lcsc.com/szlcsc/1809200019_XLSEMI-XL6008E1_C73012.pdf">XL6008E1</a></p></li>
-<li><p>Tipo: Step-up, regulador switching ajustable (voltaje de salida es configurable según indicaciones de conexión en el datasheet)</p></li>
-<li><p>Frecuencia de switcheo: 400kHz</p></li>
-<li><p>Corriente máxima de salida: 3A</p></li>
-</ul>
-</section>
-</section>
-<section id="fuente-de-alimentacion">
-<h4>Fuente de alimentación<a class="headerlink" href="#fuente-de-alimentacion" title="Permalink to this heading">¶</a></h4>
-<p>Dado que el circuito electrónico funcionará con alimentación DC es necesario emplear una fuente DC que se enchufe directamente a la red y que entegue un voltaje de salida continuo. En particular, se decidió emplear una <a class="reference external" href="https://afel.cl/producto/fuente-de-poder-12v-10a-120w/">fuente DC conmutada</a>. Sus principales características son:</p>
-<ul class="simple">
-<li><p>Voltaje de entrada: 100-120VAC / 60Hz, <strong>200-240VAC / 50Hz</strong></p></li>
-<li><p>Voltaje de salida: 12V</p></li>
-<li><p>Corriente máxima de salida: 10A</p></li>
-<li><p>Potencia máxima de salida: 120W</p></li>
-</ul>
-</section>
-</section>
-</section>
-<section id="esquematico">
-<h2>Esquemático<a class="headerlink" href="#esquematico" title="Permalink to this heading">¶</a></h2>
-<p>En la siguiente figura se muestra el diagrama de bloques del esquemático implementado</p>
-<p><img alt="Diagrama de bloques del esquemático" src="README_images/diagrama_bloques.png" /></p>
-</section>
-</section>
-
-
-          </div>
           
-        </div>
-      </div>
-      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
-        <div class="sphinxsidebarwrapper">
-<h1 class="logo"><a href="#">FluOpti</a></h1>
-
-
-
-
-
-
-
-
-<h3>Navigation</h3>
-
-<div class="relations">
-<h3>Related Topics</h3>
+          <a href="#" class="icon icon-home">
+            FluOpti
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul>
-  <li><a href="#">Documentation overview</a><ul>
-  </ul></li>
+<li class="toctree-l1"><a class="reference internal" href="modules.html">FluOpti</a></li>
 </ul>
-</div>
-<div id="searchbox" style="display: none" role="search">
-  <h3 id="searchlabel">Quick search</h3>
-    <div class="searchformwrapper">
-    <form class="search" action="search.html" method="get">
-      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
-      <input type="submit" value="Go" />
-    </form>
-    </div>
-</div>
-<script>document.getElementById('searchbox').style.display = "block"</script>
-
-
-
-
-
-
-
 
         </div>
       </div>
-      <div class="clearer"></div>
-    </div>
-    <div class="footer">
-      &copy;2024, Lab Tec Libre.
-      
-      |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 7.1.2</a>
-      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.13</a>
-      
-      |
-      <a href="_sources/index.md.txt"
-          rel="nofollow">Page source</a>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: white" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="#">FluOpti</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="#" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Welcome to FluOpti’s documentation!</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/index.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="welcome-to-fluopti-s-documentation">
+<h1>Welcome to FluOpti’s documentation!<a class="headerlink" href="#welcome-to-fluopti-s-documentation" title="Link to this heading"></a></h1>
+<div class="toctree-wrapper compound">
+<p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="modules.html">FluOpti</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="modules.html#table-of-contents">Table of Contents</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</section>
+<section id="indices-and-tables">
+<h1>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Link to this heading"></a></h1>
+<ul class="simple">
+<li><p><a class="reference internal" href="genindex.html"><span class="std std-ref">Index</span></a></p></li>
+<li><p><a class="reference internal" href="py-modindex.html"><span class="std std-ref">Module Index</span></a></p></li>
+<li><p><a class="reference internal" href="search.html"><span class="std std-ref">Search Page</span></a></p></li>
+</ul>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="modules.html" class="btn btn-neutral float-right" title="FluOpti" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
-    
+  <hr/>
 
-    
-  </body>
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Lab Tec Libre.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+    <!-- Theme Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-XXXXXXXXXX', {
+          'anonymize_ip': false,
+      });
+    </script> 
+
+</body>
 </html>

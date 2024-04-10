@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Detalle de módulos &mdash; FluOpti V2.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=92fd9be5" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=19f00094" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../_static/documentation_options.js?v=464bee56"></script>
+        <script src="../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: white" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            FluOpti
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../modules.html">FluOpti</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: white" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">FluOpti</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Detalle de módulos</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/source/Detalle_modulos/index.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="detalle-de-modulos">
+<h1>Detalle de módulos<a class="headerlink" href="#detalle-de-modulos" title="Link to this heading"></a></h1>
+<section id="adc">
+<h2>ADC<a class="headerlink" href="#adc" title="Link to this heading"></a></h2>
+<p>El ADC escogido es el
+<a class="reference external" href="https://cdn-shop.adafruit.com/datasheets/ads1115.pdf">ADC</a> de la
+empresa Texas Instruments. La empresa
+<a class="reference external" href="https://www.adafruit.com/product/1085">adafruit</a> posee un módulo
+autocontenido para integrar este ADC a la Raspberry Pi, así como una
+completa documentación y las bibliotecas para utilizarlo.</p>
+<p>Las principales características de este ADC se enlistan a continuación</p>
+<ul class="simple">
+<li><p>4 canales, single-ended.</p></li>
+<li><p>16 bits de resolución</p></li>
+<li><p>Voltaje de alimentación entre 2V a 5V</p></li>
+<li><p>Interfaz I2C</p></li>
+<li><p>Referencia interna</p></li>
+</ul>
+</section>
+<section id="acondicionamiento-de-senal">
+<h2>Acondicionamiento de señal<a class="headerlink" href="#acondicionamiento-de-senal" title="Link to this heading"></a></h2>
+<p>Los sensores que se utilizarán permiten implementar el proceso de
+medición gracias a la variación de sus propiedades eléctricas. En
+general, estas variaciones se evidencian mediante un cambio de voltaje.
+En consecuencia, este es el voltaje que debe ser adquirido por el
+circuito electrónico. Por ello, en primera instancia, se dispone de un
+circuito divisor que, al ser conectado con el respectivo sensor, permite
+obtener el voltaje asociado a la medición. En la siguiente figura se
+muestra un ejemplo de esta conexión circuital, para el caso de un sensor
+de temperatura del tipo termistor (NTC):</p>
+<figure class="align-default" id="id3">
+<img alt="Divisor" src="README_images/divisor_ntc.png" />
+<figcaption>
+<p><span class="caption-text">Divisor</span><a class="headerlink" href="#id3" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+<p>Para realizar correctamente la adquisición de las señales desde los
+sensores es necesario contar con una etapa de acondicionamiento de
+señal. De esta forma, se asegura que los valores de voltaje que
+entreguen los sensores se encuentren dentro de los límites que permiten
+las entradas del ADC y de la Raspberry. No solo es deseable que se opere
+dentro de los límites, sino también aprovechar el rango de lectura al
+máximo, es decir, que el voltaje mínimo de medición sea igual (o lo más
+cercano posible) al voltaje mínimo que permiten los pines del ADC. Y, la
+misma relación con el voltaje máximo de medición.</p>
+<p>Dado que aún no existe 100% de certeza sobre los sensores a utilizar, se
+implementó una circuito genérico de acondicionamiento, el cual se
+compone de una etapa de amplificación y otra de adición de offset. En la
+siguiente figura se muestra este circuito:</p>
+<figure class="align-default" id="id4">
+<img alt="Acondicionador" src="README_images/acondicionador.png" />
+<figcaption>
+<p><span class="caption-text">Acondicionador</span><a class="headerlink" href="#id4" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+<p>Los símbolos de switches corresponden, en la práctica, a un solder
+jumper, el cual conecta la entrada con la salida solo si se unen con
+soldadura sus terminales. Si se conectan S1, S2 y S3 el circuito queda
+configurado como un buffer, lo cual, de todas formas, beneficia a la
+señal adquirida puesto que el buffer disminuye su impedancia. Conectando
+o no S1, S2 y S3 se pueden obtener distintas configuraciones: solo
+amplificador, solo adición de offset, o ambas. Además, los valores de
+las resistencias se pueden ajustar dependiendo de los sensores que se
+utilicen, de tal forma de fijar correctamente la ganancia y el offset,
+según sea el caso.</p>
+</section>
+<section id="generador-de-pwm">
+<h2>Generador de PWM<a class="headerlink" href="#generador-de-pwm" title="Link to this heading"></a></h2>
+<p>La generación de PWM se realiza por medio de un circuito integrado
+<a class="reference external" href="https://cdn-shop.adafruit.com/datasheets/PCA9685.pdf">PCA9685</a>. La
+empresa <a class="reference external" href="https://www.adafruit.com/product/2928">adafruit</a> posee un
+módulo autocontenido para integrar este módulo a la Raspberry Pi, así
+como una documentación completa y las bibliotecas para utilizarlo.</p>
+<p>Principales características:</p>
+<ul class="simple">
+<li><p>16 canales dimeables por PWM.</p></li>
+<li><p>12 bits de resolución</p></li>
+<li><p>Voltaje de alimentación etre 2.3V a 5.5V</p></li>
+<li><p>Interfaz I2C</p></li>
+</ul>
+</section>
+<section id="driver-de-baja-corriente">
+<h2>Driver de baja corriente<a class="headerlink" href="#driver-de-baja-corriente" title="Link to this heading"></a></h2>
+<p>Para los canales de bajo consumo de corriente, tales como los arreglos
+de LEDs rojos y verdes, se utilizará el integrado
+<a class="reference external" href="https://www.electroschematics.com/wp-content/uploads/2013/07/uln2803a-datasheet.pdf">ULN2803</a>.
+Este integrado implementa un arreglo de 8 transistores tipo darlington,
+haciendo posible el control de hasta 8 canales en un único integrado.</p>
+<p>Principales características:</p>
+<ul class="simple">
+<li><p>Arreglo de 8 canales</p></li>
+<li><p>Poseen alimentación común</p></li>
+<li><p>La corriente máxima por canal es de 500mA, pudiendo aumentar esta
+cantidad si se consideran canales en paralelo.</p></li>
+</ul>
+</section>
+<section id="driver-de-alta-corriente">
+<h2>Driver de alta corriente<a class="headerlink" href="#driver-de-alta-corriente" title="Link to this heading"></a></h2>
+<p>Para los canales de alto consumo se utilizará un transistor mosfet
+<a class="reference external" href="https://datasheet.lcsc.com/szlcsc/1808281645_Infineon-Technologies-IRF7402TRPBF_C169089.pdf">IRF740</a>.
+Es necesario contar con un transistor por canal. Y, para casos de alta
+corriente (superiores a 1A) es necesario considerar la inclusión de
+disipadores (heatsink) o pads de disipación que permitan una evacuación
+efectiva del calor.</p>
+<p>Principales características:</p>
+<ul class="simple">
+<li><p>Altas frecuencias de switching</p></li>
+<li><p>Bajo consumo de operación</p></li>
+<li><p>Control de hasta 10A (ó 40A en corrientes pulsantes)</p></li>
+<li><p>Simple implementación</p></li>
+</ul>
+</section>
+<section id="sistema-de-distribucion-de-poder">
+<h2>Sistema de distribución de poder<a class="headerlink" href="#sistema-de-distribucion-de-poder" title="Link to this heading"></a></h2>
+<p>Como se mencionará más adelante, la alimentación que llegará al circuito
+electrónico implementado será de 12VDC, por lo que es necesario contar
+con convertidores de voltaje DC-DC para generar los distintos voltajes
+de alimentación que se requieren en el circuito. En particular, es
+necesario generar 5V y 3.3V para alimentar los circuitos analógicos y
+digitales, y un set de voltajes para alimentar los distintos arreglos de
+LEDs y el Heater. Se decidió disponer de los siguientes voltajes para
+este último uso: 9V, 16V, 20V y 24V. A continuación se especifican los
+convertidores empleados para generar cada uno de los voltajes
+mencionados.</p>
+<section id="v">
+<h3>5V<a class="headerlink" href="#v" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p>Integrado:
+<a class="reference external" href="https://datasheet.lcsc.com/szlcsc/1811131510_HTC-Korea-TAEJIN-Tech-LM2596R-5-0_C77782.pdf">LM2596R-5.0</a></p></li>
+<li><p>Tipo: Step-down, regulador switching</p></li>
+<li><p>Frecuencia de switcheo: 150kHz</p></li>
+<li><p>Corriente máxima de salida: 3A</p></li>
+</ul>
+</section>
+<section id="v-1">
+<span id="id1"></span><h3>3.3V<a class="headerlink" href="#v-1" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p>Integrado:
+<a class="reference external" href="https://datasheet.lcsc.com/szlcsc/1809192242_Diodes-Incorporated-AP2112K-3-3TRG1_C51118.pdf">AP2112K-3.3</a></p></li>
+<li><p>Tipo: LDO, regulador lineal</p></li>
+<li><p>Corriente máxima de salida: 600mA</p></li>
+</ul>
+</section>
+<section id="v-2">
+<span id="id2"></span><h3>9V<a class="headerlink" href="#v-2" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p>Integrado:
+<a class="reference external" href="https://datasheet.lcsc.com/szlcsc/1809192335_Texas-Instruments-LM2596SX-ADJ-NOPB_C29781.pdf">LM2696SX-ADJ</a></p></li>
+<li><p>Tipo: Step-down, regulador switching ajustable (voltaje de salida es
+configurable según indicaciones de conexión en el datasheet)</p></li>
+<li><p>Frecuencia de switcheo: 150kHz</p></li>
+<li><p>Corriente máxima de salida: 3A</p></li>
+</ul>
+</section>
+<section id="v-20v-24v">
+<h3>16V, 20V, 24V<a class="headerlink" href="#v-20v-24v" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p>Integrado:
+<a class="reference external" href="https://datasheet.lcsc.com/szlcsc/1809200019_XLSEMI-XL6008E1_C73012.pdf">XL6008E1</a></p></li>
+<li><p>Tipo: Step-up, regulador switching ajustable (voltaje de salida es
+configurable según indicaciones de conexión en el datasheet)</p></li>
+<li><p>Frecuencia de switcheo: 400kHz</p></li>
+<li><p>Corriente máxima de salida: 3A</p></li>
+</ul>
+</section>
+</section>
+<section id="fuente-de-alimentacion">
+<h2>Fuente de alimentación<a class="headerlink" href="#fuente-de-alimentacion" title="Link to this heading"></a></h2>
+<p>Dado que el circuito electrónico funcionará con alimentación DC es
+necesario emplear una fuente DC que se enchufe directamente a la red y
+que entegue un voltaje de salida continuo. En particular, se decidió
+emplear una <a class="reference external" href="https://afel.cl/producto/fuente-de-poder-12v-10a-120w/">fuente DC
+conmutada</a>.
+Sus principales características son:</p>
+<ul class="simple">
+<li><p>Voltaje de entrada: 100-120VAC / 60Hz, <strong>200-240VAC / 50Hz</strong></p></li>
+<li><p>Voltaje de salida: 12V</p></li>
+<li><p>Corriente máxima de salida: 10A</p></li>
+<li><p>Potencia máxima de salida: 120W</p></li>
+</ul>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Lab Tec Libre.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+    <!-- Theme Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-XXXXXXXXXX', {
+          'anonymize_ip': false,
+      });
+    </script> 
+
+</body>
+</html>
