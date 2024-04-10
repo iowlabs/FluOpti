@@ -1,10 +1,7 @@
 FluOpti
 =======
 
-.. toctree::
-   :maxdepth: 1
 
-   Descripcion_problema/faq.rst
    
 
 
@@ -19,7 +16,7 @@ https://docs.google.com/document/d/1PmyignsIkzQdomBdSQQ2lFlBKneosc83GTr52-iTTBQ/
 3. `OSF <https://osf.io/dy6p2/>`__ 4. `Manual de diseño de proyectos de
 LEDs estandar <https://www.overleaf.com/4759732231nspqcngnnhdq>`__
 
-.. image:: diagrama_1.png
+.. figure:: /README_images/diagrama_1.png
    :alt: Diagrama General
 
 
