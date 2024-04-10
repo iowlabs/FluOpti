@@ -22,6 +22,7 @@ release = 'V2.0'
 
 extensions = ["myst_parser", "sphinx_rtd_theme",  "sphinx.ext.todo", "sphinx.ext.viewcode", "sphinx.ext.autodoc"]
 
+master_doc = 'index'
 templates_path = ['_templates']
 exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store']
 
