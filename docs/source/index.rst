@@ -16,7 +16,8 @@ https://docs.google.com/document/d/1PmyignsIkzQdomBdSQQ2lFlBKneosc83GTr52-iTTBQ/
 3. `OSF <https://osf.io/dy6p2/>`__ 4. `Manual de diseño de proyectos de
 LEDs estandar <https://www.overleaf.com/4759732231nspqcngnnhdq>`__
 
-
+Table of Contents
+----------------------
 
 .. toctree::
    :maxdepth: 1
@@ -27,6 +28,13 @@ LEDs estandar <https://www.overleaf.com/4759732231nspqcngnnhdq>`__
    Resumen/resumen.rst
    Detalle_modulos/detalle_modulos.rst
    Esquematico/esquematico.rst
+
+Indices and tables
+==================
+
+* :ref:`genindex`
+* :ref:`modindex`
+* :ref:`search`
 
 
 
