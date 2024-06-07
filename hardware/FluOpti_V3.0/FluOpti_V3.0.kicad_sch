@@ -10573,16 +10573,6 @@
 	)
 	(wire
 		(pts
-			(xy 538.353 73.533) (xy 554.863 73.533)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "9f6d6e51-a6cf-41a9-a3b0-3cd9f56de3a6")
-	)
-	(wire
-		(pts
 			(xy 538.48 123.825) (xy 554.99 123.825)
 		)
 		(stroke
@@ -10930,6 +10920,16 @@
 			(type default)
 		)
 		(uuid "b7ecc441-618a-4a69-b4f0-0e1ece962200")
+	)
+	(wire
+		(pts
+			(xy 538.353 73.533) (xy 554.863 73.533)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "b8464e0d-ac28-4bc4-97b2-0e57d8443e6c")
 	)
 	(wire
 		(pts
@@ -12834,28 +12834,6 @@
 			)
 		)
 	)
-	(global_label "V_LED_3"
-		(shape input)
-		(at 514.096 68.453 180)
-		(fields_autoplaced yes)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right)
-		)
-		(uuid "0a1ec79e-bd9f-4f52-affa-f4b050b234c9")
-		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 503.4304 68.453 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify right)
-				(hide yes)
-			)
-		)
-	)
 	(global_label "+12V"
 		(shape input)
 		(at 29.21 92.71 180)
@@ -14066,28 +14044,6 @@
 			)
 		)
 	)
-	(global_label "V_LED_2"
-		(shape input)
-		(at 540.893 65.913 0)
-		(fields_autoplaced yes)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left)
-		)
-		(uuid "70dda9f4-ffc6-45fc-980f-7531f91b5dbe")
-		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 551.5586 65.913 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-				(hide yes)
-			)
-		)
-	)
 	(global_label "VCC_LED_3"
 		(shape input)
 		(at 416.179 172.085 180)
@@ -14128,28 +14084,6 @@
 					(size 1.27 1.27)
 				)
 				(justify right)
-				(hide yes)
-			)
-		)
-	)
-	(global_label "V_LED_2"
-		(shape input)
-		(at 542.4552 73.533 0)
-		(fields_autoplaced yes)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left)
-		)
-		(uuid "75f46e73-7ca6-456c-9b3d-d8c5ed401e76")
-		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 553.1208 73.533 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
 				(hide yes)
 			)
 		)
@@ -14264,6 +14198,28 @@
 			)
 		)
 	)
+	(global_label "V_LED_2"
+		(shape input)
+		(at 514.096 68.453 180)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "7bb1eccb-c650-4d1b-8fca-55e1f64e5ede")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 503.4304 68.453 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+				(hide yes)
+			)
+		)
+	)
 	(global_label "5V"
 		(shape input)
 		(at 514.096 165.608 180)
@@ -14348,6 +14304,28 @@
 					(size 1.27 1.27)
 				)
 				(justify right)
+				(hide yes)
+			)
+		)
+	)
+	(global_label "V_LED_3"
+		(shape input)
+		(at 540.893 65.913 0)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "81e4deeb-9a3c-40cb-8ddc-0071f24c1de7")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 551.5586 65.913 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
 				(hide yes)
 			)
 		)
