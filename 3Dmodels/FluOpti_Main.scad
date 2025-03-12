@@ -1,22 +1,19 @@
 /*
-
        This code is part of  a collaborative project between Lab Tecnologia Libre and IOWlabs 
     (c) Fernan Federici and Isaac Nuñez, 2022- Released under the CERN Open Hardware License   
 */
 
 //include <picam_2_push_fit.scad>  
-include </home/fernan/Documents/github/MiniFluOpti/hardware/Enclosure/Soportes camara/Flat_cam_holder.scad>  
+include <Flat_cam_holder.scad>  
 
-//-------important parameters if you wish to change petri dish and  base dimensions below for customization
+//-------important parameters if you wish to change the petri dish size and the base dimensions below for customization
 
 corr=0.2;// used to create extra fitting space for printing imperfections
 petri_h=15;// petri dish height
 petri_lid_d=92.4 + corr*3; //petri dish diameter, corr is added for extra space (e.g. parafilm)
 LED_shield=40;//distance from illuminating hole to border used to hide the LEDs from the camera field of view
 
-
-
-//-----------------secondary -parameters more unlikely to be changed
+//-----------------secondary -parameters less likely to be changed
 
 screw_d=21;//distance between screw holes in RPI camera holder
 screw_r=2/2;//screw radius
@@ -169,27 +166,22 @@ rrei = r_int-re_rfei;// ring enclosure internal radius
 //h_total = h_int+z_thick;
 
 
+//------------Uncomment items below to render each piece--------------------------
 
 
 
-
-//------------uncomment items below to render pieces--------------------------
-
-
-//translate([ 0.00, 0.00, 330.00 ]) rotate([0,180.0]) camera_holder(type=1); //use type 1 for the RPI camera as it comes; type 2 and 3 use M12 but I need to update the thread libary (and use the same used in Saleroscope with Nano Castro) type 2 for M12 lens (removing the native RPIlens) using puh-fit approach from R. Bowman; type 3 is for M12lens but using screws to attach it to camera
 
 //translate([ 0.00, 0.00, 150.00 ]) rotate([0,0,40]) cone_window_lid();  
 
-//translate([ 0.00, 0.00, -150.00 ]) cone_hull_short();//usar este
-//translate([ 0.00, 0.00, -150.00 ])  cone_hull();//de siempre
 
-//translate([ 0.00, 0.00, 100.00 ]) extension_ring_long_v2();
+translate([0,0,-10]) top_part(); 
+
+//translate([ 0.00, 0.00, -150.00 ]) cone_hull_short();//usar este
 
 //translate([ 0.00, 0.00, 55.00 ]) diffuser_holder(true);
 
 //translate([ 0.00, 0.00, 0.00 ]) plate_holder();// .
 
-//translate([ 0.00, 0.00, -80.00 ]) lighting_base();  
 //lighting_base_squared();
 
 //rotate([0,180,0])led_ring_enclosure();
@@ -208,29 +200,29 @@ module led_ring_enclosure(){
             // base cylinder
             difference(){
             color("red")cylinder($fn = 100, h=hre, r=rre, center=true);
-            translate([0,0,re_zt/2])
-           color("white") cylinder($fn = 100, h=hre-re_zt, r=rre-re_rt, center=true);
+            translate([0,0,re_zt/2+wall])
+            color("white") cylinder($fn = 100, h=hre-re_zt+wall, r=rre-re_rt, center=true);
             }
             
             // internal cylinder
             cylinder($fn = 100, h=hre, r=rrei, center=true);
             
-            //screw supports
-           color("red") for (x =[x_shd/2,-x_shd/2]){
+            // screw supports for LED ring
+           color("blue") for (x =[x_shd/2,-x_shd/2]){
                 for (y =[y_shd/2,-y_shd/2]){ 
                     translate([x,y,(re_bh-hre)/2+re_zt])
                     cylinder($fn = 100, h=re_bh, r=rh_screw + r_sh, center=true);
                 }
             }
         }
-            //internal hole
-            cylinder($fn = 100, h=hre, r=rrei-re_rt, center=true);
+            // internal hole
+            cylinder($fn = 100, h=hre+wall, r=rrei-re_rt, center=true);
             
-            //screw holes for LED ring
+            // screw holes for LED ring
             for (x =[x_shd/2,-x_shd/2]){
                 for (y =[y_shd/2,-y_shd/2]){ 
                     translate([x,y,(re_bh-hre+re_zt)/2])
-                    cylinder($fn = 100, h=re_bh+re_zt, r=r_sh, center=true);
+                     color("red") cylinder($fn = 100, h=re_bh+re_zt, r=r_sh, center=true);
                 }
             }
             
@@ -239,13 +231,19 @@ module led_ring_enclosure(){
             translate([0,rre-0.5*re_rt,(hre-chsz_final)/2])
             cube([chs_x,2*re_rt,chsz_final], center = true);
             
-            //arms hole
-            xash = scafold_x/2 + arm_tick + s_arm_screw+ra_screw;
+            //arms hole to hold the module to the ceiling of the device
+            xash = scafold_x/2 +ra_screw;
             
-            for (x =[xash,-xash]){
-                translate([x,0,(re_zt-hre)/2])
-                cylinder($fn = 100, h=re_zt, r=ra_screw, center=true);
+                 for (x =[xash,-xash]){
+                 translate([0,x,(re_zt-hre)/2])
+                color("yellow") cylinder($fn = 100, h=re_zt*2, r=ra_screw, center=true);
                 }
+                
+                
+//            for (x =[xash,-xash]){
+//                translate([x,0,(re_zt-hre)/2])
+//                cylinder($fn = 100, h=re_zt*2, r=ra_screw, center=true);
+//                }
             
             // Clamp
             for (rc =[rre-re_cdh,-(rre)]){
@@ -328,17 +326,7 @@ module pi_supports(){
 
 
 
-//cone_window_lid();
-module cone_window_lid(){
-      difference(){
-                 translate([ 0.00, 0.00, focus_h/2 ]) color("red")  cylinder( r=cone_r3+wall*3, h=focus_h, center=true);
-            translate([ 0.00, 0.00, focus_h/2 -wall*2 ]) color("blue")  cylinder( r=cone_r3+corr, h=focus_h-wall*2, center=true);
-         translate([ 0.00, 0.00, focus_h/2 -wall*2 ]) color("cyan")  cylinder( r=focus_r-wall*8, h=focus_h+wall*1000, center=true);
-            //operation window
-          translate([ 0.00, 0.00, focus_h/2+wall*3]) minkowski(){ 
-                    sphere(r=1.5); cube([ focus_r*3, focus_r, focus_h/2 ], center=true); }
-}
-    }
+
  
 
  int_top_cyl_r=lrd_r+wall;
@@ -348,53 +336,51 @@ roof_thick_h=10; //to screw holder and camera in
 module top_part(){
     difference(){
        union(){
-           //top camera square 
-//           translate([ 0.00, 0.00, focus_h-mount_h/2+wall*3 ])    cube([base_xy+wall*3, base_xy+wall*3, mount_h], center = true);
       difference(){
-                 translate([ 0.00, 0.00, focus_h/2+roof_thick_h/2 ]) color("green")  cylinder( r=int_top_cyl_r+wall*4, h=focus_h+wall*2+roof_thick_h, center=true);//
+                 translate([ 0.00, 0.00, focus_h/2+roof_thick_h/2 ]) color("green")  cylinder( r=int_top_cyl_r+wall*7, h=focus_h+wall*2+roof_thick_h, center=true);//
             translate([ 0.00, 0.00,focus_h/2-wall*2 ]) color("yellow")  cylinder( r=int_top_cyl_r+wall*2+corr   , h=focus_h-wall*2+corr, center=true);//corr was added in 2024 for prusa
-//      translate([ 0.00, 0.00, focus_h+mount_h/2-corr ])     
-//    color("Blue") cube([base_xy+corr*2, base_xy+corr*2, mount_h*20], center = true);
-            //operation window
+
+            //operation window //important for manipulation and screwing things in (leave it)
           translate([ 0.00, 0.00, focus_h/4]) rotate([0,0,90]) minkowski(){ 
                     sphere(r=1.5); cube([ focus_r*3, focus_r, focus_h/2 ], center=true); }
                   }}
-//              color("green") cube([base_xy+corr*2, base_xy+corr*2, mount_h*300], center = true);
                 
-                  //wire clearance tunel
-                  translate([int_top_cyl_r+wall*2-wall,0, focus_h/2-wall*2]) color("red")    cube([wire_clearance_x,wire_clearance_w+wall*4,focus_h+wall*2],center = true);
+            //wire clearance tunel
+                  translate([int_top_cyl_r+wall*2-wall,0, focus_h/2-wall*2]) color("white") cube([wire_clearance_x*2.5,wire_clearance_w+wall*4,focus_h+wall*2],center = true);
                   
-                  //camera csi flat cable clearance
-                     translate([int_top_cyl_r*2,0, focus_h+roof_thick_h-wall*3]) color("pink")    rotate([0,-9,0])cube([int_top_cyl_r*3,24,wall*3],center = true);
-//                       translate([int_top_cyl_r*0.6,0, focus_h+roof_thick_h/2]) color("pink")    rotate([0,-7,0])cube([int_top_cyl_r*3,24,wall*3],center = true);
+            //camera csi flat cable clearance
+                     translate([int_top_cyl_r*1.8,0, focus_h+roof_thick_h-wall]) color("pink")    rotate([0,-12,0])cube([int_top_cyl_r*3,24,wall*6],center = true);
+
                   }            
-     //cable riel
+             //cable riel
      difference(){
-         translate([int_top_cyl_r+wall*2+wire_clearance_x/2-wall,0, focus_h/2-wall])     color("red")    cube([wire_clearance_x+wall*8,wire_clearance_w+wall*8,focus_h],center = true);
+         translate([int_top_cyl_r+wall*2+wire_clearance_x/2-wall,0, focus_h/2-wall])     color("red")    cube([wire_clearance_x+wall*10,wire_clearance_w+wall*10,focus_h],center = true);
     translate([int_top_cyl_r+wall*2 +wire_clearance_x/2-wall,0, focus_h/2-wall*4])     color("blue")    cube([wire_clearance_x+wall*4+corr*2,wire_clearance_w+wall*3+corr*3,focus_h+corr],center = true);//the corr in wire_clearance_w is critical for tight fitting.
      
              translate([ 0.00, 0.00,focus_h/2-wall*2 ]) color("yellow")  cylinder( r=int_top_cyl_r+wall*2+corr   , h=focus_h-wall*2+corr, center=true);//corr was added in 2024 for prusa
        }
        
-       //camera mount
+             //camera mount
           color("red")translate([ 0.00, 0.00, focus_h-wall*2+4])  rotate([0,180,90]) camera_mount(camera);
        
            //arms hole
 //            xash = scafold_x/2 + arm_tick + s_arm_screw+ra_screw;
-       xash=28;
+//      xash=28;
+       xash = scafold_x/2 +ra_screw;
            difference(){ 
                color("red")translate([ 0.00, 0.00, focus_h-wall*2])
        for (x =[xash,-xash]){
-                translate([0,x,0])
-                cylinder($fn = 100, h=20, r=ra_screw*3, center=true);
+                translate([0,x,wall*2])
+                cylinder($fn = 100, h=20+wall, r=ra_screw*3, center=true);
                 }
-           color("red")translate([ 0.00, 0.00, focus_h-wall*2])
+           color("white")translate([ 0.00, 0.00, focus_h-wall*2])
        for (x =[xash,-xash]){
                 translate([0,x,0])
-                cylinder($fn = 100, h=20, r=ra_screw, center=true);
+                cylinder($fn = 100, h=21+wall, r=ra_screw, center=true);
                 }
             }
-       
+            
+            
 //    RG_PCB=[23,60]; //M3 screw positions
 //LED_screw_h=raspi_z/2;
 //                 
@@ -416,8 +402,7 @@ module top_part(){
 }
   
   echo("int_top_cyl_r is",int_top_cyl_r);
-// translate([ 0.00, 0.00, 50 ]) top_part_cone();    
-
+//translate([ 0.00, 0.00, 50 ]) top_part_cone();    
 module top_part_cone(){
       difference(){
                  translate([ 0.00, 0.00, focus_h/2 ]) color("blue")  cylinder( r=int_top_cyl_r+wall*2, h=focus_h, center=true);      
@@ -438,7 +423,7 @@ module top_part_cone(){
         } 
     
     
-//  translate([ 0,0,h_cam+ h_ring+20])   RG_ring();
+// translate([ 0,0,h_cam+ h_ring+20])   RG_ring();
  module RG_ring(){
   difference(){
       circle(RG_ring_r);
@@ -461,6 +446,7 @@ module joint_bottom(){
       }}
             
  h_cam_short=5;
+      
 //cone_hull_short();
 module cone_hull_short(){
       translate([ 0,0,h_ring])    translate([ 0.00, 0.00, h_cam_short-corr])  top_part_cone(); 
@@ -582,7 +568,7 @@ module square_structure(){
     
     
 }
-diffuser_holder(true);
+//diffuser_holder(true);
 module diffuser_holder(sq){
     
     re_space = r_ext_down-re_thick_d;
@@ -602,6 +588,9 @@ module diffuser_holder(sq){
 }
 
 
+
+
+//---------------------------------- plate and filter holder 
 //
 //module ring(H,re_up,re_down,ri){
 //    difference(){
@@ -658,9 +647,6 @@ module diffuser_holder(sq){
 //      }
 //}
 
-//---------------------------------- plate and filter holder 
-
-
 //translate([0,0,90])plate_holder();
 module plate_holder(){
 //top part holding the plate and interfacing with lid
@@ -705,11 +691,7 @@ module lighting_base_squared(){
     }
     
     
-//---------------------------deprecated modules
-
-
-
-    
+/////////////////////////////////////////////////////deprecated modules below//////////////////////////////////////////////
 
 //translate([ 0,0,50 ]) extension_ring_long_v2();
 module extension_ring_long_v2(){
@@ -770,19 +752,7 @@ module M12_push_fit(){
 }
 
 //----------------- M12lens  holder attached with screws
-/*
-RPI camera dimensions: https://www.raspberrypi-spy.co.uk/2013/05/pi-camera-module-mechanical-dimensions/
 
-25x24x9
-
---------25 mm (x)----
-______________
-|o    21mm        o|
-|12.5                     |
-|o                        o|   24 (y)
-|9.5                       |
-|_____________|
-*/
 
 //distance btwn top and mid holes
 d_top_mid_holes=12.5;
@@ -862,7 +832,7 @@ module velvet_background_ring_v1(){
 }
 
 /*--------------------------------------------------------------------------------------------------------
-These modules below use Richard Bowman's code to make push fit camera holder and cover. See openflexure for mor einformation (https://github.com/rwb27/openflexure_microscope). Module camera_mount_FF and RPIcam_cover were modified from Richard ´s code
+These modules below use Richard Bowman's code to make push fit camera holder and cover. See openflexure for more information (https://github.com/rwb27/openflexure_microscope). Module camera_mount_FF and RPIcam_cover were modified from Richard ´s code
 --------------------------------------------------------------------------------------------------------*/
 
 module camera_mount_FF(){
@@ -1233,7 +1203,7 @@ for ( j=[0:space:vent_y]) {
 //            translate([ 0.00, 0.00, -h_ring/3]) color("purple") cylinder( r=cone_r+wall+corr, h=h_ring);
 //           }    }
 
-// translate([ 0, 0, 2  ]) lighting_base();
+//translate([ 0, 0, 2  ]) lighting_base();
 module lighting_base(){
     difference(){
        color("violet")cylinder(r=base_d/2-corr*2, h=light_box_h);
@@ -1245,4 +1215,16 @@ module lighting_base(){
            }
        //support to screw in the LED PCB
         translate([ 0, 0, raspi_z/2  ])  PCB_LED_support();    
+    }
+
+//cone_window_lid();
+module cone_window_lid(){
+      difference(){
+                 translate([ 0.00, 0.00, focus_h/2 ]) color("red")  cylinder( r=cone_r3+wall*3, h=focus_h, center=true);
+            translate([ 0.00, 0.00, focus_h/2 -wall*2 ]) color("blue")  cylinder( r=cone_r3+corr, h=focus_h-wall*2, center=true);
+         translate([ 0.00, 0.00, focus_h/2 -wall*2 ]) color("cyan")  cylinder( r=focus_r-wall*8, h=focus_h+wall*1000, center=true);
+            //operation window
+          translate([ 0.00, 0.00, focus_h/2+wall*3]) minkowski(){ 
+                    sphere(r=1.5); cube([ focus_r*3, focus_r, focus_h/2 ], center=true); }
+}
     }
