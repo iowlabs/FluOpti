@@ -1,120 +1,140 @@
 /*
-       This code is part of  a collaborative project between Lab Tecnologia Libre and IOWlabs 
-    (c) Fernan Federici and Isaac Nuñez, 2022- Released under the CERN Open Hardware License   
+    FluOpti - Fluorescence Microscopy Optimization Device
+    Part of a collaborative project between Lab Tecnologia Libre and IOWlabs
+    (c) Fernan Federici and Isaac Nuñez, 2022
+    Released under the CERN Open Hardware License
 */
 
-//include <picam_2_push_fit.scad>  
-include <Flat_cam_holder.scad>  
+include <Flat_cam_holder.scad>
 
-//-------important parameters if you wish to change the petri dish size and the base dimensions below for customization
+// Primary Configuration Parameters
+// ------------------------------
 
-corr=0.2;// used to create extra fitting space for printing imperfections
-petri_h=15;// petri dish height
-petri_lid_d=92.4 + corr*3; //petri dish diameter, corr is added for extra space (e.g. parafilm)
-LED_shield=40;//distance from illuminating hole to border used to hide the LEDs from the camera field of view
+// Correction factor for 3D printing tolerances
+corr = 0.2;  // mm, extra fitting space for printing imperfections
 
-//-----------------secondary -parameters less likely to be changed
+// Petri Dish Parameters
+petri_h = 15;        // mm, petri dish height
+petri_lid_d = 92.4 + corr*3;  // mm, petri dish diameter with tolerance
 
-screw_d=21;//distance between screw holes in RPI camera holder
-screw_r=2/2;//screw radius
-screw_hold_r=2;
-sensor_h=2; //space for sensor
-sensor_x=8.5;//RPI camera sensor dim
-wall_M12=1.5;
-base_xy=16;
-base_h=6;
-M12_r=12/2;//radius of M12 lens
-mount_h = 12;
-wall=0.75;
-holder_x=54;//acrylic bed width to fit into holder
-holder_y=54;//acrylic bed thickness to fit into holder, normally 3mm acrylic
-holder_z=3;//acrylic bed thickness to fit into holder, normally 3mm acrylic
-h_ring= petri_h*2;//petri dish-holding ring 
-light_box_h=50;
-elastic_holder_dist=petri_lid_d+5;//petri_lid_d-8;// diameter of the illuminating hole, with a 4mm notch to hold the petri dish. It has to be smaller than petri_lid_d (Parkinson 2007 uses 82mm).
+// LED Configuration
+LED_shield = 40;     // mm, distance from illuminating hole to border (prevents LED light bleeding)
 
+// Secondary Configuration Parameters
+// -------------------------------
 
-notch_y=11;
-elastic_holder_xy=10;
-elastic_holder_z=10;
-M12_h=10;
+// Camera Mount Parameters
+screw_d = 21;        // mm, distance between screw holes in RPI camera holder
+screw_r = 1;         // mm, screw radius (2/2 simplified)
+screw_hold_r = 2;    // mm, screw holder radius
+sensor_h = 2;        // mm, space for sensor
+sensor_x = 8.5;      // mm, RPI camera sensor dimension
 
-PCB_optoLED_r=84/2;//how big is the ring from screw to screw
-PCB_optoLED_r_ext=69/2;//external radius
-PCB_optoLED_r_inte=41/2; //internal radius
-PCB_LED_x=125;//155;// placa del FluOpti es de 15.5x11cm  y los agujeros estan a 3mm delos bordes en los dos ejes//
-PCB_LED_y=81;//111;
-diag=190; //diagonal of blue LED PCB (155 x 111)
-cone_r=petri_lid_d/2*1.5;//bottom radius of cone
-echo("cone r is", cone_r);
+// Base Structure Parameters
+wall_M12 = 1.5;      // mm, wall thickness for M12 lens mount
+base_xy = 16;        // mm, base width and length
+base_h = 6;          // mm, base height
+M12_r = 6;           // mm, radius of M12 lens (12/2 simplified)
+mount_h = 12;        // mm, mount height
+wall = 0.75;         // mm, standard wall thickness
 
-view_open_d=petri_lid_d-wall*4;
-base_d=diag+wall*6;//diameter of printed light house cylinder
-cone_r2=base_xy*2;//top radius
-focus_h=40;
-h_cam=90-h_ring;//height to camera 
-inner_r=petri_lid_d*1.2/2;
-velvet_background_ring_h=28;
-LED_base_h=9;
-LED_ring_ext_d=base_d-wall*3;
-LED_ring_int_d=LED_ring_ext_d-10;
-velvet_background_ring_d=LED_ring_int_d-wall*3;
-velvet_background_ring_stage_r=velvet_background_ring_d/2-10;
-inner_h=petri_h/2;
-focus_r=cone_r2;
-M13_neg_d=2.8;
+// Base Holder Parameters
+base_holder_thickness = 8;     // mm, thickness of the holder base
+base_holder_margin = 15;       // mm, extra margin around the base
+base_holder_height = 25;       // mm, height of the holder walls
+mount_screw_d = 4;             // mm, diameter of mounting screws
+mount_screw_head_d = 7;        // mm, diameter of screw head
+mount_screw_head_h = 3;        // mm, height of screw head
 
-wire_clearance_w=wall*7;
-wire_clearance_x=wall*6;
-wire_riel_h=focus_h*0.75;
+// Ventilation Parameters
+vent_hole_d = 8;               // mm, diameter of ventilation holes
+vent_hole_spacing = 15;        // mm, spacing between ventilation holes
+foot_height = 10;              // mm, height of the feet
+foot_d = 10;                   // mm, diameter of feet base
+foot_top_d = 12;               // mm, diameter of feet top
 
-raspi_z = 10;
-raspi_board = [85, 58, 19]; // 3B model is 82*56*19.5mm and 4B is 88*58*19.5mm
+// Holder Parameters
+holder_x = 54;       // mm, acrylic bed width
+holder_y = 54;       // mm, acrylic bed length
+holder_z = 3;        // mm, acrylic bed thickness (3mm standard)
 
-//h = raspi_z + raspi_board[2] + 5;
+// Ring and Box Parameters
+h_ring = petri_h * 2; // mm, petri dish-holding ring height
+light_box_h = 50;    // mm, light box height
+elastic_holder_dist = petri_lid_d + 5;  // mm, illuminating hole diameter with notch
 
-echo(raspi_board[1]);
+// Holder and Notch Parameters
+notch_y = 11;            // mm, notch height
+elastic_holder_xy = 10;  // mm, elastic holder width and length
+elastic_holder_z = 10;   // mm, elastic holder height
+M12_h = 10;              // mm, M12 lens mount height
 
-ITO_dim=100;
-$fn=100;
-    RG_ring_r=70/2;
-    cone_r3=RG_ring_r+wall*8;
-    
-///////////////////////////
-//// user defined values //
-///////////////////////////
-//r_inte = 48; // internal radius
-//ri_thick = 1; // structure internal thickness
-//re_thick_u = 3; // structure external thickness
-//re_thick_d = 1; // structure external thickness
-//z_thick = 2; // z structure thickness
-//paper_space = 0.5; // space to fit the paper
-//h_int = 3; // internal height where to fit paper
-//
+// PCB and LED Parameters
+PCB_optoLED_r = 42;     // mm, ring radius from screw to screw (84/2)
+PCB_optoLED_r_ext = 34.5;  // mm, external radius (69/2)
+PCB_optoLED_r_inte = 20.5; // mm, internal radius (41/2)
+PCB_LED_x = 125;        // mm, FluOpti PCB width
+PCB_LED_y = 81;         // mm, FluOpti PCB length
+diag = 190;             // mm, diagonal of blue LED PCB
 
-// for the arms
-arm_z = 15; // arm z lenght
-arm_tick = 3; // arm thickness
+// Cone and Base Parameters
+cone_r = petri_lid_d/2 * 1.5;  // mm, bottom radius of cone
+view_open_d = petri_lid_d - wall*4;  // mm, viewing opening diameter
+base_d = diag + wall*6;  // mm, light house cylinder diameter
+cone_r2 = base_xy * 2;   // mm, top radius
+focus_h = 40;            // mm, focus height
+h_cam = 90 - h_ring;     // mm, height to camera
 
-arm_hbt = 2.5; // hole borders thickness
-ra_screw = 1.5; // ringholder-arms screw rad
-s_arm_screw = 1.5; // arms screw hole separation from scafold.
+// Ring Parameters
+inner_r = petri_lid_d * 1.2/2;  // mm, inner radius
+velvet_background_ring_h = 28;   // mm, background ring height
+LED_base_h = 9;          // mm, LED base height
+LED_ring_ext_d = base_d - wall*3;  // mm, LED ring external diameter
+LED_ring_int_d = LED_ring_ext_d - 10;  // mm, LED ring internal diameter
+velvet_background_ring_d = LED_ring_int_d - wall*3;  // mm, background ring diameter
+velvet_background_ring_stage_r = velvet_background_ring_d/2 - 10;  // mm, stage radius
+inner_h = petri_h/2;     // mm, inner height
+focus_r = cone_r2;       // mm, focus radius
+M13_neg_d = 2.8;         // mm, M13 negative diameter
 
+// Wire and Clearance Parameters
+wire_clearance_w = wall * 7;  // mm, wire clearance width
+wire_clearance_x = wall * 6;  // mm, wire clearance length
+wire_riel_h = focus_h * 0.75; // mm, wire rail height
 
-plate_center= 66; //distance from the enclosure wall to the center of the plate.
+// Raspberry Pi Parameters
+raspi_z = 10;  // mm, Raspberry Pi Z offset
+raspi_board = [85, 58, 19];  // mm, RPi board dimensions [width, length, height]
 
+// Rendering Quality
+$fn = 100;  // facet number for curved surfaces
 
-// LED ring parameters
+// Additional Parameters
+ITO_dim = 100;      // mm, ITO glass dimension
+RG_ring_r = 35;     // mm, ring radius (70/2)
+cone_r3 = RG_ring_r + wall * 8;  // mm, cone radius
 
-r_ext = 70/2; // external radius
-r_int = 40/2; // internal radius
-ring_h = 1.5; // PCB height
-r_sh = 1.5; // screw holes radius
-x_shd = 60; // screw holes x distance
-y_shd = 23; // screw holes y distance
-LED_z = 8; // LEDs height
+// Arm Parameters
+arm_z = 15;          // mm, arm z length
+arm_tick = 3;        // mm, arm thickness
+arm_hbt = 2.5;       // mm, hole borders thickness
+ra_screw = 1.5;      // mm, ringholder-arms screw radius
+s_arm_screw = 1.5;   // mm, arms screw hole separation from scaffold
 
-CCFB = plate_center - holder_y; // Camera Center From Border
+// Plate Parameters
+plate_center = 66;    // mm, distance from enclosure wall to plate center
+
+// LED Ring Parameters
+r_ext = 35;          // mm, external radius (70/2)
+r_int = 20;          // mm, internal radius (40/2)
+ring_h = 1.5;        // mm, PCB height
+r_sh = 1.5;          // mm, screw holes radius
+x_shd = 60;          // mm, screw holes x distance
+y_shd = 23;          // mm, screw holes y distance
+LED_z = 8;           // mm, LEDs height
+
+// Camera Position
+CCFB = plate_center - holder_y;  // mm, Camera Center From Border
 
 //// external square support
 //sq_x = 126;
@@ -171,20 +191,23 @@ rrei = r_int-re_rfei;// ring enclosure internal radius
 
 
 
-//translate([ 0.00, 0.00, 150.00 ]) rotate([0,0,40]) cone_window_lid();  
+translate([0,0,200]) top_part(); 
 
+translate([ 0.00, 0.00, 70.00 ]) cone_hull_short();//usar este
 
-translate([0,0,-10]) top_part(); 
+translate([ 0.00, 0.00, 170.00 ]) rotate([0,180,0])led_ring_enclosure();
 
-//translate([ 0.00, 0.00, -150.00 ]) cone_hull_short();//usar este
+translate([ 0.00, 0.00, 55.00 ]) diffuser_holder(true);
 
-//translate([ 0.00, 0.00, 55.00 ]) diffuser_holder(true);
+translate([ 0.00, 0.00, 0.00 ]) plate_holder();// .
 
-//translate([ 0.00, 0.00, 0.00 ]) plate_holder();// .
+translate([ 0.00, 0.00, -60.00 ]) lighting_base_squared();
 
-//lighting_base_squared();
+// Render the base holder
+translate([0, 0, -170]) base_holder();
 
-//rotate([0,180,0])led_ring_enclosure();
+// Render the lighting base (commented out for testing)
+//translate([0, 0, base_holder_height]) lighting_base_squared();
 
 
 
@@ -667,23 +690,96 @@ translate([ 0, 0, -h_ring/2+wall*2])   joint_top();
 }
     
 wire_tunnel_h=35;
+vent_h=12;
+
+// Standalone base holder module
+module base_holder() {
+    difference() {
+        union() {
+            // Main base plate
+            translate([0, 0, base_holder_thickness/2 + foot_height])
+                color("DarkGray")
+                cube([sq_x + wall*10,
+                      sq_y + wall*10,
+                      base_holder_thickness], center=true);
+            
+            // Walls
+            difference() {
+                translate([0, 0, base_holder_height/2 + foot_height])
+                    color("yellow")
+                    cube([sq_x + wall*10 + wall*4,
+                          sq_y + wall*10 + wall*4,
+                          base_holder_height], center=true);
+                
+                translate([0, 0, base_holder_height/2 + foot_height+vent_h])
+                    cube([sq_x + wall*10+corr*2,
+                          sq_y + wall*10+corr*2,
+                          base_holder_height + 1], center=true);
+                
+                 translate([0, 0, base_holder_height/2 + foot_height])
+                    cube([sq_x + wall*6,
+                          sq_y + wall*6,
+                          base_holder_height + 1], center=true);
+                
+            }
+            
+            // Feet at corners of base
+            for(x=[-1,1]) for(y=[-1,1]) {
+                translate([x*(sq_x/2),
+                          y*(sq_y/2),
+                          foot_height/2]) {
+                    color("LightGray")
+                     cylinder(d1=foot_d, d2=foot_top_d, h=foot_height, center=true);
+                }
+            }
+        }
+        
+        // Ventilation holes pattern
+        translate([0, 0, foot_height + base_holder_thickness/2]) {
+            for(x=[-3:3]) for(y=[-3:3]) {
+                if((x+y) % 2 == 0) { // Checkerboard pattern
+                    translate([x*vent_hole_spacing, y*vent_hole_spacing, 0])
+                        cylinder(d=vent_hole_d, h=base_holder_thickness*2, center=true);
+                }
+            }
+        }
+        
+        
+        //cable hole
+          translate([ sq_x/2+wall*4, sq_x/2-wall*2,base_holder_thickness+foot_height+wire_clear*1.5])    cube([8,5,wire_clear*1.5],center = true);    
+    }
+    
+          //wire cable tunnel to avoid light pollution in
+          translate([sq_x/2+wall*6,sq_x/2-wire_tunnel_h/2+wall*4,wire_tunnel_h/2+wire_clear*1.5]) difference(){
+             rotate([90,0,0]) cylinder(r=5+wall*3, h=wire_tunnel_h, center = true);
+          translate([ 0, -wall*2,0]) rotate([90,0,0])cylinder(r=5, h=wire_tunnel_h, center = true); 
+              translate([-sq_x/2,0,0])cube([sq_x,sq_y,h_ring],center = true);
+      } 
+}
+
+wire_clear=5;
 //translate([ 0, 0, 0  ]) lighting_base_squared();
 module lighting_base_squared(){
      translate([0,0,-wall]) joint_bottom(); 
    translate([0,0,-h_ring]) difference(){
-                       union(){
+          
+       union(){
        color("purple")    cube([sq_x+wall*10,sq_y+wall*10,h_ring],center = true);
-          //wire cable tunnel to avoid light pollution in
-          translate([sq_x/2+wall*4,sq_x/2-wire_tunnel_h/2+wall*4,+wall*4]) difference(){
-            translate([ 0, 0,-h_ring/2+ wall*6 ]) rotate([90,0,0]) cylinder(r=5+wall*3, h=wire_tunnel_h, center = true);
-          translate([ 0, -wall*2,-h_ring/2+ wall*6 ]) rotate([90,0,0])cylinder(r=5, h=wire_tunnel_h, center = true);   
-      }
 
       }
+      
                 translate([ 0.00, 0.00, wall*4 ])       color("teal") cube([sq_x+corr,sq_y+corr,h_ring+corr*2],center = true);    
 
        //cable hole
-          translate([ sq_x/2, sq_x/2-wall*2,-h_ring/2+ wall*6 ])    cube([8,3,3],center = true);    
+          translate([ sq_x/2, sq_x/2-wall*2,-h_ring/2+ wire_clear+wall ])    cube([8,5,wire_clear],center = true);    
+      
+       // Ventilation holes in base
+          for(x=[-2:2]) for(y=[-2:2]) {
+              if((x+y) % 2 == 0) { // Checkerboard pattern
+                  translate([x*vent_hole_spacing, y*vent_hole_spacing, -h_ring/2])
+                      cylinder(d=vent_hole_d, h=wall*30, center=true);
+              }
+          }
             }
 
        //support to screw in the LED PCB
