@@ -178,6 +178,8 @@ echo("rre is", rre);
 echo("lrd_r is", lrd_r);
 rrei = r_int-re_rfei;// ring enclosure internal radius
 
+ int_top_cyl_r=lrd_r+wall;
+roof_thick_h=10; //to screw holder and camera in
 
 
 //// computed values
@@ -193,18 +195,18 @@ rrei = r_int-re_rfei;// ring enclosure internal radius
 
 translate([0,0,200]) top_part(); 
 
-translate([ 0.00, 0.00, 70.00 ]) cone_hull_short();//usar este
-
-translate([ 0.00, 0.00, 170.00 ]) rotate([0,180,0])led_ring_enclosure();
-
-translate([ 0.00, 0.00, 55.00 ]) diffuser_holder(true);
-
-translate([ 0.00, 0.00, 0.00 ]) plate_holder();// .
-
-translate([ 0.00, 0.00, -60.00 ]) lighting_base_squared();
+//translate([ 0.00, 0.00, 70.00 ]) cone_hull_short();//usar este
+//
+//translate([ 0.00, 0.00, 170.00 ]) rotate([0,180,0])led_ring_enclosure();
+//
+//translate([ 0.00, 0.00, 55.00 ]) diffuser_holder(true);
+//
+//translate([ 0.00, 0.00, 0.00 ]) plate_holder();// .
+//
+//translate([ 0.00, 0.00, -60.00 ]) lighting_base_squared();
 
 // Render the base holder
-translate([0, 0, -170]) base_holder();
+//translate([0, 0, -170]) base_holder();
 
 // Render the lighting base (commented out for testing)
 //translate([0, 0, base_holder_height]) lighting_base_squared();
@@ -351,12 +353,29 @@ module pi_supports(){
 
 
  
-
- int_top_cyl_r=lrd_r+wall;
-roof_thick_h=10; //to screw holder and camera in
+ // Parameters for M3 nut
+    m3_nut_flat = 5.6; // mm, across-flats for M3 nut
+    m3_nut_depth = 2.4; // mm, typical thickness of M3 nut
+    m3_nut_hole_offset = int_top_cyl_r + wall*7 - m3_nut_depth/2; // place hole on outer wall
+    m3_nut_hole_z = focus_h/3; // modified to be below the vertical center of main cylinder
+    // Hexagon shape for nut
+    module m3_nut_hex_hole() {
+        rotate([0,90,0])
+        translate([0,0,-m3_nut_depth/2])
+        difference() {
+            // Hex hole for nut
+            linear_extrude(height=m3_nut_depth)
+                polygon(points=[
+                    for(i=[0:5]) [cos(i*60)*m3_nut_flat/2, sin(i*60)*m3_nut_flat/2]
+                ]);
+            
+        }
+    }
 
 //translate([0,0,100]) top_part();                 
 module top_part(){
+   
+
     difference(){
        union(){
       difference(){
@@ -370,10 +389,31 @@ module top_part(){
                 
             //wire clearance tunel
                   translate([int_top_cyl_r+wall*2-wall,0, focus_h/2-wall*2]) color("white") cube([wire_clearance_x*2.5,wire_clearance_w+wall*4,focus_h+wall*2],center = true);
-                  
             //camera csi flat cable clearance
                      translate([int_top_cyl_r*1.8,0, focus_h+roof_thick_h-wall]) color("pink")    rotate([0,-12,0])cube([int_top_cyl_r*3,24,wall*6],center = true);
 
+            // M3 nut hexagonal hole in side wall (X+ direction)
+           // X+ side
+           rotate([0,0,35]) translate([m3_nut_hole_offset, 0, m3_nut_hole_z])
+               union(){  color("orange") m3_nut_hex_hole();
+                   // Central hole for M3 screw (3.2 mm diameter)
+             translate([-m3_nut_depth,0,0])rotate([0,90,0]) cylinder(d=3.2, h=m3_nut_depth*10, $fn=40);}
+           // X- side
+           rotate([0,0,-35]) translate([-m3_nut_hole_offset, 0, m3_nut_hole_z])
+               union(){  color("orange") m3_nut_hex_hole();
+                   // Central hole for M3 screw (3.2 mm diameter)
+             translate([-m3_nut_depth,0,0])rotate([0,90,0]) cylinder(d=3.2, h=m3_nut_depth*10, $fn=40);}
+              // X+Y- side
+           rotate([0,0,-35]) translate([m3_nut_hole_offset, 0, m3_nut_hole_z])
+               union(){  color("orange") m3_nut_hex_hole();
+                   // Central hole for M3 screw (3.2 mm diameter)
+             translate([-m3_nut_depth,0,0])rotate([0,90,0]) cylinder(d=3.2, h=m3_nut_depth*10, $fn=40);}
+           // X-Y- side
+           rotate([0,0,35]) translate([-m3_nut_hole_offset, 0, m3_nut_hole_z])
+               union(){  color("orange") m3_nut_hex_hole();
+                   // Central hole for M3 screw (3.2 mm diameter)
+             translate([-m3_nut_depth,0,0])rotate([0,90,0]) cylinder(d=3.2, h=m3_nut_depth*10, $fn=40);}
+                       
                   }            
              //cable riel
      difference(){
